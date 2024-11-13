@@ -9,28 +9,39 @@ import XCTest
 @testable import CategorySwiper
 
 final class CategorySwiperTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func test_apiCall_withBearerToken() async {
+        guard let key = ProcessInfo.processInfo.environment["LUNCHMONEY_ACCESS_TOKEN"] else {
+            XCTFail("access key is not setup")
+            return
         }
-    }
+        
+        let transactionsURL = URL( // 1
+            string: "https://dev.lunchmoney.app/v1/transactions"
+        )!
+        var request = URLRequest( // 2
+            url: transactionsURL
+        )
+        request.setValue( // 3
+            "Bearer <<access-token>>",
+            forHTTPHeaderField: "Authentication"
+        )
+        request.setValue( // 4
+            "application/json;charset=utf-8",
+            forHTTPHeaderField: "Content-Type"
+        )
 
+        var sessionConfiguration = URLSessionConfiguration.default // 5
+
+        sessionConfiguration.httpAdditionalHeaders = [
+            "Authorization": "Bearer \(key)" // 6
+        ]
+
+        let session = URLSession(configuration: sessionConfiguration) // 7
+        
+        let (data, response) = try! await session.data(for: request)
+        print(String(data: data, encoding: .utf8) ?? "Unknown")
+        // assert status code == 200 in the response
+        XCTAssertNotNil(response)
+    }
 }
