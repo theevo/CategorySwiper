@@ -2,7 +2,12 @@
 
 ## Refine API calls
 
-- if 401 status, data.isEmpty?
+- inject good or bad key
+
+
+- ✅ if 401 status, data.isEmpty? NO
+	- ✅ assert contains "name: Error"
+
 - ✅ assert status 200
 	- ✅ handle optional URLSession
 

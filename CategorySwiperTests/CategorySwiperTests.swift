@@ -15,6 +15,7 @@ final class CategorySwiperTests: XCTestCase {
             XCTFail("access key is not setup")
             return
         }
+//        let key = "junktoken"
         
         let transactionsURL = URL( // 1
             string: "https://dev.lunchmoney.app/v1/transactions"
@@ -41,11 +42,16 @@ final class CategorySwiperTests: XCTestCase {
         
         do {
             let (data, response) = try await session.data(for: request)
+            
+            // check for status 200
             if let httpResponse = response as? HTTPURLResponse {
                 XCTAssertEqual(httpResponse.statusCode, 200)
             }
-            XCTAssertFalse(data.isEmpty)
-            //        print(String(data: data, encoding: .utf8) ?? "Unknown")
+            
+            // check data for Error
+            let dataString = String(data: data, encoding: .utf8) ?? "Unknown"
+            print(dataString)
+            XCTAssertFalse(dataString.contains("\"name\":\"Error\""))
         } catch {
             XCTFail("Failed to make API call: \(error)")
         }
