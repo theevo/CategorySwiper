@@ -31,7 +31,7 @@ final class CategorySwiperTests: XCTestCase {
             forHTTPHeaderField: "Content-Type"
         )
 
-        var sessionConfiguration = URLSessionConfiguration.default // 5
+        let sessionConfiguration = URLSessionConfiguration.default // 5
 
         sessionConfiguration.httpAdditionalHeaders = [
             "Authorization": "Bearer \(key)" // 6
@@ -39,9 +39,14 @@ final class CategorySwiperTests: XCTestCase {
 
         let session = URLSession(configuration: sessionConfiguration) // 7
         
-        let (data, response) = try! await session.data(for: request)
-        print(String(data: data, encoding: .utf8) ?? "Unknown")
+        do {
+            let (data, response) = try await session.data(for: request)
+            //        print(String(data: data, encoding: .utf8) ?? "Unknown")
+            XCTAssertFalse(data.isEmpty)
+        } catch {
+            XCTFail("Failed to make API call: \(error)")
+        }
         // assert status code == 200 in the response
-        XCTAssertNotNil(response)
+        
     }
 }

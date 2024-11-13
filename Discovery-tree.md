@@ -1,6 +1,9 @@
 
 
+## Refine API calls
 
+- assert status 200
+	- ✅ handle optional URLSession
 
 ## Housekeeping
 - change bearer token
