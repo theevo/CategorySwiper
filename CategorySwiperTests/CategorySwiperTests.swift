@@ -41,12 +41,14 @@ final class CategorySwiperTests: XCTestCase {
         
         do {
             let (data, response) = try await session.data(for: request)
-            //        print(String(data: data, encoding: .utf8) ?? "Unknown")
+            if let httpResponse = response as? HTTPURLResponse {
+                XCTAssertEqual(httpResponse.statusCode, 200)
+            }
             XCTAssertFalse(data.isEmpty)
+            //        print(String(data: data, encoding: .utf8) ?? "Unknown")
         } catch {
             XCTFail("Failed to make API call: \(error)")
         }
-        // assert status code == 200 in the response
         
     }
 }

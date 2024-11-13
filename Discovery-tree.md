@@ -2,7 +2,8 @@
 
 ## Refine API calls
 
-- assert status 200
+- if 401 status, data.isEmpty?
+- ✅ assert status 200
 	- ✅ handle optional URLSession
 
 ## Housekeeping
