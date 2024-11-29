@@ -47,6 +47,7 @@ struct NetworkInterface {
             return .success(Response(data: data, urlResponse: urlResponse))
         } catch {
             print("\(#file) \(#function) line \(#line): URLSession failed")
+            print("error: \(error)")
         }
         return .failure(.SessionFailed)
     }

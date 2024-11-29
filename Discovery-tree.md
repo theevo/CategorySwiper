@@ -1,9 +1,11 @@
 
 ## Decode JSON
 
-- Create Model 
+✅ Create Model 
 
 ## Refine API calls
+
+- filter transactions where status is UNCLEARED
 
 ✅ Move NetworkInterface into its own file
 
