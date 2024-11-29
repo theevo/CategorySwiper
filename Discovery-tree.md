@@ -3,6 +3,7 @@
 ## Refine API calls
 
 - Wrap NetworkInterface in Result
+    - ✅ create type to hold Reponse (NetworkInterface.Response)
 
 ✅ inject good or bad key
 

@@ -15,9 +15,9 @@ final class CategorySwiperTests: XCTestCase {
         
         let interface = NetworkInterface(bearerToken: key)
         
-        let (_, response) = await interface.getCategories()
+        let response = await interface.getCategories()
         
-        if let httpResponse = response as? HTTPURLResponse {
+        if let httpResponse = response.urlResponse as? HTTPURLResponse {
             XCTAssertEqual(httpResponse.statusCode, 401)
         }
     }
@@ -25,15 +25,15 @@ final class CategorySwiperTests: XCTestCase {
     func test_apiCall_with_VALID_BearerToken_resultsIn_200statusCode_andNoError() async {
         let interface = NetworkInterface()
         
-        let (data, response) = await interface.getCategories()
+        let response = await interface.getCategories()
         
         // check for status 200
-        if let httpResponse = response as? HTTPURLResponse {
+        if let httpResponse = response.urlResponse as? HTTPURLResponse {
             XCTAssertEqual(httpResponse.statusCode, 200)
         }
         
         // check data for Error
-        guard let data = data else {
+        guard let data = response.data else {
             XCTFail("failed to unwrap data")
             return
         }
@@ -55,7 +55,7 @@ struct NetworkInterface {
         self.bearerToken = bearerToken
     }
     
-    func getCategories() async -> (Data?, URLResponse?) {
+    func getCategories() async -> Response {
         let transactionsURL = URL( // 1
             string: "https://dev.lunchmoney.app/v1/transactions"
         )!
@@ -80,10 +80,18 @@ struct NetworkInterface {
         let session = URLSession(configuration: sessionConfiguration) // 7
         
         do {
-            return try await session.data(for: request)
+            let (data, urlResponse) = try await session.data(for: request)
+            return Response(data: data, urlResponse: urlResponse)
         } catch {
             print("\(#file) \(#function) line \(#line): URLSession failed")
         }
-        return (nil, nil)
+        return Response(data: nil, urlResponse: nil)
+    }
+}
+
+extension NetworkInterface {
+    struct Response {
+        var data: Data?
+        var urlResponse: URLResponse?
     }
 }
