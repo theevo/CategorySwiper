@@ -2,17 +2,19 @@
 
 ## Refine API calls
 
-- inject good or bad key
+- Wrap NetworkInterface in Result
+
+✅ inject good or bad key
 
 
-- ✅ if 401 status, data.isEmpty? NO
+✅ if 401 status, data.isEmpty? NO
 	- ✅ assert contains "name: Error"
 
-- ✅ assert status 200
+✅ assert status 200
 	- ✅ handle optional URLSession
 
 ## Housekeeping
-- change bearer token
+✅ change bearer token
 
 
 ## ✅ Rough Draft

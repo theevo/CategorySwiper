@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27A13ABC2CFA374800430ABF /* Discovery-tree.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Discovery-tree.md"; sourceTree = "<group>"; };
 		27F3EC932CDAC26400851CCB /* CategorySwiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategorySwiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperApp.swift; sourceTree = "<group>"; };
 		27F3EC982CDAC26400851CCB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		27F3EC8A2CDAC26400851CCB = {
 			isa = PBXGroup;
 			children = (
+				27A13ABC2CFA374800430ABF /* Discovery-tree.md */,
 				27F3EC952CDAC26400851CCB /* CategorySwiper */,
 				27F3ECA62CDAC26500851CCB /* CategorySwiperTests */,
 				27F3ECB02CDAC26500851CCB /* CategorySwiperUITests */,
