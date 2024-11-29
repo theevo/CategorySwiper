@@ -15,7 +15,12 @@ final class CategorySwiperTests: XCTestCase {
         
         let interface = NetworkInterface(bearerToken: key)
         
-        let response = await interface.getCategories()
+        let result = await interface.getCategories()
+        
+        guard case .success(let response) = result else {
+            XCTFail("URLSession failed")
+            return
+        }
         
         if let httpResponse = response.urlResponse as? HTTPURLResponse {
             XCTAssertEqual(httpResponse.statusCode, 401)
@@ -25,7 +30,12 @@ final class CategorySwiperTests: XCTestCase {
     func test_apiCall_with_VALID_BearerToken_resultsIn_200statusCode_andNoError() async {
         let interface = NetworkInterface()
         
-        let response = await interface.getCategories()
+        let result = await interface.getCategories()
+        
+        guard case .success(let response) = result else {
+            XCTFail("URLSession failed")
+            return
+        }
         
         // check for status 200
         if let httpResponse = response.urlResponse as? HTTPURLResponse {
@@ -55,7 +65,7 @@ struct NetworkInterface {
         self.bearerToken = bearerToken
     }
     
-    func getCategories() async -> Response {
+    func getCategories() async -> Result<Response, SessionError> {
         let transactionsURL = URL( // 1
             string: "https://dev.lunchmoney.app/v1/transactions"
         )!
@@ -81,11 +91,11 @@ struct NetworkInterface {
         
         do {
             let (data, urlResponse) = try await session.data(for: request)
-            return Response(data: data, urlResponse: urlResponse)
+            return .success(Response(data: data, urlResponse: urlResponse))
         } catch {
             print("\(#file) \(#function) line \(#line): URLSession failed")
         }
-        return Response(data: nil, urlResponse: nil)
+        return .failure(.SessionFailed)
     }
 }
 
@@ -93,5 +103,16 @@ extension NetworkInterface {
     struct Response {
         var data: Data?
         var urlResponse: URLResponse?
+    }
+    
+    enum SessionError: LocalizedError {
+        case SessionFailed
+        
+        var errorDescription: String? {
+            switch self {
+            case .SessionFailed:
+                "Tried to establish URLSession data session, but it was not successful."
+            }
+        }
     }
 }
