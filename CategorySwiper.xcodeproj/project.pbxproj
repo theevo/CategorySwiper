@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27A13ABE2CFA6AD200430ABF /* NetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */; };
 		27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */; };
 		27F3EC992CDAC26400851CCB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC982CDAC26400851CCB /* ContentView.swift */; };
 		27F3EC9B2CDAC26500851CCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F3EC9A2CDAC26500851CCB /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		27A13ABC2CFA374800430ABF /* Discovery-tree.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Discovery-tree.md"; sourceTree = "<group>"; };
+		27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterface.swift; sourceTree = "<group>"; };
 		27F3EC932CDAC26400851CCB /* CategorySwiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategorySwiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperApp.swift; sourceTree = "<group>"; };
 		27F3EC982CDAC26400851CCB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				27F3EC982CDAC26400851CCB /* ContentView.swift */,
 				27F3EC9A2CDAC26500851CCB /* Assets.xcassets */,
 				27F3EC9C2CDAC26500851CCB /* Preview Content */,
+				27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */,
 			);
 			path = CategorySwiper;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27F3EC992CDAC26400851CCB /* ContentView.swift in Sources */,
+				27A13ABE2CFA6AD200430ABF /* NetworkInterface.swift in Sources */,
 				27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

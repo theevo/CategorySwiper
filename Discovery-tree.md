@@ -1,8 +1,11 @@
 
+## Decode JSON
+
+- Create Model 
 
 ## Refine API calls
 
-- Move NetworkInterface into its own file
+✅ Move NetworkInterface into its own file
 
 ✅ Wrap NetworkInterface in Result
     - ✅ create type to hold Reponse (NetworkInterface.Response)
