@@ -97,8 +97,4 @@ extension NetworkInterface {
     }
 }
 
-extension Collection {
-    var notEmpty: Bool {
-        !isEmpty
-    }
-}
+

@@ -10,7 +10,7 @@ import XCTest
 
 final class CategorySwiperTests: XCTestCase {
     
-    func test_apiCall_with_INVALID_BearerToken_resultsIn_401statusCode() async {
+    func test_NetworkInterace_with_INVALID_BearerToken_resultsIn_401statusCode() async {
         let key = "junktoken"
         
         let interface = NetworkInterface(bearerToken: key)
@@ -27,70 +27,17 @@ final class CategorySwiperTests: XCTestCase {
         }
     }
     
-    func test_apiCall_responseData_decodesSuccessfully() async {
-        let interface = NetworkInterface()
-        
-        let result = await interface.getTransactions()
-        
-        guard case .success(let response) = result else {
-            XCTFail("URLSession failed")
-            return
-        }
-        
-        // check for status 200
-        if let httpResponse = response.urlResponse as? HTTPURLResponse {
-            XCTAssertEqual(httpResponse.statusCode, 200)
-        }
-        
-        // check data for Error
-        guard let data = response.data else {
-            XCTFail("failed to unwrap data")
-            return
-        }
-        
-        do {
-            let object = try JSONDecoder().decode(TopLevelObject.self, from: data)
-            XCTAssertFalse(object.transactions.isEmpty)
-        } catch {
-            print("\(#file) \(#function) line \(#line): JSONDecoder failed")
-            print("error: \(error)")
-        }
+    func test_TransactionsLoader_returns_nonEmptyTransactionsArray_andStatusCode200() async throws {
+        let loader = TransactionsLoader()
+        let (object, statusCode) = try await loader.load()
+        XCTAssertTrue(object.transactions.notEmpty)
+        XCTAssertEqual(statusCode, 200)
     }
     
-    func test_apiCall_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async {
-        let interface = NetworkInterface()
-        
-        let filters = [NetworkInterface.Filter.Uncleared]
-        
-        let result = await interface.getTransactions(filters: filters)
-        
-        guard case .success(let response) = result else {
-            XCTFail("URLSession failed")
-            return
-        }
-        
-        // check for status 200
-        if let httpResponse = response.urlResponse as? HTTPURLResponse {
-            XCTAssertEqual(httpResponse.statusCode, 200)
-        }
-        
-        // check data for Error
-        guard let data = response.data else {
-            XCTFail("failed to unwrap data")
-            return
-        }
-        
-        do {
-            let object = try JSONDecoder().decode(TopLevelObject.self, from: data)
-            let totalCount = object.transactions.count
-            print("Transactions #:", totalCount)
-            
-            let uncleared = object.transactions.filter({ $0.status == .uncleared })
-            print(" Uncleared #:", uncleared.count)
-            XCTAssertEqual(totalCount, uncleared.count)
-        } catch {
-            print("\(#file) \(#function) line \(#line): JSONDecoder failed")
-            print("error: \(error)")
-        }
+    func test_TransactionsLoader_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
+        let loader = TransactionsLoader()
+        let (object, statusCode) = try await loader.load(showUnclearedOnly: true)
+        XCTAssertEqual(object.transactions.count, object.uncleared.count)
+        XCTAssertEqual(statusCode, 200)
     }
 }

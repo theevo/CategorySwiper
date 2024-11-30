@@ -5,6 +5,8 @@
 
 ## Refine API calls
 
+✅ abstract the JSONDecoder block
+
 ✅ filter transactions where status is UNCLEARED
     - ✅ Move Transaction into its own file
 

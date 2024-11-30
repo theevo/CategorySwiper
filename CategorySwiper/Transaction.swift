@@ -9,6 +9,29 @@ import Foundation
 
 struct TopLevelObject: Decodable {
     var transactions: [Transaction]
+    
+    var uncleared: [Transaction] {
+        transactions.filter({ $0.status == .uncleared })
+    }
+    
+    var cleared: [Transaction] {
+        transactions.filter({ $0.status == .cleared })
+    }
+    
+    var pending: [Transaction] {
+        transactions.filter({ $0.status == .pending })
+    }
+}
+
+extension TopLevelObject: CustomStringConvertible {
+    var description: String {
+        var string = ""
+        string += "Transactions #: \(transactions.count)\n"
+        string += " Uncleared #: \(uncleared.count)\n"
+        string += " Cleared #: \(cleared.count)\n"
+        string += " Pending #: \(pending.count)"
+        return string
+    }
 }
 
 struct Transaction: Decodable {
