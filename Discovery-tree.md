@@ -1,11 +1,22 @@
+# Discovery Tree
+
+## UI
+
+- Use the Transaction's Currency
+
+✅ CardView
+    - ✅ TransactionViewModel
+        - ✅ TransactionViewModel Example
+            - ✅ Transaction Example
+
 
 ## Decode JSON
+
+✅ abstract the JSONDecoder block
 
 ✅ Create Model 
 
 ## Refine API calls
-
-✅ abstract the JSONDecoder block
 
 ✅ filter transactions where status is UNCLEARED
     - ✅ Move Transaction into its own file

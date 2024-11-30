@@ -91,3 +91,17 @@ struct Transaction: Decodable {
         case pending
     }
 }
+
+extension Transaction {
+    static let example = Transaction(id: 2239190824,
+                                     date: "2024-11-10",
+                                     amount: "17.5300",
+                                     to_base: 17.53,
+                                     currency: "usd",
+                                     payee: "Central Market",
+                                     category_name: "Groceries",
+                                     is_income: false,
+                                     status: .uncleared,
+                                     created_at: "2024-11-13T03:07:10.365Z",
+                                     updated_at: "2024-11-13T03:07:10.365Z")
+}
