@@ -6,6 +6,7 @@
 ## Refine API calls
 
 - filter transactions where status is UNCLEARED
+    - ✅ Move Transaction into its own file
 
 ✅ Move NetworkInterface into its own file
 
