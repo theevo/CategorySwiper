@@ -12,6 +12,8 @@ struct TopLevelObject: Decodable {
 }
 
 struct Transaction: Decodable {
+    static let unclearedStatus = Transaction.Status.uncleared.rawValue
+    
     var id: Int
     var date: String // "2024-11-01"
     var amount: String

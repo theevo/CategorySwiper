@@ -18,12 +18,26 @@ struct NetworkInterface {
         self.bearerToken = bearerToken
     }
     
-    func getCategories() async -> Result<Response, SessionError> {
+    func getTransactions(filters: [Filter] = []) async -> Result<Response, SessionError> {
         let transactionsURL = URL( // 1
             string: "https://dev.lunchmoney.app/v1/transactions"
         )!
-        var request = URLRequest( // 2
-            url: transactionsURL
+        
+        var queries: [URLQueryItem] = []
+        
+        for filter in filters {
+            queries.append(filter.queryItem)
+        }
+        
+        var urlComponents = URLComponents(url: transactionsURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = queries
+        
+        guard let finalURL = urlComponents?.url else { return .failure(.BadURL) }
+        
+        print(finalURL)
+        
+        var request = URLRequest(
+            url: finalURL
         )
         request.setValue( // 3
             "Bearer <<access-token>>",
@@ -51,6 +65,17 @@ struct NetworkInterface {
         }
         return .failure(.SessionFailed)
     }
+    
+    enum Filter: String {
+        case Uncleared
+        
+        var queryItem: URLQueryItem {
+            switch self {
+            case .Uncleared:
+                URLQueryItem(name: "status", value: Transaction.unclearedStatus)
+            }
+        }
+    }
 }
 
 extension NetworkInterface {
@@ -61,12 +86,21 @@ extension NetworkInterface {
     
     enum SessionError: LocalizedError {
         case SessionFailed
+        case BadURL
         
         var errorDescription: String? {
             switch self {
             case .SessionFailed:
                 "Tried to establish URLSession data session, but it was not successful."
+            case .BadURL:
+                "Tried to create URL with URLComponents, but it was not successful."
             }
         }
+    }
+}
+
+extension Collection {
+    var notEmpty: Bool {
+        !isEmpty
     }
 }
