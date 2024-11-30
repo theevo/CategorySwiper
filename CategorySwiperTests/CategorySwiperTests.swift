@@ -51,18 +51,6 @@ final class CategorySwiperTests: XCTestCase {
         do {
             let object = try JSONDecoder().decode(TopLevelObject.self, from: data)
             XCTAssertFalse(object.transactions.isEmpty)
-            
-            print("Transactions #:", object.transactions.count)
-            
-            let cleared = object.transactions.filter({ $0.status == .cleared })
-            print(" Cleared #:", cleared.count)
-            
-            let uncleared = object.transactions.filter({ $0.status == .uncleared })
-            print(" Uncleared #:", uncleared.count)
-            
-            let pending = object.transactions.filter({ $0.status == .pending })
-            print(" Pending #:", pending.count)
-            
         } catch {
             print("\(#file) \(#function) line \(#line): JSONDecoder failed")
             print("error: \(error)")

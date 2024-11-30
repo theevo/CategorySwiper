@@ -34,8 +34,6 @@ struct NetworkInterface {
         
         guard let finalURL = urlComponents?.url else { return .failure(.BadURL) }
         
-        print(finalURL)
-        
         var request = URLRequest(
             url: finalURL
         )
