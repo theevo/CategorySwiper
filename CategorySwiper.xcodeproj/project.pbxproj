@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27158EB62CFC1AF90093421F /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27158EB52CFC1AF90093421F /* TransactionViewModel.swift */; };
 		27A13ABE2CFA6AD200430ABF /* NetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */; };
 		27D259CA2CFABADE004A4CAD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D259C92CFABADE004A4CAD /* Transaction.swift */; };
 		27D638162CFBBD7C00B43DE1 /* TransactionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D638152CFBBD7C00B43DE1 /* TransactionLoader.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27158EB52CFC1AF90093421F /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		27A13ABC2CFA374800430ABF /* Discovery-tree.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Discovery-tree.md"; sourceTree = "<group>"; };
 		27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterface.swift; sourceTree = "<group>"; };
 		27D259C92CFABADE004A4CAD /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
 				27F3EC982CDAC26400851CCB /* ContentView.swift */,
 				27D638192CFBD22C00B43DE1 /* CardView.swift */,
+				27158EB52CFC1AF90093421F /* TransactionViewModel.swift */,
 				27F3EC9A2CDAC26500851CCB /* Assets.xcassets */,
 				27F3EC9C2CDAC26500851CCB /* Preview Content */,
 				27A13ABD2CFA6AD200430ABF /* NetworkInterface.swift */,
@@ -281,6 +284,7 @@
 				27D259CA2CFABADE004A4CAD /* Transaction.swift in Sources */,
 				27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */,
 				27D638162CFBBD7C00B43DE1 /* TransactionLoader.swift in Sources */,
+				27158EB62CFC1AF90093421F /* TransactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

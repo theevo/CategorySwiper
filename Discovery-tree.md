@@ -3,6 +3,7 @@
 ## UI
 
 - Swipeable Cards
+    - ✅ Identifiable
 
 - Format date
 
