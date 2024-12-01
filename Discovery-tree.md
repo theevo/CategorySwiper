@@ -2,7 +2,11 @@
 
 ## UI
 
-- Use the Transaction's Currency
+- Swipeable Cards
+
+- Format date
+
+✅ Use the Transaction's Currency
 
 ✅ CardView
     - ✅ TransactionViewModel
