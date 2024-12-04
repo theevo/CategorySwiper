@@ -18,5 +18,5 @@ struct SwipeableCardsView: View {
 }
 
 #Preview {
-    SwipeableCardsView(transactions: [TransactionViewModel.example])
+    SwipeableCardsView(transactions: TransactionViewModel.examples)
 }
