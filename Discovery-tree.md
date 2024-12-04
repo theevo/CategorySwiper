@@ -3,7 +3,11 @@
 ## UI
 
 - Swipeable Cards
-    - ✅ Identifiable
+    - SwipeableCardsView 
+        - make the CardView look like a card
+        - rename Deck?
+        - ✅ inject array of TransactionViewModels
+    - ✅ TransactionViewModel: Identifiable
 
 - Format date
 
