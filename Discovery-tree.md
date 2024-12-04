@@ -5,6 +5,8 @@
 - Swipeable Cards
     - SwipeableCardsView 
         - make the CardView look like a card
+            - inject size
+            - ✅ add shadow and radius 
         - rename Deck?
         - ✅ inject array of TransactionViewModels
     - ✅ TransactionViewModel: Identifiable

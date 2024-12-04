@@ -11,12 +11,22 @@ struct CardView: View {
     var transaction: TransactionViewModel
     
     var body: some View {
-        Text(transaction.merchant)
-            .font(.title)
-        Text(transaction.amount, format: .currency(code: transaction.currency))
-            .font(.largeTitle)
-        Text(transaction.date)
-        Text(transaction.category)
+        ZStack {
+            RoundedRectangle(
+                cornerRadius: 45,
+                style: .continuous
+            )
+                .fill(.background)
+                .shadow(color: .secondary, radius: 10)
+            VStack {
+                Text(transaction.merchant)
+                    .font(.title)
+                Text(transaction.amount, format: .currency(code: transaction.currency))
+                    .font(.largeTitle)
+                Text(transaction.date)
+                Text(transaction.category)
+            }
+        }
     }
 }
 
