@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct CardView: View {
-    var viewModel: TransactionViewModel
+    var transaction: TransactionViewModel
     
     var body: some View {
-        Text(viewModel.merchant)
+        Text(transaction.merchant)
             .font(.title)
-        Text(viewModel.amount, format: .currency(code: viewModel.currency))
+        Text(transaction.amount, format: .currency(code: transaction.currency))
             .font(.largeTitle)
-        Text(viewModel.date)
-        Text(viewModel.category)
+        Text(transaction.date)
+        Text(transaction.category)
     }
 }
 
 #Preview {
-    CardView(viewModel: TransactionViewModel.example)
+    CardView(transaction: TransactionViewModel.example)
 }

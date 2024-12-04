@@ -12,7 +12,7 @@ struct SwipeableCardsView: View {
     
     var body: some View {
         ForEach(transactions) { transaction in
-            CardView(viewModel: transaction)
+            CardView(transaction: transaction)
         }
     }
 }
