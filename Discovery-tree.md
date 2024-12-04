@@ -3,9 +3,10 @@
 ## UI
 
 - Swipeable Cards
-    - SwipeableCardsView 
-        - make the CardView look like a card
-            - inject size
+    - SwipeableCardsView
+        - stack the cards
+        - ✅ make the CardView look like a card
+            - ✅ inject size
             - ✅ add shadow and radius 
         - rename Deck?
         - ✅ inject array of TransactionViewModels
