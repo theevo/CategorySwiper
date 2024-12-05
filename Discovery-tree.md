@@ -6,8 +6,10 @@
     - SwipeableCardsView
         - stack the cards
             - get a variety of transactions
-                - TransactionsLoader becomes protocol
-                    - LocalTransactionsLoader loads from local JSON
+                - get N transactions from LocalTransactionLoader
+                - ✅ TransactionsLoader becomes protocol
+                    - ✅ LocalTransactionsLoader loads from local JSON
+                        - ✅ integrate into tests
                     - ✅ LunchMoneyTransactionsLoader actually loads from API
             - ✅ ZStack
         - ✅ make the CardView look like a card
