@@ -12,6 +12,11 @@ protocol TransactionsLoader {
 }
 
 struct LocalTransactionsLoader: TransactionsLoader {
+    func loadTransactions(showUnclearedOnly: Bool = false, limit: Int) async throws -> [Transaction] {
+        let (object, _) = try await load(showUnclearedOnly: showUnclearedOnly)
+        return Array(object.transactions.prefix(limit))
+    }
+    
     func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
         let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
         
