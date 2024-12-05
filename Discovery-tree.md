@@ -6,7 +6,8 @@
     - SwipeableCardsView
         - stack the cards
             - swipe
-                - rename TransactionViewModel to CardViewModel 
+                - gesture
+                - ✅ rename TransactionViewModel to CardViewModel 
                 - ✅ TransactionViewModel has swipe direction
                 - ✅ ObservableObject SwipeableCardsModel
             - ✅ get a variety of transactions
