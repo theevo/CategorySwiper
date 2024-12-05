@@ -4,12 +4,13 @@
 
 - Swipeable Cards
     - SwipeableCardsView
-        - stack the cards
-            - swipe
-                - gesture
-                 ✅ rename TransactionViewModel to CardViewModel 
-                 ✅ TransactionViewModel has swipe direction
-                 ✅ ObservableObject SwipeableCardsModel
+        - connect swipe with behavior
+        ✅ swipe
+            ✅ gesture
+            ✅ rename TransactionViewModel to CardViewModel 
+            ✅ TransactionViewModel has swipe direction
+            ✅ ObservableObject SwipeableCardsModel
+        ✅ stack the cards
              ✅ get a variety of transactions
                  ✅ integrate into Preview
                  ✅ get N transactions from LocalTransactionLoader
