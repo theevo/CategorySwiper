@@ -40,4 +40,10 @@ final class CategorySwiperTests: XCTestCase {
         XCTAssertEqual(object.transactions.count, object.uncleared.count)
         XCTAssertEqual(statusCode, 200)
     }
+    
+    func test_LocalTransactionsLoader_request5_get5Transactions() async throws {
+        let loader = LocalTransactionsLoader()
+        let transactions = try await loader.loadTransactions(limit: 5)
+        XCTAssertEqual(transactions.count, 5)
+    }
 }
