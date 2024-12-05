@@ -11,8 +11,10 @@ struct SwipeableCardsView: View {
     var transactions: [TransactionViewModel]
     
     var body: some View {
-        ForEach(transactions) { transaction in
-            CardView(transaction: transaction)
+        ZStack {
+            ForEach(transactions) { transaction in
+                CardView(transaction: transaction)
+            }
         }
     }
 }

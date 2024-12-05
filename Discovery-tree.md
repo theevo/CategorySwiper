@@ -5,6 +5,8 @@
 - Swipeable Cards
     - SwipeableCardsView
         - stack the cards
+            - get a variety of transactions
+            - ✅ ZStack
         - ✅ make the CardView look like a card
             - ✅ inject size
             - ✅ add shadow and radius 
