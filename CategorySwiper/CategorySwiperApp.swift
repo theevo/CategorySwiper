@@ -11,7 +11,11 @@ import SwiftUI
 struct CategorySwiperApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SwipeableCardsView(
+                model: SwipeableCardsModel(
+                    transactions: CardViewModel.getExamples()
+                )
+            )
         }
     }
 }
