@@ -8,11 +8,11 @@
 import SwiftUI
 
 class SwipeableCardsModel: ObservableObject {
-    private var originalCards: [TransactionViewModel]
-    @Published var unswipedCards: [TransactionViewModel]
-    @Published var swipedCards: [TransactionViewModel]
+    private var originalCards: [CardViewModel]
+    @Published var unswipedCards: [CardViewModel]
+    @Published var swipedCards: [CardViewModel]
     
-    init(transactions: [TransactionViewModel]) {
+    init(transactions: [CardViewModel]) {
         self.originalCards = transactions
         self.unswipedCards = transactions
         self.swipedCards = []
@@ -26,7 +26,7 @@ class SwipeableCardsModel: ObservableObject {
         }
     }
     
-    func updateTopCardSwipeDirection(_ direction: TransactionViewModel.SwipeDirection) {
+    func updateTopCardSwipeDirection(_ direction: CardViewModel.SwipeDirection) {
         if !unswipedCards.isEmpty {
             unswipedCards[0].swipeDirection = direction
         }
@@ -53,7 +53,7 @@ struct SwipeableCardsView: View {
 #Preview {
     SwipeableCardsView(
         model: SwipeableCardsModel(
-            transactions: TransactionViewModel.getExamples()
+            transactions: CardViewModel.getExamples()
         )
     )
 }
