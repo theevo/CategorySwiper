@@ -1,5 +1,5 @@
 //
-//  TransactionViewModel.swift
+//  CardViewModel.swift
 //  CategorySwiper
 //
 //  Created by Tana Vora on 11/30/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TransactionViewModel: Identifiable {
+struct CardViewModel: Identifiable {
     var id: Int
     var merchant: String
     var date: String
@@ -29,8 +29,8 @@ struct TransactionViewModel: Identifiable {
     }
 }
 
-extension TransactionViewModel {
-    static let example = TransactionViewModel(transaction: Transaction.example)
+extension CardViewModel {
+    static let example = CardViewModel(transaction: Transaction.example)
     
     init(transaction: Transaction) {
         self.id = transaction.id
@@ -41,8 +41,8 @@ extension TransactionViewModel {
         self.category_name = transaction.category_name
     }
     
-    static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5) -> [TransactionViewModel] {
+    static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5) -> [CardViewModel] {
         let transactions = try! LocalTransactionsLoader().loadTransactions(showUnclearedOnly: showUnclearedOnly, limit: limit)
-        return transactions.map(TransactionViewModel.init)
+        return transactions.map(CardViewModel.init)
     }
 }
