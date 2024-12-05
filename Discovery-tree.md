@@ -5,8 +5,8 @@
 - Swipeable Cards
     - SwipeableCardsView
         - stack the cards
-            - get a variety of transactions
-                - integrate into Preview
+            - ✅ get a variety of transactions
+                - ✅ integrate into Preview
                 - ✅ get N transactions from LocalTransactionLoader
                 - ✅ TransactionsLoader becomes protocol
                     - ✅ LocalTransactionsLoader loads from local JSON
