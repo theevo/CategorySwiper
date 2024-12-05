@@ -26,7 +26,6 @@ struct TransactionViewModel: Identifiable {
 
 extension TransactionViewModel {
     static let example = TransactionViewModel(transaction: Transaction.example)
-    static let examples = Array(repeating: example, count: 5)
     
     init(transaction: Transaction) {
         self.id = transaction.id
