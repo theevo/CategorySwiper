@@ -11,6 +11,34 @@ protocol TransactionsLoader {
     func load(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
 }
 
+struct LocalTransactionsLoader: TransactionsLoader {
+    func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
+        let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
+        
+        do {
+            let object = try JSONDecoder().decode(TopLevelObject.self, from: try Data(contentsOf: url))
+            
+            guard showUnclearedOnly else {
+                return (object, 200)
+            }
+            
+            var filteredTransactions: [Transaction] = []
+            
+            object.transactions.forEach { transaction in
+                if transaction.status == .uncleared {
+                    filteredTransactions.append(transaction)
+                }
+            }
+            
+            let newObject = TopLevelObject(transactions: filteredTransactions)
+            
+            return (newObject, 200)
+        } catch {
+            throw LoaderError.JSONFailure(error: error)
+        }
+    }
+}
+
 struct LunchMoneyTransactionsLoader: TransactionsLoader {
     func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
         var object: TopLevelObject = TopLevelObject(transactions: [])
@@ -48,24 +76,24 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
         
         return (object, statusCode)
     }
+}
+
+enum LoaderError: LocalizedError {
+    case NetworkInterfaceError(error: NetworkInterface.SessionError)
+    case Unknown
+    case DataFailure
+    case JSONFailure(error: Error)
     
-    enum LoaderError: LocalizedError {
-        case NetworkInterfaceError(error: NetworkInterface.SessionError)
-        case Unknown
-        case DataFailure
-        case JSONFailure(error: Error)
-        
-        var errorDescription: String? {
-            switch self {
-            case .NetworkInterfaceError(error: let error):
-                error.errorDescription
-            case .Unknown:
-                "NetworkInterface returned a success, but it could not unpack the response."
-            case .DataFailure:
-                "Failed to unwrap the data"
-            case .JSONFailure(error: let error):
-                "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
-            }
+    var errorDescription: String? {
+        switch self {
+        case .NetworkInterfaceError(error: let error):
+            error.errorDescription
+        case .Unknown:
+            "NetworkInterface returned a success, but it could not unpack the response."
+        case .DataFailure:
+            "Failed to unwrap the data"
+        case .JSONFailure(error: let error):
+            "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
         }
     }
 }
