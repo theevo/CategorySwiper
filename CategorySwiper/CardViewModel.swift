@@ -48,3 +48,7 @@ extension CardViewModel {
         case left, right, none
     }
 }
+
+extension CardViewModel: Equatable {
+    
+}

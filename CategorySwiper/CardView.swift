@@ -13,6 +13,7 @@ enum PreviewScreen {
 
 struct CardView: View {
     @Binding var transaction: CardViewModel
+    var isTop: Bool = false
     var size: CGSize = PreviewScreen.size
     
     var width: CGFloat {
