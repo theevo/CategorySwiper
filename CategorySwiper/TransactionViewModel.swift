@@ -36,4 +36,9 @@ extension TransactionViewModel {
         self.rawCurrency = transaction.currency
         self.category_name = transaction.category_name
     }
+    
+    static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5) -> [TransactionViewModel] {
+        let transactions = try! LocalTransactionsLoader().loadTransactions(showUnclearedOnly: showUnclearedOnly, limit: limit)
+        return transactions.map(TransactionViewModel.init)
+    }
 }
