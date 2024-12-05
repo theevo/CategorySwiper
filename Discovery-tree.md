@@ -26,6 +26,7 @@
          ✅ inject array of TransactionViewModels
      ✅ TransactionViewModel: Identifiable
 
+- Separate network vs local tests
 - Format date
 
 ✅ Use the Transaction's Currency
@@ -62,6 +63,7 @@
 	 ✅ handle optional URLSession
 
 ## Housekeeping
+✅ remove example-transactions from git history
 ✅ change bearer token
 
 
