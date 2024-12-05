@@ -28,14 +28,14 @@ final class CategorySwiperTests: XCTestCase {
     }
     
     func test_TransactionsLoader_returns_nonEmptyTransactionsArray_andStatusCode200() async throws {
-        let loader = TransactionsLoader()
+        let loader = LunchMoneyTransactionsLoader()
         let (object, statusCode) = try await loader.load()
         XCTAssertTrue(object.transactions.notEmpty)
         XCTAssertEqual(statusCode, 200)
     }
     
     func test_TransactionsLoader_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
-        let loader = TransactionsLoader()
+        let loader = LunchMoneyTransactionsLoader()
         let (object, statusCode) = try await loader.load(showUnclearedOnly: true)
         XCTAssertEqual(object.transactions.count, object.uncleared.count)
         XCTAssertEqual(statusCode, 200)

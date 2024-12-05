@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct TransactionsLoader {
+protocol TransactionsLoader {
+    func load(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
+}
+
+struct LunchMoneyTransactionsLoader: TransactionsLoader {
     func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
         var object: TopLevelObject = TopLevelObject(transactions: [])
         var statusCode = 0
