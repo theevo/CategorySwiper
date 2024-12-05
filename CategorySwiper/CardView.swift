@@ -12,7 +12,7 @@ enum PreviewScreen {
 }
 
 struct CardView: View {
-    var transaction: TransactionViewModel
+    @Binding var transaction: TransactionViewModel
     var size: CGSize = PreviewScreen.size
     
     var width: CGFloat {
@@ -44,6 +44,14 @@ struct CardView: View {
     }
 }
 
+struct CardViewWithExamplePreview: View {
+    @State var example: TransactionViewModel = TransactionViewModel.example
+    
+    var body: some View {
+        CardView(transaction: $example)
+    }
+}
+
 #Preview {
-    CardView(transaction: TransactionViewModel.example)
+    CardViewWithExamplePreview()
 }

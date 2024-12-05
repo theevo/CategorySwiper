@@ -14,6 +14,7 @@ struct TransactionViewModel: Identifiable {
     var amount: Float
     var rawCurrency: String
     var category_name: String?
+    var swipeDirection: SwipeDirection = .none
     
     var currency: String {
         rawCurrency.uppercased()
@@ -21,6 +22,10 @@ struct TransactionViewModel: Identifiable {
     
     var category: String {
         category_name ?? "No Category Assigned"
+    }
+    
+    enum SwipeDirection {
+        case left, right, none
     }
 }
 
