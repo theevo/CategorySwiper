@@ -22,7 +22,8 @@ struct SwipeableCardsView: View {
                 
                 CardView(
                     transaction: card,
-                    isTop: isTop
+                    isTop: isTop,
+                    dragOffset: dragState
                 )
                 .offset(x: isTop ? dragState.width : 0)
                 .gesture(
