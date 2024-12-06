@@ -16,7 +16,8 @@
 
 ✅ Swipeable Cards
     - make card glow when swiped
-        - glow to top card only
+        - glow the next card
+        ✅ glow to top card only
         ✅ glow correctly in all SwipeDirections
     ✅ SwipeableCardsView
         ✅ message when you reach bottom
