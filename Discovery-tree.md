@@ -2,10 +2,11 @@
 
 ## UI
 
-- Card design: receipt
-    - receipt tear at bottom
-    - info top aligned
-    ✅ receipt has info
+❌ Card design: receipt (see branch `receipt-design`)
+    ❌ breaks SwipeableCardsView. cannot swipe left.
+    ✅ embed in CardView
+    ✅ receipt tear at bottom
+    ✅ info top aligned
 
 - Format date
 
