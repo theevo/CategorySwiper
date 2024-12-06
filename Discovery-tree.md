@@ -2,6 +2,11 @@
 
 ## UI
 
+- Card design: receipt
+    - receipt tear at bottom
+    - info top aligned
+    ✅ receipt has info
+
 - Format date
 
 ✅ Swipeable Cards
