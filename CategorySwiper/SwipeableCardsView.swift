@@ -50,6 +50,7 @@ struct SwipeableCardsView: View {
     
     var body: some View {
         ZStack {
+            NoTransactionsView()
             ForEach($model.unswipedCards.reversed()) { card in
                 let isTop = model.isTopCard(card: card.wrappedValue)
 //                let isSecond = card == model.unswipedCards.dropFirst().first
@@ -91,10 +92,20 @@ struct SwipeableCardsView: View {
     }
 }
 
-#Preview {
+#Preview("5") {
     SwipeableCardsView(
         model: SwipeableCardsModel(
             transactions: CardViewModel.getExamples()
         )
     )
 }
+
+#Preview("0 Transactions") {
+    SwipeableCardsView(
+        model: SwipeableCardsModel(
+            transactions: []
+        )
+    )
+}
+
+
