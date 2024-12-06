@@ -18,6 +18,14 @@ class SwipeableCardsModel: ObservableObject {
         self.swipedCards = []
     }
     
+    var isEmpty: Bool {
+        originalCards.isEmpty
+    }
+    
+    var isDoneSwiping: Bool {
+        unswipedCards.isEmpty && swipedCards.notEmpty
+    }
+    
     func isTopCard(card: CardViewModel) -> Bool {
         card == unswipedCards.first
     }
