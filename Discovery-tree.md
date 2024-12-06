@@ -2,9 +2,11 @@
 
 ## UI
 
-- Swipeable Cards
-    - SwipeableCardsView
-        - connect swipe with behavior
+- Format date
+
+✅ Swipeable Cards
+    ✅ SwipeableCardsView
+        ✅ message when you reach bottom
         ✅ swipe
             ✅ gesture
             ✅ rename TransactionViewModel to CardViewModel 
@@ -26,9 +28,6 @@
          ✅ inject array of TransactionViewModels
      ✅ TransactionViewModel: Identifiable
 
-- Separate network vs local tests
-- Format date
-
 ✅ Use the Transaction's Currency
 
 ✅ CardView
@@ -43,7 +42,12 @@
 
 ✅ Create Model 
 
-## Refine API calls
+## API calls
+
+- Connect swipe with behavior
+    - update Transaction
+
+- Separate network vs local tests
 
 ✅ filter transactions where status is UNCLEARED
      ✅ Move Transaction into its own file
@@ -71,3 +75,7 @@
 	 ✅ rough draft UI
 	✅ talk to API
 		✅ bearer token
+
+## Ideas
+
+- Activity Log
