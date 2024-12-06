@@ -15,6 +15,7 @@ struct CardView: View {
     @Binding var transaction: CardViewModel
     var isTop: Bool = false
     var size: CGSize = PreviewScreen.size
+    var dragOffset: CGSize = .zero
     
     var width: CGFloat {
         size.width * 0.9
@@ -31,7 +32,7 @@ struct CardView: View {
                 style: .continuous
             )
                 .fill(.background)
-                .shadow(color: .secondary, radius: 10)
+                .shadow(color: getShadowColor(), radius: 10)
             VStack {
                 Text(transaction.category + "?")
                     .font(.largeTitle)
@@ -48,16 +49,35 @@ struct CardView: View {
         }
         .frame(width: width, height: height)
     }
+    
+    private func getShadowColor() -> Color {
+        if dragOffset.width > 0 {
+            return Color.green.opacity(0.5)
+        } else if dragOffset.width < 0 {
+            return Color.red.opacity(0.5)
+        } else {
+            return Color.secondary
+        }
+    }
 }
 
 struct CardViewWithExamplePreview: View {
     @State var example: CardViewModel = CardViewModel.example
+    var dragOffset: CGSize = .zero
     
     var body: some View {
-        CardView(transaction: $example)
+        CardView(transaction: $example, dragOffset: dragOffset)
     }
 }
 
-#Preview {
+#Preview("Default") {
     CardViewWithExamplePreview()
+}
+
+#Preview("Swipe Left") {
+    CardViewWithExamplePreview(dragOffset: CGSize(width: -10, height: 0))
+}
+
+#Preview("Swipe Right") {
+    CardViewWithExamplePreview(dragOffset: CGSize(width: 10, height: 0))
 }
