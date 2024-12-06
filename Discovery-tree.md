@@ -2,15 +2,20 @@
 
 ## UI
 
-❌ Card design: receipt (see branch `receipt-design`)
+- Format date
+
+✅ CardView design: put expense details into gray box
+    ✅ look at more example transactions
+        ✅ allow the LocalTransactionLoader to shuffle
+
+❌ CardView design: embed ReceiptView with torn bottom (see branch `receipt-design`)
     ❌ breaks SwipeableCardsView. cannot swipe left.
     ✅ embed in CardView
     ✅ receipt tear at bottom
     ✅ info top aligned
 
-- Format date
-
 ✅ Swipeable Cards
+    - make card glow when swiped
     ✅ SwipeableCardsView
         ✅ message when you reach bottom
         ✅ swipe
@@ -82,6 +87,11 @@
 	✅ talk to API
 		✅ bearer token
 
-## Ideas
+## Ideas for later
 
+- Add Transaction.account_display_name
+    - why? to help the user understand where the expense landed and to help them decide faster
 - Activity Log
+    - example: 5 transactions checked on Wednesday, 2 transactions checked on Tuesday
+- Read Plaid metadata
+    - why? PayPal strings are in there, not in the payee or original_name
