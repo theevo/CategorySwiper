@@ -16,3 +16,7 @@ struct NoTransactionsView: View {
         }
     }
 }
+
+#Preview {
+    NoTransactionsView()
+}
