@@ -14,6 +14,7 @@ enum PreviewScreen {
 struct CardView: View {
     @Binding var transaction: CardViewModel
     var isTop: Bool = false
+    var isSecond: Bool = false
     var size: CGSize = PreviewScreen.size
     var dragOffset: CGSize = .zero
     
@@ -51,6 +52,8 @@ struct CardView: View {
     }
     
     private func getShadowColor() -> Color {
+        if isSecond { return Color.secondary }
+        
         guard isTop else { return Color.clear }
         
         if dragOffset.width > 0 {
