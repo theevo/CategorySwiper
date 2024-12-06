@@ -46,7 +46,7 @@ struct SwipeableCardsView: View {
                                     self.dragState = .zero
                                 }
                             } else {
-                                withAnimation(.spring()) {
+                                withAnimation(.bouncy(extraBounce:0.21)) {
                                     self.dragState = .zero
                                     //                            self.cardRotation = 0
                                 }
@@ -55,7 +55,6 @@ struct SwipeableCardsView: View {
                 )
             }
         }
-        .animation(.easeInOut, value: dragState)
     }
 }
 
