@@ -15,7 +15,8 @@
     ✅ info top aligned
 
 ✅ Swipeable Cards
-    - zero transactions to start vs swiping until empty
+    - animate text of SwipedAllCardsView 🎉
+    ✅ zero transactions to start vs swiping until empty
     ✅ improve animation if card does not cross swipeThreshold 
     ✅ make card glow when swiped
         ✅ glow the next card
