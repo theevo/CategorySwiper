@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270839C02D02C11A0070F9B8 /* TornRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270839BF2D02C11A0070F9B8 /* TornRectangle.swift */; };
 		27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27158EB52CFC1AF90093421F /* CardViewModel.swift */; };
 		272F16032D0276240040A272 /* NoTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16022D0276240040A272 /* NoTransactionsView.swift */; };
 		272F16052D0277630040A272 /* SwipeableCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16042D0277630040A272 /* SwipeableCardsModel.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		270839BF2D02C11A0070F9B8 /* TornRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TornRectangle.swift; sourceTree = "<group>"; };
 		27158EB52CFC1AF90093421F /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		272F16022D0276240040A272 /* NoTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTransactionsView.swift; sourceTree = "<group>"; };
 		272F16042D0277630040A272 /* SwipeableCardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCardsModel.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		27F3EC952CDAC26400851CCB /* CategorySwiper */ = {
 			isa = PBXGroup;
 			children = (
+				270839BF2D02C11A0070F9B8 /* TornRectangle.swift */,
 				27656D502D0243F100877E8B /* example-transactions.json */,
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
 				27F3EC982CDAC26400851CCB /* ContentView.swift */,
@@ -306,6 +309,7 @@
 				27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */,
 				27D638162CFBBD7C00B43DE1 /* TransactionLoader.swift in Sources */,
 				27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */,
+				270839C02D02C11A0070F9B8 /* TornRectangle.swift in Sources */,
 				276498082D01128E005A7916 /* SwipeableCardsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

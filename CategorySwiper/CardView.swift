@@ -33,12 +33,9 @@ struct CardView: View {
                 .fill(.background)
                 .shadow(color: .secondary, radius: 10)
             VStack {
-                Text(transaction.merchant)
+                Text(transaction.category + "?")
                     .font(.title)
-                Text(transaction.amount, format: .currency(code: transaction.currency))
-                    .font(.largeTitle)
-                Text(transaction.date)
-                Text(transaction.category)
+                ReceiptView(transaction: transaction)
             }
         }
         .frame(width: width, height: height)
