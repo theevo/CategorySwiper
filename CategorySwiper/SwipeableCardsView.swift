@@ -18,11 +18,12 @@ struct SwipeableCardsView: View {
             NoTransactionsView()
             ForEach($model.unswipedCards.reversed()) { card in
                 let isTop = model.isTopCard(card: card.wrappedValue)
-//                let isSecond = card == model.unswipedCards.dropFirst().first
+                let isSecond = model.isSecondCard(card: card.wrappedValue)
                 
                 CardView(
                     transaction: card,
                     isTop: isTop,
+                    isSecond: isSecond,
                     dragOffset: dragState
                 )
                 .offset(x: isTop ? dragState.width : 0)

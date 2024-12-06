@@ -15,8 +15,9 @@
     ✅ info top aligned
 
 ✅ Swipeable Cards
-    - make card glow when swiped
-        - glow the next card
+    - zero transactions to start vs swiping until empty
+    ✅ make card glow when swiped
+        ✅ glow the next card
         ✅ glow to top card only
         ✅ glow correctly in all SwipeDirections
     ✅ SwipeableCardsView

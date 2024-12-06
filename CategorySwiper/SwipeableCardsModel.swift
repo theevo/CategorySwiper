@@ -22,6 +22,10 @@ class SwipeableCardsModel: ObservableObject {
         card == unswipedCards.first
     }
     
+    func isSecondCard(card: CardViewModel) -> Bool {
+        card == unswipedCards.dropFirst().first
+    }
+    
     func removeTopCard() {
         if !unswipedCards.isEmpty {
             guard let card = unswipedCards.first else { return }
