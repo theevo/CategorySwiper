@@ -51,6 +51,8 @@ struct CardView: View {
     }
     
     private func getShadowColor() -> Color {
+        guard isTop else { return Color.clear }
+        
         if dragOffset.width > 0 {
             return Color.green.opacity(0.5)
         } else if dragOffset.width < 0 {
@@ -63,10 +65,11 @@ struct CardView: View {
 
 struct CardViewWithExamplePreview: View {
     @State var example: CardViewModel = CardViewModel.example
+    var isTop: Bool = true
     var dragOffset: CGSize = .zero
     
     var body: some View {
-        CardView(transaction: $example, dragOffset: dragOffset)
+        CardView(transaction: $example, isTop: isTop, dragOffset: dragOffset)
     }
 }
 
