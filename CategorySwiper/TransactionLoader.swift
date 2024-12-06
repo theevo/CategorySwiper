@@ -12,7 +12,7 @@ protocol TransactionsLoader {
 }
 
 struct LocalTransactionsLoader: TransactionsLoader {
-    func loadTransactions(showUnclearedOnly: Bool = false, limit: Int) throws -> [Transaction] {
+    func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
         let (object, _) = try load(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))
     }

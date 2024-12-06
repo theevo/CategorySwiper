@@ -60,7 +60,7 @@ struct SwipeableCardsView: View {
 #Preview("5") {
     SwipeableCardsView(
         model: SwipeableCardsModel(
-            transactions: CardViewModel.getExamples()
+            transactions: CardViewModel.getExamples(shuffled: true)
         )
     )
 }

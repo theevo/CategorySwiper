@@ -37,9 +37,10 @@ struct CardViewModel: Identifiable {
 extension CardViewModel {
     static let example = CardViewModel(transaction: Transaction.example)
     
-    static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5) -> [CardViewModel] {
-        let transactions = try! LocalTransactionsLoader().loadTransactions(showUnclearedOnly: showUnclearedOnly, limit: limit)
-        return transactions.map(CardViewModel.init)
+    static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5, shuffled: Bool = false) -> [CardViewModel] {
+        let transactions = try! LocalTransactionsLoader().loadTransactions(showUnclearedOnly: showUnclearedOnly)
+        let cards = shuffled ? transactions.map(CardViewModel.init).shuffled() : transactions.map(CardViewModel.init)
+        return Array(cards.prefix(limit))
     }
 }
 

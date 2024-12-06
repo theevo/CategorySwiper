@@ -33,12 +33,17 @@ struct CardView: View {
                 .fill(.background)
                 .shadow(color: .secondary, radius: 10)
             VStack {
-                Text(transaction.merchant)
-                    .font(.title)
-                Text(transaction.amount, format: .currency(code: transaction.currency))
+                Text(transaction.category + "?")
                     .font(.largeTitle)
-                Text(transaction.date)
-                Text(transaction.category)
+                Text("\n")
+                VStack {
+                    Text(transaction.merchant)
+                        .font(.title2)
+                    Text(transaction.date)
+                    Text(transaction.amount, format: .currency(code: transaction.currency))
+                }
+                .padding()
+                .background(HierarchicalShapeStyle.quinary)
             }
         }
         .frame(width: width, height: height)
