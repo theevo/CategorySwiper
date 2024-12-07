@@ -63,6 +63,13 @@
 
 - Connect swipe with behavior
     - update Transaction
+        - unwrap Response.data
+            - add useful unit test
+        ✅ wrap the UpdateTransaction object in a PutBody object (PUT can accept multiple parameters)
+        ✅ add update object to httpBody
+        ✅ UpdateTransaction object
+        ✅ append id of Transaction to URL as path component
+        ✅ PUT request
     ✅ Separate network vs local tests
 
 ✅ filter transactions where status is UNCLEARED
