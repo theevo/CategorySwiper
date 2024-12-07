@@ -20,11 +20,12 @@
 		27D638182CFBBE0A00B43DE1 /* Collection+notEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D638172CFBBE0A00B43DE1 /* Collection+notEmpty.swift */; };
 		27D6381A2CFBD22C00B43DE1 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D638192CFBD22C00B43DE1 /* CardView.swift */; };
 		27E554632D03B9A400186D6F /* NoTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E554622D03B9A400186D6F /* NoTransactionsView.swift */; };
+		27E554652D03EDF500186D6F /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E554642D03EDF500186D6F /* NetworkTests.swift */; };
 		27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */; };
 		27F3EC992CDAC26400851CCB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC982CDAC26400851CCB /* ContentView.swift */; };
 		27F3EC9B2CDAC26500851CCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F3EC9A2CDAC26500851CCB /* Assets.xcassets */; };
 		27F3EC9E2CDAC26500851CCB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F3EC9D2CDAC26500851CCB /* Preview Assets.xcassets */; };
-		27F3ECA82CDAC26500851CCB /* CategorySwiperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECA72CDAC26500851CCB /* CategorySwiperTests.swift */; };
+		27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECA72CDAC26500851CCB /* LocalTests.swift */; };
 		27F3ECB22CDAC26500851CCB /* CategorySwiperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */; };
 		27F3ECB42CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -60,13 +61,14 @@
 		27D638172CFBBE0A00B43DE1 /* Collection+notEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+notEmpty.swift"; sourceTree = "<group>"; };
 		27D638192CFBD22C00B43DE1 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		27E554622D03B9A400186D6F /* NoTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTransactionsView.swift; sourceTree = "<group>"; };
+		27E554642D03EDF500186D6F /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		27F3EC932CDAC26400851CCB /* CategorySwiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategorySwiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperApp.swift; sourceTree = "<group>"; };
 		27F3EC982CDAC26400851CCB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27F3EC9A2CDAC26500851CCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27F3EC9D2CDAC26500851CCB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		27F3ECA32CDAC26500851CCB /* CategorySwiperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CategorySwiperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		27F3ECA72CDAC26500851CCB /* CategorySwiperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperTests.swift; sourceTree = "<group>"; };
+		27F3ECA72CDAC26500851CCB /* LocalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTests.swift; sourceTree = "<group>"; };
 		27F3ECAD2CDAC26500851CCB /* CategorySwiperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CategorySwiperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITests.swift; sourceTree = "<group>"; };
 		27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -152,7 +154,8 @@
 		27F3ECA62CDAC26500851CCB /* CategorySwiperTests */ = {
 			isa = PBXGroup;
 			children = (
-				27F3ECA72CDAC26500851CCB /* CategorySwiperTests.swift */,
+				27F3ECA72CDAC26500851CCB /* LocalTests.swift */,
+				27E554642D03EDF500186D6F /* NetworkTests.swift */,
 			);
 			path = CategorySwiperTests;
 			sourceTree = "<group>";
@@ -318,7 +321,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27F3ECA82CDAC26500851CCB /* CategorySwiperTests.swift in Sources */,
+				27E554652D03EDF500186D6F /* NetworkTests.swift in Sources */,
+				27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,8 +63,7 @@
 
 - Connect swipe with behavior
     - update Transaction
-
-- Separate network vs local tests
+    ✅ Separate network vs local tests
 
 ✅ filter transactions where status is UNCLEARED
      ✅ Move Transaction into its own file
