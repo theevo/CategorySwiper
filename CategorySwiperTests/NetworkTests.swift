@@ -46,4 +46,18 @@ final class NetworkTests: XCTestCase {
             XCTAssertEqual(httpResponse.statusCode, 200)
         }
     }
+    
+    func test_LunchMoneyTransactionLoader_with_VALID_BearerToken_resultsIn_200statusCode() async {
+        let loader = LunchMoneyTransactionsLoader()
+        
+        do {
+            let result = try await loader.load()
+            let responseCode = result.1
+            XCTAssertEqual(responseCode, 200)
+            let object = result.0
+            XCTAssertTrue(object.transactions.notEmpty)
+        } catch {
+            XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
+        }
+    }
 }
