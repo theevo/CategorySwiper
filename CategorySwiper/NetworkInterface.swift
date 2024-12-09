@@ -73,7 +73,7 @@ struct NetworkInterface {
         // transaction ID Appending Path
         transactionsURL.append(path: String(transaction.id))
         
-        var urlComponents = URLComponents(url: transactionsURL, resolvingAgainstBaseURL: true)
+        let urlComponents = URLComponents(url: transactionsURL, resolvingAgainstBaseURL: true)
         
         guard let finalURL = urlComponents?.url else { return .failure(.BadURL) }
         
@@ -127,8 +127,8 @@ struct NetworkInterface {
 
 extension NetworkInterface {
     struct Response {
-        var data: Data?
-        var urlResponse: URLResponse?
+        var data: Data
+        var urlResponse: URLResponse
     }
     
     enum SessionError: LocalizedError {

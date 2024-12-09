@@ -65,6 +65,7 @@
     - update Transaction
         - unwrap Response.data
             - add useful unit test
+            - ✅ make Response properties non-optional
         ✅ wrap the UpdateTransaction object in a PutBody object (PUT can accept multiple parameters)
         ✅ add update object to httpBody
         ✅ UpdateTransaction object
@@ -90,7 +91,9 @@
 	 ✅ handle optional URLSession
 
 ## Housekeeping
-✅ remove example-transactions from git history
+- remove example-transactions from git history
+    - remove redundant commits
+
 ✅ change bearer token
 
 

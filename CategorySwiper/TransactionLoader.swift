@@ -27,13 +27,7 @@ struct LocalTransactionsLoader: TransactionsLoader {
                 return (object, 200)
             }
             
-            var filteredTransactions: [Transaction] = []
-            
-            object.transactions.forEach { transaction in
-                if transaction.status == .uncleared {
-                    filteredTransactions.append(transaction)
-                }
-            }
+            let filteredTransactions = object.transactions.filter { $0.status == .uncleared }
             
             let newObject = TopLevelObject(transactions: filteredTransactions)
             
@@ -68,13 +62,8 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
             statusCode = httpResponse.statusCode
         }
         
-        // check data for Error
-        guard let data = response.data else {
-            throw LoaderError.DataFailure
-        }
-        
         do {
-            object = try JSONDecoder().decode(TopLevelObject.self, from: data)
+            object = try JSONDecoder().decode(TopLevelObject.self, from: response.data)
         } catch (let error) {
             throw LoaderError.JSONFailure(error: error)
         }
@@ -86,7 +75,6 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
 enum LoaderError: LocalizedError {
     case NetworkInterfaceError(error: NetworkInterface.SessionError)
     case Unknown
-    case DataFailure
     case JSONFailure(error: Error)
     
     var errorDescription: String? {
@@ -95,8 +83,6 @@ enum LoaderError: LocalizedError {
             error.errorDescription
         case .Unknown:
             "NetworkInterface returned a success, but it could not unpack the response."
-        case .DataFailure:
-            "Failed to unwrap the data"
         case .JSONFailure(error: let error):
             "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
         }
