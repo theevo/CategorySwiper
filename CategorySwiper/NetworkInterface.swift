@@ -58,10 +58,8 @@ struct NetworkInterface {
             let (data, urlResponse) = try await session.data(for: request)
             return .success(Response(data: data, urlResponse: urlResponse))
         } catch {
-            print("\(#file) \(#function) line \(#line): URLSession failed")
-            print("error: \(error)")
+            return .failure(.SessionFailed(details: ErrorDetails(file: #file, function: #function, line: #line, error: error)))
         }
-        return .failure(.SessionFailed)
     }
     
     func update(transaction: Transaction, status: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
@@ -106,11 +104,8 @@ struct NetworkInterface {
             let (data, urlResponse) = try await session.data(for: request)
             return .success(Response(data: data, urlResponse: urlResponse))
         } catch {
-            print("\(#file) \(#function) line \(#line): URLSession failed")
-            print("error: \(error)")
+            return .failure(.SessionFailed(details: ErrorDetails(file: #file, function: #function, line: #line, error: error)))
         }
-        
-        return .failure(.SessionFailed)
     }
     
     enum Filter: String {
@@ -132,13 +127,13 @@ extension NetworkInterface {
     }
     
     enum SessionError: LocalizedError {
-        case SessionFailed
+        case SessionFailed(details: ErrorDetails)
         case BadURL
         
         var errorDescription: String? {
             switch self {
-            case .SessionFailed:
-                "Tried to establish URLSession data session, but it was not successful."
+            case .SessionFailed(let details):
+                "Error: URLSession failure. Error: \(details)"
             case .BadURL:
                 "Tried to create URL with URLComponents, but it was not successful."
             }
@@ -161,5 +156,16 @@ struct UpdateTransactionObject: Encodable {
     init(transaction: Transaction, newStatus: Transaction.Status) {
         self.id = transaction.id
         self.status = newStatus.rawValue
+    }
+}
+
+struct ErrorDetails: CustomStringConvertible {
+    var file: String
+    var function: String
+    var line: Int
+    var error: Error
+    
+    var description: String {
+        "\(file) \(function) line \(line): \(error.localizedDescription)"
     }
 }

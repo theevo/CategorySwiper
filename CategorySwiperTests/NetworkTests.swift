@@ -32,6 +32,10 @@ final class NetworkTests: XCTestCase {
         
         let result = try await interface.update(transaction: Transaction.example, status: .cleared)
         
+        if case .failure(let error) = result {
+            XCTFail("Error: NetworkInterface returned this error: \(error)")
+        }
+        
         guard case .success(let response) = result else {
             XCTFail("URLSession failed")
             return
