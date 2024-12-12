@@ -30,7 +30,7 @@ final class NetworkTests: XCTestCase {
     func test_NetworkInterface_updateStatus_resultsIn_200statusCode() async throws {
         let interface = NetworkInterface()
         
-        let result = try await interface.update(transaction: Transaction.example, status: .cleared)
+        let result = try await interface.update(transaction: Transaction.example, newStatus: .cleared)
         
         if case .failure(let error) = result {
             XCTFail("Error: NetworkInterface returned this error: \(error)")

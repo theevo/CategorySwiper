@@ -19,67 +19,15 @@ struct NetworkInterface {
     }
     
     func getTransactions(filters: [Filter] = []) async -> Result<Response, SessionError> {
-        let transactionsURL = URL( // 1
-            string: "https://dev.lunchmoney.app/v1/transactions"
-        )!
-        
-        var queries: [URLQueryItem] = []
-        
-        for filter in filters {
-            queries.append(filter.queryItem)
-        }
-        
-        var urlComponents = URLComponents(url: transactionsURL, resolvingAgainstBaseURL: true)
-        urlComponents?.queryItems = queries
-        
-        guard let finalURL = urlComponents?.url else { return .failure(.BadURL) }
-        
-        var request = URLRequest(
-            url: finalURL
-        )
-        request.setValue( // 3
-            "Bearer <<access-token>>",
-            forHTTPHeaderField: "Authentication"
-        )
-        request.setValue( // 4
-            "application/json;charset=utf-8",
-            forHTTPHeaderField: "Content-Type"
-        )
+        guard let request = LunchMoneyURL.GetTransactions.request(filters: filters) else { return .failure(.BadURL) }
 
         return await lunchMoneyURLSession(request: request)
     }
     
-    func update(transaction: Transaction, status: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
+    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
+        guard let putRequest = try LunchMoneyURL.UpdateTransaction(id: transaction.id).putRequest(transaction: transaction, status: newStatus) else { return .failure(.BadURL) }
         
-        var transactionsURL = URL( // 1
-            string: "https://dev.lunchmoney.app/v1/transactions"
-        )!
-        
-        // transaction ID Appending Path
-        transactionsURL.append(path: String(transaction.id))
-        
-        let urlComponents = URLComponents(url: transactionsURL, resolvingAgainstBaseURL: true)
-        
-        guard let finalURL = urlComponents?.url else { return .failure(.BadURL) }
-        
-        var request = URLRequest(
-            url: finalURL
-        )
-        request.httpMethod = "PUT"
-        request.setValue( // 3
-            "Bearer <<access-token>>",
-            forHTTPHeaderField: "Authentication"
-        )
-        request.setValue( // 4
-            "application/json;charset=utf-8",
-            forHTTPHeaderField: "Content-Type"
-        )
-        
-        let putBody = PutBodyObject(transaction: transaction, newStatus: status)
-        let data = try JSONEncoder().encode(putBody)
-        request.httpBody = data
-        
-        return await lunchMoneyURLSession(request: request)
+        return await lunchMoneyURLSession(request: putRequest)
     }
     
     private func lunchMoneyURLSession(request: URLRequest) async -> Result<Response, SessionError> {
@@ -107,6 +55,65 @@ struct NetworkInterface {
             case .Uncleared:
                 URLQueryItem(name: "status", value: Transaction.unclearedStatus)
             }
+        }
+    }
+    
+    enum LunchMoneyURL {
+        case GetTransactions
+        case UpdateTransaction(id: Int)
+        
+        private var baseURL: URL {
+            switch self {
+            case .GetTransactions:
+                URL(string: endpoint)!
+            case .UpdateTransaction(id: let id):
+                LunchMoneyURL.GetTransactions.baseURL.appending(path: String(id))
+            }
+        }
+        
+        private var endpoint: String {
+            switch self {
+            case .GetTransactions, .UpdateTransaction(id: _):
+                "https://dev.lunchmoney.app/v1/transactions"
+            }
+        }
+        
+        private var urlComponents: URLComponents? {
+            return URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        }
+        
+        private func queryItems(filters: [Filter]) -> [URLQueryItem] {
+            filters.map { $0.queryItem }
+        }
+        
+        func request(filters: [Filter] = []) -> URLRequest? {
+            var components = urlComponents
+            components?.queryItems = queryItems(filters: filters)
+            guard let url = components?.url else { return nil }
+            
+            var request = URLRequest(
+                url: url
+            )
+            request.setValue(
+                "Bearer <<access-token>>",
+                forHTTPHeaderField: "Authentication"
+            )
+            request.setValue(
+                "application/json;charset=utf-8",
+                forHTTPHeaderField: "Content-Type"
+            )
+            return request
+        }
+        
+        func putRequest(filters: [Filter] = [], transaction: Transaction, status: Transaction.Status) throws -> URLRequest? {
+            let putBody = PutBodyObject(transaction: transaction, newStatus: status)
+            let data = try JSONEncoder().encode(putBody)
+            
+            var request = request(filters: filters)
+            request?.httpMethod = "PUT"
+            request?.httpBody = data
+            
+            return request
         }
     }
 }

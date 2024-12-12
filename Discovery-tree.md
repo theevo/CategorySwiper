@@ -66,7 +66,8 @@
         - unwrap Response.data
             - add useful unit test
                 - refactor URLSession
-                    - DRY URLRequest
+                    - eliminate unintended paths like GetTransactions.putRequest
+                    * ✅ DRY URLRequest
                     * ✅ DRY URLSession, include config
             - ✅ make Response properties non-optional
         ✅ wrap the UpdateTransaction object in a PutBody object (PUT can accept multiple parameters)
