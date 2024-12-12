@@ -65,6 +65,9 @@
     - update Transaction
         - unwrap Response.data
             - add useful unit test
+                - refactor URLSession
+                    - DRY URLRequest
+                    * ✅ DRY URLSession, include config
             - ✅ make Response properties non-optional
         ✅ wrap the UpdateTransaction object in a PutBody object (PUT can accept multiple parameters)
         ✅ add update object to httpBody

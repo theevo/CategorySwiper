@@ -46,20 +46,7 @@ struct NetworkInterface {
             forHTTPHeaderField: "Content-Type"
         )
 
-        let sessionConfiguration = URLSessionConfiguration.default // 5
-
-        sessionConfiguration.httpAdditionalHeaders = [
-            "Authorization": "Bearer \(bearerToken)" // 6
-        ]
-
-        let session = URLSession(configuration: sessionConfiguration) // 7
-        
-        do {
-            let (data, urlResponse) = try await session.data(for: request)
-            return .success(Response(data: data, urlResponse: urlResponse))
-        } catch {
-            return .failure(.SessionFailed(details: ErrorDetails(file: #file, function: #function, line: #line, error: error)))
-        }
+        return await lunchMoneyURLSession(request: request)
     }
     
     func update(transaction: Transaction, status: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
@@ -92,6 +79,10 @@ struct NetworkInterface {
         let data = try JSONEncoder().encode(putBody)
         request.httpBody = data
         
+        return await lunchMoneyURLSession(request: request)
+    }
+    
+    private func lunchMoneyURLSession(request: URLRequest) async -> Result<Response, SessionError> {
         let sessionConfiguration = URLSessionConfiguration.default // 5
 
         sessionConfiguration.httpAdditionalHeaders = [
