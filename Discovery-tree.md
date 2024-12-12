@@ -110,3 +110,10 @@
     - example: 5 transactions checked on Wednesday, 2 transactions checked on Tuesday
 - Read Plaid metadata
     - why? PayPal strings are in there, not in the payee or original_name
+- Choose your animation
+    - crush
+    - burn
+    - alien abduction
+    - holy fire
+    - explode
+    - float away
