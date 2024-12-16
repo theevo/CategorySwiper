@@ -24,6 +24,11 @@ struct NetworkInterface {
         return await lunchMoneyURLSession(request: request)
     }
     
+    /// Update Transaction Status
+    /// - Parameters:
+    ///   - transaction: the `Transaction` to be updated
+    ///   - newStatus: what `Transaction.Status` you want it to be
+    /// - Returns: true if the transaction was updated successfully
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
         guard let putRequest = LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest() else { return .failure(.BadURL) }
         
@@ -41,6 +46,15 @@ struct NetworkInterface {
         
         do {
             let (data, urlResponse) = try await session.data(for: request)
+            
+            if let httpResponse = urlResponse as? HTTPURLResponse {
+                guard httpResponse.statusCode == 200 else {
+                    return .failure(.HTTPStatusCode(response: httpResponse))
+                }
+            } else {
+                return .failure(.NoHTTPResponse(urlResponse: urlResponse))
+            }
+            
             return .success(Response(data: data, urlResponse: urlResponse))
         } catch {
             return .failure(.SessionFailed(details: ErrorDetails(file: #file, function: #function, line: #line, error: error)))
@@ -142,6 +156,8 @@ extension NetworkInterface {
     enum SessionError: LocalizedError {
         case SessionFailed(details: ErrorDetails)
         case BadURL
+        case HTTPStatusCode(response: HTTPURLResponse)
+        case NoHTTPResponse(urlResponse: URLResponse)
         
         var errorDescription: String? {
             switch self {
@@ -149,6 +165,10 @@ extension NetworkInterface {
                 "Error: URLSession failure. Error: \(details)"
             case .BadURL:
                 "Tried to create URL with URLComponents, but it was not successful."
+            case .HTTPStatusCode(response: let response):
+                "Server returned HTTP status code \(response.statusCode)."
+            case .NoHTTPResponse(urlResponse: let response):
+                "Unable to decode response. See raw response: \(response)"
             }
         }
     }
@@ -160,6 +180,10 @@ struct PutBodyObject: Encodable {
     init(transaction: Transaction, newStatus: Transaction.Status) {
         self.transaction = UpdateTransactionObject(transaction: transaction, newStatus: newStatus)
     }
+}
+
+struct UpdateTransactionResponseObject: Decodable {
+    var updated: Bool
 }
 
 struct UpdateTransactionObject: Encodable {

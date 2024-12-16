@@ -64,8 +64,10 @@
 - Connect swipe with behavior
     - update Transaction
         - unwrap Response.data
-            - add useful unit test
-                - make 401 response code Result.failure
+            - implement in LunchMoneyTransactionsLoader
+            * ✅ add useful unit test
+                * ✅ assert API returns updated:true
+                * ✅ make 401 response code Result.failure
                 * ✅ refactor URLSession
                     * ✅ eliminate force unwrap in baseURL
                     * ⁇ distinguish between BadURL and BadURLRequest

@@ -10,40 +10,48 @@ import XCTest
 
 final class NetworkTests: XCTestCase {
 
-    func test_NetworkInterace_with_INVALID_BearerToken_resultsIn_401statusCode() async {
+    func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
         let key = "junktoken"
         
         let interface = NetworkInterface(bearerToken: key)
         
         let result = await interface.getTransactions()
         
-        guard case .success(let response) = result else {
-            XCTFail("URLSession failed")
+        guard case .failure(let error) = result else {
+            XCTFail("We sent the server a junk token and expected a failure. Instead, we got a success?")
             return
         }
         
-        if let httpResponse = response.urlResponse as? HTTPURLResponse {
-            XCTAssertEqual(httpResponse.statusCode, 401)
+        guard case .HTTPStatusCode(let response) = error else {
+            XCTFail("We sent the server a junk token and expected a 401 status failure. Instead, we got this error: \(error)")
+            return
         }
+        
+        XCTAssertEqual(response.statusCode, 401)
     }
     
-    func test_NetworkInterface_updateStatus_resultsIn_200statusCode() async throws {
+    func test_NetworkInterface_updateStatus_resultsInSuccess_responseReturnsTrue() async throws {
         let interface = NetworkInterface()
         
         let result = try await interface.update(transaction: Transaction.example, newStatus: .cleared)
         
-        if case .failure(let error) = result {
+        switch result {
+        case .success(let response):
+            guard let urlResponse = response.urlResponse as? HTTPURLResponse else {
+                XCTFail("Unable to get HTTPURLResponse")
+                return
+            }
+            
+            XCTAssertEqual(urlResponse.statusCode, 200)
+            
+            do {
+                let object = try JSONDecoder().decode(UpdateTransactionResponseObject.self, from: response.data)
+                XCTAssertTrue(object.updated)
+            } catch (let error) {
+                XCTFail("Problem decoding the response after Update Transaction: \(error)")
+            }
+        case .failure(let error):
             XCTFail("Error: NetworkInterface returned this error: \(error)")
-        }
-        
-        guard case .success(let response) = result else {
-            XCTFail("URLSession failed")
-            return
-        }
-        
-        if let httpResponse = response.urlResponse as? HTTPURLResponse {
-            print(response)
-            XCTAssertEqual(httpResponse.statusCode, 200)
         }
     }
     
