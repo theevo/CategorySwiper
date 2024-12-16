@@ -9,6 +9,7 @@ import Foundation
 
 protocol TransactionsLoader {
     func load(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
+    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
 struct LocalTransactionsLoader: TransactionsLoader {
@@ -35,6 +36,10 @@ struct LocalTransactionsLoader: TransactionsLoader {
         } catch {
             throw LoaderError.JSONFailure(error: error)
         }
+    }
+    
+    func update(transaction: Transaction, newStatus: Transaction.Status) throws -> Bool {
+        return true
     }
 }
 

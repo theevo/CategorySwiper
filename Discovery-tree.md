@@ -64,8 +64,8 @@
 - Connect swipe with behavior
     - call LunchMoneyTransactionsLoader.update from UI
     - find where UI calls update
-    - update Transaction
-        - implement in LocalTransactionsLoader
+    * ✅ update Transaction
+        * ✅ implement in LocalTransactionsLoader
         * ✅ remove throws from NetworkInterface.update
         * ✅ unwrap Response.data
             * ✅ implement in LunchMoneyTransactionsLoader
