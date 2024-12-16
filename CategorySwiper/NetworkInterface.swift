@@ -62,12 +62,12 @@ struct NetworkInterface {
         case GetTransactions
         case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
         
-        private var baseURL: URL {
+        private var baseURL: URL? {
             switch self {
             case .GetTransactions:
-                URL(string: endpoint)!
+                URL(string: endpoint)
             case .UpdateTransaction(transaction: let transaction, newStatus: _):
-                LunchMoneyURL.GetTransactions.baseURL.appending(path: String(transaction.id))
+                LunchMoneyURL.GetTransactions.baseURL?.appending(path: String(transaction.id))
             }
         }
         
@@ -79,6 +79,7 @@ struct NetworkInterface {
         }
         
         private var urlComponents: URLComponents? {
+            guard let baseURL else { return nil }
             return URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         }
         
