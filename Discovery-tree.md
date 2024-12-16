@@ -65,9 +65,11 @@
     - update Transaction
         - unwrap Response.data
             - add useful unit test
-                - refactor URLSession
-                    - eliminate invalid paths like LunchMoneyURL.GetTransactions.putRequest
-                        - distinguish between BadURL and BadURLRequest
+                - make 401 response code Result.failure
+                * ✅ refactor URLSession
+                    * ✅ eliminate force unwrap in baseURL
+                    * ⁇ distinguish between BadURL and BadURLRequest
+                    * ✅ eliminate invalid paths like LunchMoneyURL.GetTransactions.putRequest
                         * ✅ construct URLRequest according to case
                         * ✅ give UpdateTransaction Transaction, not id[^1]
                     * ✅ DRY URLRequest
