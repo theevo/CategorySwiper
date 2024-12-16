@@ -73,7 +73,7 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
-        let result = try await NetworkInterface().update(transaction: transaction, newStatus: newStatus)
+        let result = await NetworkInterface().update(transaction: transaction, newStatus: newStatus)
         
         switch result {
         case .success(let response):

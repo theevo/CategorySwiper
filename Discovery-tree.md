@@ -66,8 +66,8 @@
     - find where UI calls update
     - update Transaction
         - implement in LocalTransactionsLoader
-        - remove throws from NetworkInterface.update
-        ✅ unwrap Response.data
+        * ✅ remove throws from NetworkInterface.update
+        * ✅ unwrap Response.data
             * ✅ implement in LunchMoneyTransactionsLoader
             * ✅ add useful unit test
                 * ✅ assert API returns updated:true
@@ -80,7 +80,7 @@
                         * ✅ give UpdateTransaction Transaction, not id[^1]
                     * ✅ DRY URLRequest
                     * ✅ DRY URLSession, include config
-            - ✅ make Response properties non-optional
+            * ✅ make Response properties non-optional
         ✅ wrap the UpdateTransaction object in a PutBody object (PUT can accept multiple parameters)
         ✅ add update object to httpBody
         ✅ UpdateTransaction object
