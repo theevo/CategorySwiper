@@ -66,7 +66,9 @@
         - unwrap Response.data
             - add useful unit test
                 - refactor URLSession
-                    - eliminate unintended paths like GetTransactions.putRequest
+                    - eliminate invalid paths like LunchMoneyURL.GetTransactions.putRequest
+                        - construct Request according to case
+                        * ✅ give UpdateTransaction Transaction, not id[^1]
                     * ✅ DRY URLRequest
                     * ✅ DRY URLSession, include config
             - ✅ make Response properties non-optional
@@ -121,3 +123,5 @@
     - holy fire
     - explode
     - float away
+
+[^1]: a putRequest requires a PutBodyObject, which requires a Transaction 

@@ -25,7 +25,7 @@ struct NetworkInterface {
     }
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
-        guard let putRequest = try LunchMoneyURL.UpdateTransaction(id: transaction.id).putRequest(transaction: transaction, status: newStatus) else { return .failure(.BadURL) }
+        guard let putRequest = try LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).putRequest(transaction: transaction, status: newStatus) else { return .failure(.BadURL) }
         
         return await lunchMoneyURLSession(request: putRequest)
     }
@@ -60,14 +60,14 @@ struct NetworkInterface {
     
     enum LunchMoneyURL {
         case GetTransactions
-        case UpdateTransaction(id: Int)
+        case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
         
         private var baseURL: URL {
             switch self {
             case .GetTransactions:
                 URL(string: endpoint)!
-            case .UpdateTransaction(id: let id):
-                LunchMoneyURL.GetTransactions.baseURL.appending(path: String(id))
+            case .UpdateTransaction(transaction: let transaction, newStatus: _):
+                LunchMoneyURL.GetTransactions.baseURL.appending(path: String(transaction.id))
             }
         }
         
