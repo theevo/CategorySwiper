@@ -34,7 +34,7 @@ extension TopLevelObject: CustomStringConvertible {
     }
 }
 
-struct Transaction: Decodable {
+struct Transaction: Decodable, Equatable {
     static let unclearedStatus = Transaction.Status.uncleared.rawValue
     
     var id: Int

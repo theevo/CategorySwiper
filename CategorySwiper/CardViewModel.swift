@@ -14,7 +14,13 @@ struct CardViewModel: Identifiable {
     var amount: Float
     var rawCurrency: String
     var category_name: String?
-    var swipeDirection: SwipeDirection = .none
+    var transaction: Transaction
+    
+    var swipeDirection: SwipeDirection = .none {
+        didSet {
+            applyAction()
+        }
+    }
     
     var currency: String {
         rawCurrency.uppercased()
@@ -31,6 +37,19 @@ struct CardViewModel: Identifiable {
         self.amount = transaction.to_base
         self.rawCurrency = transaction.currency
         self.category_name = transaction.category_name
+        self.transaction = transaction
+    }
+    
+    func applyAction() {
+        switch swipeDirection {
+        case .right:
+            _ = try? LocalTransactionsLoader().update(transaction: transaction, newStatus: .cleared)
+            print("\(merchant) has been cleared")
+        case .left:
+            print("implement me plz 😄")
+        case .none:
+            print("this card has not been swiped. no action taken.")
+        }
     }
 }
 

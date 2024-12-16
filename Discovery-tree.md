@@ -63,7 +63,12 @@
 
 - Connect swipe with behavior
     - call LunchMoneyTransactionsLoader.update from UI
-    - find where UI calls update
+        - Distinguish between Preview (Local) vs Live (LunchMoney)
+    - Edit Category UI
+        - implement for swipe left
+        - 👉 update transaction category
+    * ✅ find where UI calls update
+        * ✅ implement for swipe right
     * ✅ update Transaction
         * ✅ implement in LocalTransactionsLoader
         * ✅ remove throws from NetworkInterface.update
