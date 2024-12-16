@@ -73,7 +73,7 @@ struct NetworkInterface {
         
         private var endpoint: String {
             switch self {
-            case .GetTransactions, .UpdateTransaction(id: _):
+            case .GetTransactions, .UpdateTransaction(_, _):
                 "https://dev.lunchmoney.app/v1/transactions"
             }
         }
