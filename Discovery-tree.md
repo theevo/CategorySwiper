@@ -67,7 +67,8 @@
             - add useful unit test
                 - refactor URLSession
                     - eliminate invalid paths like LunchMoneyURL.GetTransactions.putRequest
-                        - construct Request according to case
+                        - distinguish between BadURL and BadURLRequest
+                        * ✅ construct URLRequest according to case
                         * ✅ give UpdateTransaction Transaction, not id[^1]
                     * ✅ DRY URLRequest
                     * ✅ DRY URLSession, include config

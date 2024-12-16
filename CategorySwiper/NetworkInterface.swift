@@ -19,13 +19,13 @@ struct NetworkInterface {
     }
     
     func getTransactions(filters: [Filter] = []) async -> Result<Response, SessionError> {
-        guard let request = LunchMoneyURL.GetTransactions.request(filters: filters) else { return .failure(.BadURL) }
+        guard let request = LunchMoneyURL.GetTransactions.makeRequest(filters: filters) else { return .failure(.BadURL) }
 
         return await lunchMoneyURLSession(request: request)
     }
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Result<Response, NetworkInterface.SessionError> {
-        guard let putRequest = try LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).putRequest(transaction: transaction, status: newStatus) else { return .failure(.BadURL) }
+        guard let putRequest = LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest() else { return .failure(.BadURL) }
         
         return await lunchMoneyURLSession(request: putRequest)
     }
@@ -86,7 +86,17 @@ struct NetworkInterface {
             filters.map { $0.queryItem }
         }
         
-        func request(filters: [Filter] = []) -> URLRequest? {
+        func makeRequest(filters: [Filter] = []) -> URLRequest? {
+            var baseRequest = baseRequest(filters: filters)
+            
+            if case .UpdateTransaction = self {
+                baseRequest = try? newPutRequest(baseRequest: baseRequest)
+            }
+            
+            return baseRequest
+        }
+        
+        private func baseRequest(filters: [Filter] = []) -> URLRequest? {
             var components = urlComponents
             components?.queryItems = queryItems(filters: filters)
             guard let url = components?.url else { return nil }
@@ -105,13 +115,17 @@ struct NetworkInterface {
             return request
         }
         
-        func putRequest(filters: [Filter] = [], transaction: Transaction, status: Transaction.Status) throws -> URLRequest? {
+        private func newPutRequest(baseRequest request: URLRequest?) throws -> URLRequest? {
+            guard case .UpdateTransaction(let transaction, let status) = self,
+                var request = request else {
+                return nil
+            }
+            
             let putBody = PutBodyObject(transaction: transaction, newStatus: status)
             let data = try JSONEncoder().encode(putBody)
             
-            var request = request(filters: filters)
-            request?.httpMethod = "PUT"
-            request?.httpBody = data
+            request.httpMethod = "PUT"
+            request.httpBody = data
             
             return request
         }
