@@ -30,31 +30,6 @@ final class NetworkTests: XCTestCase {
         XCTAssertEqual(response.statusCode, 401)
     }
     
-    func test_NetworkInterface_updateStatus_resultsInSuccess_responseReturnsTrue() async throws {
-        let interface = NetworkInterface()
-        
-        let result = try await interface.update(transaction: Transaction.example, newStatus: .cleared)
-        
-        switch result {
-        case .success(let response):
-            guard let urlResponse = response.urlResponse as? HTTPURLResponse else {
-                XCTFail("Unable to get HTTPURLResponse")
-                return
-            }
-            
-            XCTAssertEqual(urlResponse.statusCode, 200)
-            
-            do {
-                let object = try JSONDecoder().decode(UpdateTransactionResponseObject.self, from: response.data)
-                XCTAssertTrue(object.updated)
-            } catch (let error) {
-                XCTFail("Problem decoding the response after Update Transaction: \(error)")
-            }
-        case .failure(let error):
-            XCTFail("Error: NetworkInterface returned this error: \(error)")
-        }
-    }
-    
     func test_LunchMoneyTransactionLoader_with_VALID_BearerToken_resultsIn_200statusCode() async {
         let loader = LunchMoneyTransactionsLoader()
         
@@ -68,4 +43,18 @@ final class NetworkTests: XCTestCase {
             XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
         }
     }
+    
+    func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {
+        
+        let loader = LunchMoneyTransactionsLoader()
+        
+        do {
+            let result = try await loader.update(transaction: Transaction.example, newStatus: .cleared)
+            XCTAssertTrue(result)
+        } catch {
+            XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
+        }
+        
+    }
+        
 }

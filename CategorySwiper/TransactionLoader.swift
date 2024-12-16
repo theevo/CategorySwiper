@@ -70,6 +70,23 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
         
         return (object, statusCode)
     }
+    
+    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
+        
+        let result = try await NetworkInterface().update(transaction: transaction, newStatus: newStatus)
+        
+        switch result {
+        case .success(let response):
+            do {
+                let object = try JSONDecoder().decode(UpdateTransactionResponseObject.self, from: response.data)
+                return object.updated
+            } catch (let error) {
+                throw LoaderError.JSONFailure(error: error)
+            }
+        case .failure(let error):
+            throw LoaderError.NetworkInterfaceError(error: error)
+        }
+    }
 }
 
 enum LoaderError: LocalizedError {

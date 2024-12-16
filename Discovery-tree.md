@@ -62,9 +62,13 @@
 ## API calls
 
 - Connect swipe with behavior
+    - call LunchMoneyTransactionsLoader.update from UI
+    - find where UI calls update
     - update Transaction
-        - unwrap Response.data
-            - implement in LunchMoneyTransactionsLoader
+        - implement in LocalTransactionsLoader
+        - remove throws from NetworkInterface.update
+        ✅ unwrap Response.data
+            * ✅ implement in LunchMoneyTransactionsLoader
             * ✅ add useful unit test
                 * ✅ assert API returns updated:true
                 * ✅ make 401 response code Result.failure
