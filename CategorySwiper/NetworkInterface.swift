@@ -18,6 +18,13 @@ struct NetworkInterface {
         self.bearerToken = bearerToken
     }
     
+    func getCategories() async -> Result<Response, SessionError> {
+        guard let request = LunchMoneyURL.GetCategories.makeRequest() else { return .failure(.BadURL) }
+        
+        print(request)
+        return await lunchMoneyURLSession(request: request)
+    }
+    
     func getTransactions(filters: [Filter] = []) async -> Result<Response, SessionError> {
         guard let request = LunchMoneyURL.GetTransactions.makeRequest(filters: filters) else { return .failure(.BadURL) }
 
@@ -63,21 +70,27 @@ struct NetworkInterface {
     
     enum Filter: String {
         case Uncleared
+        case CategoryFormatIsNested // TODO: - this should only apply to GetAllCategories
         
         var queryItem: URLQueryItem {
             switch self {
             case .Uncleared:
                 URLQueryItem(name: "status", value: Transaction.unclearedStatus)
+            case .CategoryFormatIsNested:
+                URLQueryItem(name: "format", value: "nested")
             }
         }
     }
     
     enum LunchMoneyURL {
+        case GetCategories
         case GetTransactions
         case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
         
         private var baseURL: URL? {
             switch self {
+            case .GetCategories:
+                URL(string: endpoint)
             case .GetTransactions:
                 URL(string: endpoint)
             case .UpdateTransaction(transaction: let transaction, newStatus: _):
@@ -87,6 +100,8 @@ struct NetworkInterface {
         
         private var endpoint: String {
             switch self {
+            case .GetCategories:
+                "https://dev.lunchmoney.app/v1/categories"
             case .GetTransactions, .UpdateTransaction(_, _):
                 "https://dev.lunchmoney.app/v1/transactions"
             }
@@ -102,6 +117,10 @@ struct NetworkInterface {
         }
         
         func makeRequest(filters: [Filter] = []) -> URLRequest? {
+            if case .GetCategories = self {
+                return baseRequest(filters: [.CategoryFormatIsNested])
+            }
+            
             var baseRequest = baseRequest(filters: filters)
             
             if case .UpdateTransaction = self {

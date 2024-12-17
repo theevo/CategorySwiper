@@ -67,6 +67,9 @@
     - Edit Category UI
         - implement for swipe left
         - 👉 update transaction category
+            - get categories
+                - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
+                * ✅ choose flattened or **nested**[^2]
     * ✅ find where UI calls update
         * ✅ implement for swipe right
     * ✅ update Transaction
@@ -139,3 +142,4 @@
     - float away
 
 [^1]: a putRequest requires a PutBodyObject, which requires a Transaction 
+[^2]: [Get All Categories](https://lunchmoney.dev/#get-all-categories) takes an optional Query param: Flattened (default) or Nested. Flattened will show a Category more than once if it belongs to a Category Group. The said category appears the first time in the "first level" of the array (as if it had no parent) and a second time as a child of the Group (within its children array). Either way, you want to present your UI in a tree like structure. I think Flattened makes sense if you prefer piecing together the child with its parent by its id. On the other hand, you could get the same result with Nested by traversing into children array when you reach a Category Group. With Nested, there's never a fear of duplicating a category.

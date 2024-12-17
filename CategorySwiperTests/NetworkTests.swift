@@ -54,4 +54,19 @@ final class NetworkTests: XCTestCase {
             XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
         }
     }
+    
+    func test_NetworkInterface_getCategories() async {
+        let interface = NetworkInterface()
+        
+        let result = await interface.getCategories()
+        
+        guard case .success(let response) = result else {
+            XCTFail("the response should be .success")
+            return
+        }
+        
+        let data = response.data
+        print(data.jsonFlatString)
+        XCTAssertNotNil(data)
+    }
 }

@@ -29,6 +29,7 @@
 		27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECA72CDAC26500851CCB /* LocalTests.swift */; };
 		27F3ECB22CDAC26500851CCB /* CategorySwiperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */; };
 		27F3ECB42CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */; };
+		27F88AAC2D11FD89000D8DFF /* example-categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 27F88AAB2D11FD89000D8DFF /* example-categories.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		27F3ECAD2CDAC26500851CCB /* CategorySwiperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CategorySwiperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITests.swift; sourceTree = "<group>"; };
 		27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		27F88AAB2D11FD89000D8DFF /* example-categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "example-categories.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		27F3EC952CDAC26400851CCB /* CategorySwiper */ = {
 			isa = PBXGroup;
 			children = (
+				27F88AAB2D11FD89000D8DFF /* example-categories.json */,
 				27656D502D0243F100877E8B /* example-transactions.json */,
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
 				27F3EC982CDAC26400851CCB /* ContentView.swift */,
@@ -278,6 +281,7 @@
 			files = (
 				27656D512D0243F100877E8B /* example-transactions.json in Resources */,
 				27F3EC9E2CDAC26500851CCB /* Preview Assets.xcassets in Resources */,
+				27F88AAC2D11FD89000D8DFF /* example-categories.json in Resources */,
 				27F3EC9B2CDAC26500851CCB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
