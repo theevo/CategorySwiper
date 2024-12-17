@@ -45,7 +45,6 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {
-        
         let loader = LunchMoneyTransactionsLoader()
         
         do {
@@ -54,7 +53,5 @@ final class NetworkTests: XCTestCase {
         } catch {
             XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
         }
-        
     }
-        
 }
