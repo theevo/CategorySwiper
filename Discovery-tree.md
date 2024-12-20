@@ -62,7 +62,8 @@
 ## API calls
 
 - divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
-    - 👉 move URLSessionBuilder.Filter to LunchMoneyInterface
+    - 👉 rename load(showUnclearedOnly:) to getTransactions(showUnclearedOnly:)
+    * ✅ move URLSessionBuilder.Filter to LunchMoneyInterface
     * ✅ rename
         * ✅ NetworkInterface -> URLSessionBuilder
         * ✅ LoaderError.NetworkInterfaceError -> .SessionErrorThrown

@@ -68,20 +68,6 @@ struct URLSessionBuilder {
         }
     }
     
-    enum Filter: String {
-        case Uncleared
-        case CategoryFormatIsNested // TODO: - this should only apply to GetAllCategories
-        
-        var queryItem: URLQueryItem {
-            switch self {
-            case .Uncleared:
-                URLQueryItem(name: "status", value: Transaction.unclearedStatus)
-            case .CategoryFormatIsNested:
-                URLQueryItem(name: "format", value: "nested")
-            }
-        }
-    }
-    
     enum LunchMoneyURL {
         case GetCategories
         case GetTransactions

@@ -50,7 +50,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let interface = URLSessionBuilder()
         
-        let filters = showUnclearedOnly ? [URLSessionBuilder.Filter.Uncleared] : []
+        let filters = showUnclearedOnly ? [Filter.Uncleared] : []
         
         let result = await interface.getTransactions(filters: filters)
         
@@ -107,6 +107,20 @@ enum LoaderError: LocalizedError {
             "URLSessionBuilder returned a success, but it could not unpack the response."
         case .JSONFailure(error: let error):
             "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
+        }
+    }
+}
+
+enum Filter: String {
+    case Uncleared
+    case CategoryFormatIsNested // TODO: - this should only apply to GetAllCategories
+    
+    var queryItem: URLQueryItem {
+        switch self {
+        case .Uncleared:
+            URLQueryItem(name: "status", value: Transaction.unclearedStatus)
+        case .CategoryFormatIsNested:
+            URLQueryItem(name: "format", value: "nested")
         }
     }
 }
