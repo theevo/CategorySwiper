@@ -13,9 +13,9 @@ final class NetworkTests: XCTestCase {
     func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
         let key = "junktoken"
         
-        let interface = URLSessionBuilder(bearerToken: key)
+        let session = URLSessionBuilder(bearerToken: key)
         
-        let result = await interface.getTransactions()
+        let result = await session.getTransactions()
         
         guard case .failure(let error) = result else {
             XCTFail("We sent the server a junk token and expected a failure. Instead, we got a success?")
@@ -31,10 +31,10 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_LunchMoneyTransactionLoader_with_VALID_BearerToken_resultsIn_200statusCode() async {
-        let loader = LMNetworkInterface()
+        let interface = LMNetworkInterface()
         
         do {
-            let result = try await loader.getTransactions()
+            let result = try await interface.getTransactions()
             let responseCode = result.1
             XCTAssertEqual(responseCode, 200)
             let object = result.0
@@ -45,10 +45,10 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {
-        let loader = LMNetworkInterface()
+        let interface = LMNetworkInterface()
         
         do {
-            let result = try await loader.update(transaction: Transaction.example, newStatus: .cleared)
+            let result = try await interface.update(transaction: Transaction.example, newStatus: .cleared)
             XCTAssertTrue(result)
         } catch {
             XCTFail("Error: LMNetworkInterface returned this error: \(error)")
@@ -56,9 +56,9 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_NetworkInterface_getCategories() async {
-        let interface = URLSessionBuilder()
+        let session = URLSessionBuilder()
         
-        let result = await interface.getCategories()
+        let result = await session.getCategories()
         
         guard case .success(let response) = result else {
             XCTFail("the response should be .success")
