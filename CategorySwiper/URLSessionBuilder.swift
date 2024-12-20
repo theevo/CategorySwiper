@@ -25,21 +25,10 @@ struct URLSessionBuilder {
         return await lunchMoneyURLSession(request: request)
     }
     
-    func getTransactions(filters: [Filter] = []) async -> Result<Response, SessionError> {
-        guard let request = LMNetworkInterface.LunchMoneyURL.GetTransactions.makeRequest(filters: filters) else { return .failure(.BadURL) }
+    func execute(request: URLRequest?) async -> Result<Response, SessionError> {
+        guard let request = request else { return .failure(.BadURL) }
 
         return await lunchMoneyURLSession(request: request)
-    }
-    
-    /// Update Transaction Status
-    /// - Parameters:
-    ///   - transaction: the `Transaction` to be updated
-    ///   - newStatus: what `Transaction.Status` you want it to be
-    /// - Returns: true if the transaction was updated successfully
-    func update(transaction: Transaction, newStatus: Transaction.Status) async -> Result<Response, URLSessionBuilder.SessionError> {
-        guard let putRequest = LMNetworkInterface.LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest() else { return .failure(.BadURL) }
-        
-        return await lunchMoneyURLSession(request: putRequest)
     }
     
     private func lunchMoneyURLSession(request: URLRequest) async -> Result<Response, SessionError> {

@@ -16,7 +16,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let filters = showUnclearedOnly ? [Filter.Uncleared] : []
         
-        let result = await interface.getTransactions(filters: filters)
+        let request = LunchMoneyURL.GetTransactions.makeRequest(filters: filters)
+        
+        let result = await interface.execute(request: request)
         
         if case .failure(let error) = result {
             throw LoaderError.SessionErrorThrown(error: error)
@@ -42,7 +44,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
-        let result = await URLSessionBuilder().update(transaction: transaction, newStatus: newStatus)
+        let request = LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
+        
+        let result = await URLSessionBuilder().execute(request: request)
         
         switch result {
         case .success(let response):

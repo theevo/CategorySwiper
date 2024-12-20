@@ -55,7 +55,8 @@
 ## API calls
 
 - divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
-    - 👉 inject URLRequest into URLSessionBuilder
+    - 👉 rename LunchMoneyURL to LunchMoneyAction
+    - ✅ inject URLRequest into URLSessionBuilder
     - ✅ move LunchMoney Codable structs to LMNetworkInterface
         - ✅ create new file for LMNetworkInterface (大きすぎます！)
     - ✅ move LunchMoneyURL from URLSessionBuilder to LMNetworkInterface

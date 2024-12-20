@@ -15,7 +15,9 @@ final class NetworkTests: XCTestCase {
         
         let session = URLSessionBuilder(bearerToken: key)
         
-        let result = await session.getTransactions()
+        let request = LMNetworkInterface.LunchMoneyURL.GetTransactions.makeRequest()
+        
+        let result = await session.execute(request: request)
         
         guard case .failure(let error) = result else {
             XCTFail("We sent the server a junk token and expected a failure. Instead, we got a success?")
