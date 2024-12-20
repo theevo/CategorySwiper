@@ -16,7 +16,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let filters = showUnclearedOnly ? [Filter.Uncleared] : []
         
-        let request = LunchMoneyURL.GetTransactions.makeRequest(filters: filters)
+        let request = Request.GetTransactions.makeRequest(filters: filters)
         
         let result = await interface.execute(request: request)
         
@@ -44,7 +44,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
-        let request = LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
+        let request = Request.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
         
         let result = await URLSessionBuilder().execute(request: request)
         
@@ -61,7 +61,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
-    enum LunchMoneyURL {
+    enum Request {
         case GetCategories
         case GetTransactions
         case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
@@ -73,7 +73,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             case .GetTransactions:
                 URL(string: endpoint)
             case .UpdateTransaction(transaction: let transaction, newStatus: _):
-                LunchMoneyURL.GetTransactions.baseURL?.appending(path: String(transaction.id))
+                Request.GetTransactions.baseURL?.appending(path: String(transaction.id))
             }
         }
         

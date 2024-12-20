@@ -19,7 +19,7 @@ struct URLSessionBuilder {
     }
     
     func getCategories() async -> Result<Response, SessionError> {
-        guard let request = LMNetworkInterface.LunchMoneyURL.GetCategories.makeRequest() else { return .failure(.BadURL) }
+        guard let request = LMNetworkInterface.Request.GetCategories.makeRequest() else { return .failure(.BadURL) }
         
         print(request)
         return await lunchMoneyURLSession(request: request)

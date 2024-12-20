@@ -15,7 +15,7 @@ final class NetworkTests: XCTestCase {
         
         let session = URLSessionBuilder(bearerToken: key)
         
-        let request = LMNetworkInterface.LunchMoneyURL.GetTransactions.makeRequest()
+        let request = LMNetworkInterface.Request.GetTransactions.makeRequest()
         
         let result = await session.execute(request: request)
         
