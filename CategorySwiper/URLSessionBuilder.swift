@@ -1,5 +1,5 @@
 //
-//  NetworkInterface.swift
+//  URLSessionBuilder.swift
 //  CategorySwiper
 //
 //  Created by Tana Vora on 11/29/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkInterface {
+struct URLSessionBuilder {
     var bearerToken: String
     
     init() {
@@ -36,7 +36,7 @@ struct NetworkInterface {
     ///   - transaction: the `Transaction` to be updated
     ///   - newStatus: what `Transaction.Status` you want it to be
     /// - Returns: true if the transaction was updated successfully
-    func update(transaction: Transaction, newStatus: Transaction.Status) async -> Result<Response, NetworkInterface.SessionError> {
+    func update(transaction: Transaction, newStatus: Transaction.Status) async -> Result<Response, URLSessionBuilder.SessionError> {
         guard let putRequest = LunchMoneyURL.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest() else { return .failure(.BadURL) }
         
         return await lunchMoneyURLSession(request: putRequest)
@@ -166,7 +166,7 @@ struct NetworkInterface {
     }
 }
 
-extension NetworkInterface {
+extension URLSessionBuilder {
     struct Response {
         var data: Data
         var urlResponse: URLResponse

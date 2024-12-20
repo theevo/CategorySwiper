@@ -61,14 +61,24 @@
 
 ## API calls
 
+- divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
+    - 👉 move URLSessionBuilder.Filter to LunchMoneyInterface
+    * ✅ rename
+        * ✅ NetworkInterface -> URLSessionBuilder
+        * ✅ LoaderError.NetworkInterfaceError -> .SessionErrorThrown
+        * ✅ TransactionLoader -> LunchMoneyInterface
+        * ✅ LocalTransactionsLoader -> LMLocalInterface
+        * ✅ LunchMoneyTransactionsLoader -> LMNetworkInterface
+
 - Connect swipe with behavior
     - call LunchMoneyTransactionsLoader.update from UI
         - Distinguish between Preview (Local) vs Live (LunchMoney)
     - Edit Category UI
         - implement for swipe left
-        - 👉 update transaction category
+        - update transaction category
             - get categories
                 - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
+                    - rename LunchMoneyTransactionLoader (we're working with categories too!)
                 * ✅ choose flattened or **nested**[^2]
     * ✅ find where UI calls update
         * ✅ implement for swipe right

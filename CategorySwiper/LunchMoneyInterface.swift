@@ -1,5 +1,5 @@
 //
-//  TransactionLoader.swift
+//  LunchMoneyInterface.swift
 //  CategorySwiper
 //
 //  Created by Tana Vora on 11/30/24.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol TransactionsLoader {
+protocol LunchMoneyInterface {
     func load(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
-struct LocalTransactionsLoader: TransactionsLoader {
+struct LMLocalInterface: LunchMoneyInterface {
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
         let (object, _) = try load(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))
@@ -43,19 +43,19 @@ struct LocalTransactionsLoader: TransactionsLoader {
     }
 }
 
-struct LunchMoneyTransactionsLoader: TransactionsLoader {
+struct LMNetworkInterface: LunchMoneyInterface {
     func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
         var object: TopLevelObject = TopLevelObject(transactions: [])
         var statusCode = 0
         
-        let interface = NetworkInterface()
+        let interface = URLSessionBuilder()
         
-        let filters = showUnclearedOnly ? [NetworkInterface.Filter.Uncleared] : []
+        let filters = showUnclearedOnly ? [URLSessionBuilder.Filter.Uncleared] : []
         
         let result = await interface.getTransactions(filters: filters)
         
         if case .failure(let error) = result {
-            throw LoaderError.NetworkInterfaceError(error: error)
+            throw LoaderError.SessionErrorThrown(error: error)
         }
         
         guard case .success(let response) = result else {
@@ -78,7 +78,7 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
-        let result = await NetworkInterface().update(transaction: transaction, newStatus: newStatus)
+        let result = await URLSessionBuilder().update(transaction: transaction, newStatus: newStatus)
         
         switch result {
         case .success(let response):
@@ -89,22 +89,22 @@ struct LunchMoneyTransactionsLoader: TransactionsLoader {
                 throw LoaderError.JSONFailure(error: error)
             }
         case .failure(let error):
-            throw LoaderError.NetworkInterfaceError(error: error)
+            throw LoaderError.SessionErrorThrown(error: error)
         }
     }
 }
 
 enum LoaderError: LocalizedError {
-    case NetworkInterfaceError(error: NetworkInterface.SessionError)
+    case SessionErrorThrown(error: URLSessionBuilder.SessionError)
     case Unknown
     case JSONFailure(error: Error)
     
     var errorDescription: String? {
         switch self {
-        case .NetworkInterfaceError(error: let error):
+        case .SessionErrorThrown(error: let error):
             error.errorDescription
         case .Unknown:
-            "NetworkInterface returned a success, but it could not unpack the response."
+            "URLSessionBuilder returned a success, but it could not unpack the response."
         case .JSONFailure(error: let error):
             "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
         }

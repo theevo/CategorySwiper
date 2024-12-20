@@ -13,7 +13,7 @@ final class NetworkTests: XCTestCase {
     func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
         let key = "junktoken"
         
-        let interface = NetworkInterface(bearerToken: key)
+        let interface = URLSessionBuilder(bearerToken: key)
         
         let result = await interface.getTransactions()
         
@@ -31,7 +31,7 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_LunchMoneyTransactionLoader_with_VALID_BearerToken_resultsIn_200statusCode() async {
-        let loader = LunchMoneyTransactionsLoader()
+        let loader = LMNetworkInterface()
         
         do {
             let result = try await loader.load()
@@ -40,23 +40,23 @@ final class NetworkTests: XCTestCase {
             let object = result.0
             XCTAssertTrue(object.transactions.notEmpty)
         } catch {
-            XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
+            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
         }
     }
     
     func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {
-        let loader = LunchMoneyTransactionsLoader()
+        let loader = LMNetworkInterface()
         
         do {
             let result = try await loader.update(transaction: Transaction.example, newStatus: .cleared)
             XCTAssertTrue(result)
         } catch {
-            XCTFail("Error: LunchMoneyTransactionsLoader returned this error: \(error)")
+            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
         }
     }
     
     func test_NetworkInterface_getCategories() async {
-        let interface = NetworkInterface()
+        let interface = URLSessionBuilder()
         
         let result = await interface.getCategories()
         

@@ -43,7 +43,7 @@ struct CardViewModel: Identifiable {
     func applyAction() {
         switch swipeDirection {
         case .right:
-            _ = try? LocalTransactionsLoader().update(transaction: transaction, newStatus: .cleared)
+            _ = try? LMLocalInterface().update(transaction: transaction, newStatus: .cleared)
             print("\(merchant) has been cleared")
         case .left:
             print("implement me plz 😄")
@@ -57,7 +57,7 @@ extension CardViewModel {
     static let example = CardViewModel(transaction: Transaction.example)
     
     static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5, shuffled: Bool = false) -> [CardViewModel] {
-        let transactions = try! LocalTransactionsLoader().loadTransactions(showUnclearedOnly: showUnclearedOnly)
+        let transactions = try! LMLocalInterface().loadTransactions(showUnclearedOnly: showUnclearedOnly)
         let cards = shuffled ? transactions.map(CardViewModel.init).shuffled() : transactions.map(CardViewModel.init)
         return Array(cards.prefix(limit))
     }
