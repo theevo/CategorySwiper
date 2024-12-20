@@ -8,17 +8,17 @@
 import Foundation
 
 protocol LunchMoneyInterface {
-    func load(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
+    func getTransactions(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
 struct LMLocalInterface: LunchMoneyInterface {
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
-        let (object, _) = try load(showUnclearedOnly: showUnclearedOnly)
+        let (object, _) = try getTransactions(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))
     }
     
-    func load(showUnclearedOnly: Bool = false) throws -> (TopLevelObject, Int) {
+    func getTransactions(showUnclearedOnly: Bool = false) throws -> (TopLevelObject, Int) {
         let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
         
         do {
@@ -44,7 +44,7 @@ struct LMLocalInterface: LunchMoneyInterface {
 }
 
 struct LMNetworkInterface: LunchMoneyInterface {
-    func load(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
+    func getTransactions(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
         var object: TopLevelObject = TopLevelObject(transactions: [])
         var statusCode = 0
         

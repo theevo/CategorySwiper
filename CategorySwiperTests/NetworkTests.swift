@@ -34,7 +34,7 @@ final class NetworkTests: XCTestCase {
         let loader = LMNetworkInterface()
         
         do {
-            let result = try await loader.load()
+            let result = try await loader.getTransactions()
             let responseCode = result.1
             XCTAssertEqual(responseCode, 200)
             let object = result.0

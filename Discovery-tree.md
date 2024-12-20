@@ -55,7 +55,11 @@
 ## API calls
 
 - divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
-    - 👉 rename load(showUnclearedOnly:) to getTransactions(showUnclearedOnly:)
+    - 👉 rename instances
+        - LMLocalInterface() -> interface
+        - LMNetworkInterface() -> interface
+        - URLSessionBuilder() -> builder
+    - ✅ rename load(showUnclearedOnly:) to getTransactions(showUnclearedOnly:)
     - ✅ move URLSessionBuilder.Filter to LunchMoneyInterface
     - ✅ rename
         - ✅ NetworkInterface -> URLSessionBuilder
