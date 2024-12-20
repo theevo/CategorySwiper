@@ -14,6 +14,7 @@
 		276498082D01128E005A7916 /* SwipeableCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276498072D01128E005A7916 /* SwipeableCardsView.swift */; };
 		27656D512D0243F100877E8B /* example-transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 27656D502D0243F100877E8B /* example-transactions.json */; };
 		27656D522D0243F100877E8B /* example-transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 27656D502D0243F100877E8B /* example-transactions.json */; };
+		276BF6A62D15F9720063935D /* LMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276BF6A52D15F9720063935D /* LMNetworkInterface.swift */; };
 		27A13ABE2CFA6AD200430ABF /* URLSessionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A13ABD2CFA6AD200430ABF /* URLSessionBuilder.swift */; };
 		27B5CE402D079EE1002B961B /* Data+jsonFlatString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5CE3F2D079EE1002B961B /* Data+jsonFlatString.swift */; };
 		27D259CA2CFABADE004A4CAD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D259C92CFABADE004A4CAD /* Transaction.swift */; };
@@ -56,6 +57,7 @@
 		272F16062D0279060040A272 /* ReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptView.swift; sourceTree = "<group>"; };
 		276498072D01128E005A7916 /* SwipeableCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCardsView.swift; sourceTree = "<group>"; };
 		27656D502D0243F100877E8B /* example-transactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "example-transactions.json"; sourceTree = "<group>"; };
+		276BF6A52D15F9720063935D /* LMNetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LMNetworkInterface.swift; sourceTree = "<group>"; };
 		27A13ABC2CFA374800430ABF /* Discovery-tree.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Discovery-tree.md"; sourceTree = "<group>"; };
 		27A13ABD2CFA6AD200430ABF /* URLSessionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionBuilder.swift; sourceTree = "<group>"; };
 		27B5CE3F2D079EE1002B961B /* Data+jsonFlatString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+jsonFlatString.swift"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				27B5CE3F2D079EE1002B961B /* Data+jsonFlatString.swift */,
 				27D259C92CFABADE004A4CAD /* Transaction.swift */,
 				27D638152CFBBD7C00B43DE1 /* LunchMoneyInterface.swift */,
+				276BF6A52D15F9720063935D /* LMNetworkInterface.swift */,
 			);
 			path = CategorySwiper;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				27D638162CFBBD7C00B43DE1 /* LunchMoneyInterface.swift in Sources */,
 				27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */,
 				276498082D01128E005A7916 /* SwipeableCardsView.swift in Sources */,
+				276BF6A62D15F9720063935D /* LMNetworkInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
