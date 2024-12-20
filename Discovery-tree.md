@@ -52,13 +52,6 @@
          - ✅ TransactionViewModel Example
              - ✅ Transaction Example
 
-
-## Decode JSON
-
-- ✅ abstract the JSONDecoder block
-
-- ✅ Create Model 
-
 ## API calls
 
 - divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
@@ -130,6 +123,10 @@
 
 - ✅ change bearer token
 
+## ✅ Decode JSON
+
+- ✅ abstract the JSONDecoder block
+- ✅ Create Model 
 
 ## ✅ Rough Draft
 - ✅ rough draft UI
