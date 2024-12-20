@@ -92,6 +92,89 @@ struct LMNetworkInterface: LunchMoneyInterface {
             throw LoaderError.SessionErrorThrown(error: error)
         }
     }
+    
+    enum LunchMoneyURL {
+        case GetCategories
+        case GetTransactions
+        case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
+        
+        private var baseURL: URL? {
+            switch self {
+            case .GetCategories:
+                URL(string: endpoint)
+            case .GetTransactions:
+                URL(string: endpoint)
+            case .UpdateTransaction(transaction: let transaction, newStatus: _):
+                LunchMoneyURL.GetTransactions.baseURL?.appending(path: String(transaction.id))
+            }
+        }
+        
+        private var endpoint: String {
+            switch self {
+            case .GetCategories:
+                "https://dev.lunchmoney.app/v1/categories"
+            case .GetTransactions, .UpdateTransaction(_, _):
+                "https://dev.lunchmoney.app/v1/transactions"
+            }
+        }
+        
+        private var urlComponents: URLComponents? {
+            guard let baseURL else { return nil }
+            return URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        }
+        
+        private func queryItems(filters: [Filter]) -> [URLQueryItem] {
+            filters.map { $0.queryItem }
+        }
+        
+        func makeRequest(filters: [Filter] = []) -> URLRequest? {
+            if case .GetCategories = self {
+                return baseRequest(filters: [.CategoryFormatIsNested])
+            }
+            
+            var baseRequest = baseRequest(filters: filters)
+            
+            if case .UpdateTransaction = self {
+                baseRequest = try? newPutRequest(baseRequest: baseRequest)
+            }
+            
+            return baseRequest
+        }
+        
+        private func baseRequest(filters: [Filter] = []) -> URLRequest? {
+            var components = urlComponents
+            components?.queryItems = queryItems(filters: filters)
+            guard let url = components?.url else { return nil }
+            
+            var request = URLRequest(
+                url: url
+            )
+            request.setValue(
+                "Bearer <<access-token>>",
+                forHTTPHeaderField: "Authentication"
+            )
+            request.setValue(
+                "application/json;charset=utf-8",
+                forHTTPHeaderField: "Content-Type"
+            )
+            return request
+        }
+        
+        private func newPutRequest(baseRequest request: URLRequest?) throws -> URLRequest? {
+            guard case .UpdateTransaction(let transaction, let status) = self,
+                var request = request else {
+                return nil
+            }
+            
+            let putBody = PutBodyObject(transaction: transaction, newStatus: status)
+            let data = try JSONEncoder().encode(putBody)
+            
+            request.httpMethod = "PUT"
+            request.httpBody = data
+            
+            return request
+        }
+    }
 }
 
 enum LoaderError: LocalizedError {
