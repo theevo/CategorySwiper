@@ -154,3 +154,27 @@ enum Filter: String {
         }
     }
 }
+
+// MARK: - Codable Objects
+
+struct PutBodyObject: Encodable {
+    var transaction: UpdateTransactionObject
+    
+    init(transaction: Transaction, newStatus: Transaction.Status) {
+        self.transaction = UpdateTransactionObject(transaction: transaction, newStatus: newStatus)
+    }
+}
+
+struct UpdateTransactionResponseObject: Decodable {
+    var updated: Bool
+}
+
+struct UpdateTransactionObject: Encodable {
+    var id: Int
+    var status: String
+    
+    init(transaction: Transaction, newStatus: Transaction.Status) {
+        self.id = transaction.id
+        self.status = newStatus.rawValue
+    }
+}
