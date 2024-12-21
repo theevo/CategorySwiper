@@ -4,6 +4,8 @@
 
 - Format date
 
+- CategoriesSelectorView
+
 - ✅ CardView design: put expense details into gray box
     - ✅ look at more example transactions
         - ✅ allow the LocalTransactionLoader to shuffle
@@ -89,13 +91,14 @@
     - Edit Category UI
         - implement for swipe left
         - update transaction category
-            - get categories
-                - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
-                    - 👉 add getCategories to LunchMoneyInterface protocol
-                    - ✅ create Decodable structs
-                    - ✅ add LMNetworkInterface.getCategories()
-                    - ✅ remove getCategories() from URLSessionBuilder
-                    - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
+            - 👉 get json string
+            - ❓ Filter.CategoryFormatIsNested should only apply to getCategories
+            - ✅ get categories
+                - ✅ add getCategories to LunchMoneyInterface protocol
+                - ✅ create Decodable structs
+                - ✅ add LMNetworkInterface.getCategories()
+                - ✅ remove getCategories() from URLSessionBuilder
+                - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
                 - ✅ choose flattened or **nested**[^2]
     - ✅ find where UI calls update
         - ✅ implement for swipe right

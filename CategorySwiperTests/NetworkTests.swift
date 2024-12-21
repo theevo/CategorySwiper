@@ -59,8 +59,7 @@ final class NetworkTests: XCTestCase {
         
         do {
             let response = try await interface.getCategories()
-            print(response)
-            XCTAssertTrue(response.notEmpty)
+            XCTAssertTrue(response.categories.notEmpty)
         } catch {
             XCTFail("Error: LMNetworkInterface returned this error: \(error)")
         }

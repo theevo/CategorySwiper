@@ -8,6 +8,7 @@
 import Foundation
 
 protocol LunchMoneyInterface {
+    func getCategories() async throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
