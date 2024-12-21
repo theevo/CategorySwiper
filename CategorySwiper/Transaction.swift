@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TopLevelObject: Decodable {
+struct TransactionsResponseWrapper: Decodable {
     var transactions: [Transaction]
     
     var uncleared: [Transaction] {
@@ -23,7 +23,7 @@ struct TopLevelObject: Decodable {
     }
 }
 
-extension TopLevelObject: CustomStringConvertible {
+extension TransactionsResponseWrapper: CustomStringConvertible {
     var description: String {
         var string = ""
         string += "Transactions #: \(transactions.count)\n"

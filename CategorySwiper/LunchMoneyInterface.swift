@@ -8,31 +8,31 @@
 import Foundation
 
 protocol LunchMoneyInterface {
-    func getTransactions(showUnclearedOnly: Bool) async throws -> (TopLevelObject, Int)
+    func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
 struct LMLocalInterface: LunchMoneyInterface {
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
-        let (object, _) = try getTransactions(showUnclearedOnly: showUnclearedOnly)
+        let object = try getTransactions(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))
     }
     
-    func getTransactions(showUnclearedOnly: Bool = false) throws -> (TopLevelObject, Int) {
+    func getTransactions(showUnclearedOnly: Bool = false) throws -> TransactionsResponseWrapper {
         let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
         
         do {
-            let object = try JSONDecoder().decode(TopLevelObject.self, from: try Data(contentsOf: url))
+            let object = try JSONDecoder().decode(TransactionsResponseWrapper.self, from: try Data(contentsOf: url))
             
             guard showUnclearedOnly else {
-                return (object, 200)
+                return object
             }
             
             let filteredTransactions = object.transactions.filter { $0.status == .uncleared }
             
-            let newObject = TopLevelObject(transactions: filteredTransactions)
+            let newObject = TransactionsResponseWrapper(transactions: filteredTransactions)
             
-            return (newObject, 200)
+            return newObject
         } catch {
             throw LoaderError.JSONFailure(error: error)
         }
@@ -47,6 +47,7 @@ enum LoaderError: LocalizedError {
     case SessionErrorThrown(error: URLSessionBuilder.SessionError)
     case Unknown
     case JSONFailure(error: Error)
+    case StatusCode(Int)
     
     var errorDescription: String? {
         switch self {
@@ -56,6 +57,8 @@ enum LoaderError: LocalizedError {
             "URLSessionBuilder returned a success, but it could not unpack the response."
         case .JSONFailure(error: let error):
             "\(#file) \(#function) line \(#line): JSONDecoder failed. Error detail: \(error.localizedDescription)"
+        case .StatusCode(let statusCode):
+            "\(#file) \(#function) line \(#line): URLSession returned status code \(statusCode)"
         }
     }
 }

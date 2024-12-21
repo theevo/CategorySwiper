@@ -8,7 +8,7 @@
 import Foundation
 
 struct LMNetworkInterface: LunchMoneyInterface {
-    func getTransactions(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
+    func getTransactions(showUnclearedOnly: Bool = false) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
         let filters = showUnclearedOnly ? [Filter.Uncleared] : []
@@ -19,16 +19,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         switch result {
         case .success(let response):
-            var object: TopLevelObject = TopLevelObject(transactions: [])
-            var statusCode = 0
-            
-            if let httpResponse = response.urlResponse as? HTTPURLResponse {
-                statusCode = httpResponse.statusCode
-            }
-            
             do {
-                object = try JSONDecoder().decode(TopLevelObject.self, from: response.data)
-                return (object, statusCode)
+                let object = try JSONDecoder().decode(TransactionsResponseWrapper.self, from: response.data)
+                return object
             } catch (let error) {
                 throw LoaderError.JSONFailure(error: error)
             }

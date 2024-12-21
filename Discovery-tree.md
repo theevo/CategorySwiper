@@ -76,9 +76,12 @@
         - ✅ LocalTransactionsLoader -> LMLocalInterface
         - ✅ LunchMoneyTransactionsLoader -> LMNetworkInterface
 
-- leaner LunchMoneyInterface
-    - getTransactions returns only TopLevelObject
-        - 👉 getTransactions throws error if statusCode is not 200
+- ✅ getTransactions returns only TopLevelObject
+    - ✅ rename TopLevelObject to TransactionsResponseWrapper
+    - ✅ rename result to response in tests
+    - ✅ remove of empty TopLevelObject var
+    - ✅ remove statusCode from LMNetworkInterface
+    - ❌ getTransactions throws error if statusCode is not 200 (it's already handled in URLSessionBuilder)
 
 - Connect swipe with behavior
     - call LunchMoneyTransactionsLoader.update from UI
@@ -88,6 +91,7 @@
         - update transaction category
             - get categories
                 - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
+                    - 👉 remove getCategories() from URLSessionBuilder
                     - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
                 - ✅ choose flattened or **nested**[^2]
     - ✅ find where UI calls update
