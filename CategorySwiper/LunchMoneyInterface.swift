@@ -13,6 +13,17 @@ protocol LunchMoneyInterface {
 }
 
 struct LMLocalInterface: LunchMoneyInterface {
+    func getCategories() throws -> CategoryResponseWrapper {
+        let url = Bundle.main.url(forResource: "example-categories", withExtension: "json")!
+        
+        do {
+            let object = try JSONDecoder().decode(CategoryResponseWrapper.self, from: try Data(contentsOf: url))
+            return object
+        } catch {
+            throw LoaderError.JSONFailure(error: error)
+        }
+    }
+    
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
         let object = try getTransactions(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))

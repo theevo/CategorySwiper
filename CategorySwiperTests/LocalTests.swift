@@ -27,4 +27,10 @@ final class LocalTests: XCTestCase {
         let transactions = try interface.loadTransactions(limit: 5)
         XCTAssertEqual(transactions.count, 5)
     }
+    
+    func test_LMLocalInterface_getCategories_returnsNonEmptyCategoriesArray() async throws {
+        let interface = LMLocalInterface()
+        let response = try interface.getCategories()
+        XCTAssertTrue(response.categories.notEmpty)
+    }
 }
