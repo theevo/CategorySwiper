@@ -125,23 +125,17 @@ struct LMNetworkInterface: LunchMoneyInterface {
             filters.map { $0.queryItem }
         }
         
-        // TODO: - refactor me plz
         func makeRequest(filters: [Filter] = []) -> URLRequest? {
-            if case .GetCategories = self {
+            switch self {
+            case .GetCategories:
                 return baseRequest(filters: [.CategoryFormatIsNested])
-            }
-            
-            var baseRequest = baseRequest(filters: filters)
-            
-            if case .UpdateTransaction = self {
+            case .GetTransactions:
+                return baseRequest(filters: filters)
+            case .UpdateTransaction(_, _), .UpdateTransactionCategory(_, _):
+                var baseRequest = baseRequest(filters: filters)
                 baseRequest = try? newPutRequest(baseRequest: baseRequest)
+                return baseRequest
             }
-            
-            if case .UpdateTransactionCategory = self {
-                baseRequest = try? newPutRequest(baseRequest: baseRequest)
-            }
-            
-            return baseRequest
         }
         
         private func baseRequest(filters: [Filter] = []) -> URLRequest? {

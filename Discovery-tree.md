@@ -93,7 +93,8 @@
     - Edit Category UI
         - implement for swipe left
         - update transaction category
-            - 👉 refactor: improve branching in Request.makeRequest()
+            - 👉 refactor: rename to `Request.updateTransactionSTATUS` 
+            - ✅ refactor: improve branching in Request.makeRequest()
             - ✅ get true in response
                 - ✅ make UpdateTransactionObject properties optional
             - ❓ Filter.CategoryFormatIsNested should only apply to getCategories
