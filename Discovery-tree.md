@@ -5,7 +5,9 @@
 - Format date
 
 - CategoriesSelectorView
-    - 👉 make it selectable
+    - make it selectable
+        - make group names not selectable, children selectable
+        - 👉 add checkmarks like in Settings > Dictionary
     - ✅ show children under groups
     - ✅ show all categories flat 
 

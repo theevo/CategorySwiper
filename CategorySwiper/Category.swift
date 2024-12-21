@@ -35,3 +35,5 @@ extension Category {
         children: nil
     )
 }
+
+extension Category: Hashable { }
