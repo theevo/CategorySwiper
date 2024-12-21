@@ -5,7 +5,8 @@
 - Format date
 
 - CategoriesSelectorView
-    - 👉 show children under groups
+    - 👉 make it selectable
+    - ✅ show children under groups
     - ✅ show all categories flat 
 
 - Distinguish between Preview (Local) vs Live (LunchMoney)

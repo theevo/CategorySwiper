@@ -14,6 +14,11 @@ struct CategoriesSelectorView: View {
         List {
             ForEach(categories) { category in
                 Text(category.name)
+                if let children = category.children {
+                    ForEach(children) { child in
+                        Text("    " + child.name)
+                    }
+                }
             }
         }
     }
