@@ -8,6 +8,25 @@
 import Foundation
 
 struct LMNetworkInterface: LunchMoneyInterface {
+    func getCategories() async throws -> String {
+        let builder = makeURLSessionBuilder()
+        let request = Request.GetCategories.makeRequest()
+        let result = await builder.execute(request: request)
+        
+        switch result {
+        case .success(let response):
+            return response.data.jsonFlatString
+//            do {
+//                let object = try JSONDecoder().decode(SOMETHING.self, from: response.data)
+//                return object
+//            } catch (let error) {
+//                throw LoaderError.JSONFailure(error: error)
+//            }
+        case .failure(let error):
+            throw LoaderError.SessionErrorThrown(error: error)
+        }
+    }
+    
     func getTransactions(showUnclearedOnly: Bool = false) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         

@@ -91,7 +91,9 @@
         - update transaction category
             - get categories
                 - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
-                    - 👉 remove getCategories() from URLSessionBuilder
+                    - 👉 create Decodable structs
+                    - ✅ add LMNetworkInterface.getCategories()
+                    - ✅ remove getCategories() from URLSessionBuilder
                     - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
                 - ✅ choose flattened or **nested**[^2]
     - ✅ find where UI calls update

@@ -10,13 +10,6 @@ import Foundation
 struct URLSessionBuilder {
     var bearerToken: String
     
-    func getCategories() async -> Result<Response, SessionError> {
-        guard let request = LMNetworkInterface.Request.GetCategories.makeRequest() else { return .failure(.BadURL) }
-        
-        print(request)
-        return await run(request: request)
-    }
-    
     func execute(request: URLRequest?) async -> Result<Response, SessionError> {
         guard let request = request else { return .failure(.BadURL) }
 

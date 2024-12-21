@@ -54,18 +54,15 @@ final class NetworkTests: XCTestCase {
         }
     }
     
-//    func test_NetworkInterface_getCategories() async {
-//        let session = URLSessionBuilder()
-//        
-//        let result = await session.getCategories()
-//        
-//        guard case .success(let response) = result else {
-//            XCTFail("the response should be .success")
-//            return
-//        }
-//        
-//        let data = response.data
-//        print(data.jsonFlatString)
-//        XCTAssertNotNil(data)
-//    }
+    func test_LMNetworkInterface_getCategories_returnIsNotEmpty() async {
+        let interface = LMNetworkInterface()
+        
+        do {
+            let response = try await interface.getCategories()
+            print(response)
+            XCTAssertTrue(response.notEmpty)
+        } catch {
+            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
+        }
+    }
 }
