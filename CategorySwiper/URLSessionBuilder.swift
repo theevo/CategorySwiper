@@ -14,16 +14,16 @@ struct URLSessionBuilder {
         guard let request = LMNetworkInterface.Request.GetCategories.makeRequest() else { return .failure(.BadURL) }
         
         print(request)
-        return await lunchMoneyURLSession(request: request)
+        return await run(request: request)
     }
     
     func execute(request: URLRequest?) async -> Result<Response, SessionError> {
         guard let request = request else { return .failure(.BadURL) }
 
-        return await lunchMoneyURLSession(request: request)
+        return await run(request: request)
     }
     
-    private func lunchMoneyURLSession(request: URLRequest) async -> Result<Response, SessionError> {
+    private func run(request: URLRequest) async -> Result<Response, SessionError> {
         let sessionConfiguration = URLSessionConfiguration.default // 5
 
         sessionConfiguration.httpAdditionalHeaders = [

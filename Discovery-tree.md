@@ -54,8 +54,8 @@
 
 ## API calls
 
-- divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
-    - 👉 remove lunchMoney strings from URLSessionBuilder
+- ✅ divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
+    - ✅ remove lunchMoney strings from URLSessionBuilder
     - ✅ refactor getTransactions similar to update(transaction:)
     - ✅ move access token from URLSessionBuilder to LMNetworkInterface
     - ✅ rename LunchMoneyURL to Request
@@ -76,6 +76,10 @@
         - ✅ LocalTransactionsLoader -> LMLocalInterface
         - ✅ LunchMoneyTransactionsLoader -> LMNetworkInterface
 
+- leaner LunchMoneyInterface
+    - getTransactions returns only TopLevelObject
+        - 👉 getTransactions throws error if statusCode is not 200
+
 - Connect swipe with behavior
     - call LunchMoneyTransactionsLoader.update from UI
         - Distinguish between Preview (Local) vs Live (LunchMoney)
@@ -84,7 +88,7 @@
         - update transaction category
             - get categories
                 - NetworkInterface.Filter.CategoryFormatIsNested should only apply to getCategories
-                    - rename LunchMoneyTransactionLoader (we're working with categories too!)
+                    - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
                 - ✅ choose flattened or **nested**[^2]
     - ✅ find where UI calls update
         - ✅ implement for swipe right
