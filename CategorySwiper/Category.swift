@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Category: Decodable {
+struct Category: Decodable, Identifiable {
     var id: Int
     var name: String
     var is_income: Bool
