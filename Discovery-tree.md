@@ -55,7 +55,8 @@
 ## API calls
 
 - divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
-    - 👉 refactor getTransactions similar to update(transaction:)
+    - 👉 remove lunchMoney strings from URLSessionBuilder
+    - ✅ refactor getTransactions similar to update(transaction:)
     - ✅ move access token from URLSessionBuilder to LMNetworkInterface
     - ✅ rename LunchMoneyURL to Request
     - ✅ inject URLRequest into URLSessionBuilder

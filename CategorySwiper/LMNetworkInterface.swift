@@ -9,9 +9,6 @@ import Foundation
 
 struct LMNetworkInterface: LunchMoneyInterface {
     func getTransactions(showUnclearedOnly: Bool = false) async throws -> (TopLevelObject, Int) {
-        var object: TopLevelObject = TopLevelObject(transactions: [])
-        var statusCode = 0
-        
         let builder = makeURLSessionBuilder()
         
         let filters = showUnclearedOnly ? [Filter.Uncleared] : []
@@ -20,26 +17,24 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let result = await builder.execute(request: request)
         
-        if case .failure(let error) = result {
+        switch result {
+        case .success(let response):
+            var object: TopLevelObject = TopLevelObject(transactions: [])
+            var statusCode = 0
+            
+            if let httpResponse = response.urlResponse as? HTTPURLResponse {
+                statusCode = httpResponse.statusCode
+            }
+            
+            do {
+                object = try JSONDecoder().decode(TopLevelObject.self, from: response.data)
+                return (object, statusCode)
+            } catch (let error) {
+                throw LoaderError.JSONFailure(error: error)
+            }
+        case .failure(let error):
             throw LoaderError.SessionErrorThrown(error: error)
         }
-        
-        guard case .success(let response) = result else {
-            throw LoaderError.Unknown
-        }
-        
-        // check for status 200
-        if let httpResponse = response.urlResponse as? HTTPURLResponse {
-            statusCode = httpResponse.statusCode
-        }
-        
-        do {
-            object = try JSONDecoder().decode(TopLevelObject.self, from: response.data)
-        } catch (let error) {
-            throw LoaderError.JSONFailure(error: error)
-        }
-        
-        return (object, statusCode)
     }
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
