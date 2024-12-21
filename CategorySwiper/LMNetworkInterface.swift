@@ -12,13 +12,13 @@ struct LMNetworkInterface: LunchMoneyInterface {
         var object: TopLevelObject = TopLevelObject(transactions: [])
         var statusCode = 0
         
-        let interface = URLSessionBuilder()
+        let builder = makeURLSessionBuilder()
         
         let filters = showUnclearedOnly ? [Filter.Uncleared] : []
         
         let request = Request.GetTransactions.makeRequest(filters: filters)
         
-        let result = await interface.execute(request: request)
+        let result = await builder.execute(request: request)
         
         if case .failure(let error) = result {
             throw LoaderError.SessionErrorThrown(error: error)
@@ -46,7 +46,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let request = Request.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
         
-        let result = await URLSessionBuilder().execute(request: request)
+        let builder = makeURLSessionBuilder()
+        
+        let result = await builder.execute(request: request)
         
         switch result {
         case .success(let response):
@@ -156,6 +158,13 @@ enum Filter: String {
         case .CategoryFormatIsNested:
             URLQueryItem(name: "format", value: "nested")
         }
+    }
+}
+
+extension LMNetworkInterface {
+    private func makeURLSessionBuilder() -> URLSessionBuilder {
+        let bearerToken = ProcessInfo.processInfo.environment["LUNCHMONEY_ACCESS_TOKEN"] ?? ""
+        return URLSessionBuilder(bearerToken: bearerToken)
     }
 }
 

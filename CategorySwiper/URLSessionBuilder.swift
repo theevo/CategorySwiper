@@ -10,14 +10,6 @@ import Foundation
 struct URLSessionBuilder {
     var bearerToken: String
     
-    init() {
-        self.bearerToken = ProcessInfo.processInfo.environment["LUNCHMONEY_ACCESS_TOKEN"] ?? ""
-    }
-    
-    init(bearerToken: String) {
-        self.bearerToken = bearerToken
-    }
-    
     func getCategories() async -> Result<Response, SessionError> {
         guard let request = LMNetworkInterface.Request.GetCategories.makeRequest() else { return .failure(.BadURL) }
         
