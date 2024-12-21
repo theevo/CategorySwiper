@@ -48,6 +48,27 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
+    func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
+        
+        let request = Request.UpdateTransactionCategory(transaction: transaction, newCategory: newCategory).makeRequest()
+        
+        let builder = makeURLSessionBuilder()
+        
+        let result = await builder.execute(request: request)
+        
+        switch result {
+        case .success(let response):
+            do {
+                let object = try JSONDecoder().decode(UpdateTransactionResponseObject.self, from: response.data)
+                return object.updated
+            } catch (let error) {
+                throw LoaderError.JSONFailure(error: error)
+            }
+        case .failure(let error):
+            throw LoaderError.SessionErrorThrown(error: error)
+        }
+    }
+    
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
         let request = Request.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
@@ -73,6 +94,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         case GetCategories
         case GetTransactions
         case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
+        case UpdateTransactionCategory(transaction: Transaction, newCategory: Category)
         
         private var baseURL: URL? {
             switch self {
@@ -80,7 +102,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
                 URL(string: endpoint)
             case .GetTransactions:
                 URL(string: endpoint)
-            case .UpdateTransaction(transaction: let transaction, newStatus: _):
+            case .UpdateTransaction(transaction: let transaction, newStatus: _), .UpdateTransactionCategory(transaction: let transaction, newCategory: _):
                 Request.GetTransactions.baseURL?.appending(path: String(transaction.id))
             }
         }
@@ -89,7 +111,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             switch self {
             case .GetCategories:
                 "https://dev.lunchmoney.app/v1/categories"
-            case .GetTransactions, .UpdateTransaction(_, _):
+            case .GetTransactions, .UpdateTransaction(_, _), .UpdateTransactionCategory(_, _):
                 "https://dev.lunchmoney.app/v1/transactions"
             }
         }
@@ -103,6 +125,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             filters.map { $0.queryItem }
         }
         
+        // TODO: - refactor me plz
         func makeRequest(filters: [Filter] = []) -> URLRequest? {
             if case .GetCategories = self {
                 return baseRequest(filters: [.CategoryFormatIsNested])
@@ -111,6 +134,10 @@ struct LMNetworkInterface: LunchMoneyInterface {
             var baseRequest = baseRequest(filters: filters)
             
             if case .UpdateTransaction = self {
+                baseRequest = try? newPutRequest(baseRequest: baseRequest)
+            }
+            
+            if case .UpdateTransactionCategory = self {
                 baseRequest = try? newPutRequest(baseRequest: baseRequest)
             }
             
@@ -137,12 +164,19 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
         
         private func newPutRequest(baseRequest request: URLRequest?) throws -> URLRequest? {
-            guard case .UpdateTransaction(let transaction, let status) = self,
-                var request = request else {
+            guard var request = request else { return nil }
+            
+            var putBody: PutBodyObject
+            
+            switch self {
+            case .UpdateTransaction(let transaction, let status):
+                putBody = PutBodyObject(transaction: transaction, newStatus: status)
+            case .UpdateTransactionCategory(let transaction, let category):
+                putBody = PutBodyObject(transaction: transaction, newCategory: category)
+            default:
                 return nil
             }
             
-            let putBody = PutBodyObject(transaction: transaction, newStatus: status)
             let data = try JSONEncoder().encode(putBody)
             
             request.httpMethod = "PUT"
@@ -182,6 +216,10 @@ struct PutBodyObject: Encodable {
     init(transaction: Transaction, newStatus: Transaction.Status) {
         self.transaction = UpdateTransactionObject(transaction: transaction, newStatus: newStatus)
     }
+    
+    init(transaction: Transaction, newCategory: Category) {
+        self.transaction = UpdateTransactionObject(transaction: transaction, newCategory: newCategory)
+    }
 }
 
 struct UpdateTransactionResponseObject: Decodable {
@@ -190,10 +228,16 @@ struct UpdateTransactionResponseObject: Decodable {
 
 struct UpdateTransactionObject: Encodable {
     var id: Int
-    var status: String
+    var status: String?
+    var category_id: Int?
     
     init(transaction: Transaction, newStatus: Transaction.Status) {
         self.id = transaction.id
         self.status = newStatus.rawValue
+    }
+    
+    init(transaction: Transaction, newCategory: Category) {
+        self.id = transaction.id
+        self.category_id = newCategory.id
     }
 }

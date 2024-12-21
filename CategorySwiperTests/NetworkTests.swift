@@ -64,4 +64,15 @@ final class NetworkTests: XCTestCase {
             XCTFail("Error: LMNetworkInterface returned this error: \(error)")
         }
     }
+    
+    func test_LMNetworkInterface_updateTransaction_newCategory_responseIsTrue() async {
+        let interface = LMNetworkInterface()
+        
+        do {
+            let response = try await interface.update(transaction: Transaction.example, newCategory: Category.exampleGroceries)
+            XCTAssertTrue(response)
+        } catch {
+            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
+        }
+    }
 }

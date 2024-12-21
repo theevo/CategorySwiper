@@ -56,6 +56,8 @@
 
 ## API calls
 
+- relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
+
 - ✅ divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
     - ✅ remove lunchMoney strings from URLSessionBuilder
     - ✅ refactor getTransactions similar to update(transaction:)
@@ -91,7 +93,9 @@
     - Edit Category UI
         - implement for swipe left
         - update transaction category
-            - 👉 get json string
+            - 👉 refactor: improve branching in Request.makeRequest()
+            - ✅ get true in response
+                - ✅ make UpdateTransactionObject properties optional
             - ❓ Filter.CategoryFormatIsNested should only apply to getCategories
             - ✅ get categories
                 - ✅ add getCategories to LunchMoneyInterface protocol

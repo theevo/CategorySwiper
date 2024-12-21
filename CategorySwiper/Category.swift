@@ -18,3 +18,20 @@ struct Category: Decodable {
 struct CategoryResponseWrapper: Decodable {
     var categories: [Category]
 }
+
+extension Category {
+    static let exampleGroceries = Category(
+        id: 909221,
+        name: "Groceries",
+        is_income: false,
+        is_group: false,
+        children: nil
+    )
+    static let exampleMusic = Category(
+        id: 909224,
+        name: "Music",
+        is_income: false,
+        is_group: false,
+        children: nil
+    )
+}
