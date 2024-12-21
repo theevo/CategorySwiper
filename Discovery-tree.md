@@ -5,6 +5,15 @@
 - Format date
 
 - CategoriesSelectorView
+    - show children under groups
+    - 👉 show all categories flat 
+
+- Distinguish between Preview (Local) vs Live (LunchMoney)
+
+- Connect swipe with behavior
+    - swipe left calls LMNetworkInterface.update 
+    - ✅ find where UI calls update
+        - ✅ implement for swipe right
 
 - ✅ CardView design: put expense details into gray box
     - ✅ look at more example transactions
@@ -87,26 +96,21 @@
     - ✅ remove statusCode from LMNetworkInterface
     - ❌ getTransactions throws error if statusCode is not 200 (it's already handled in URLSessionBuilder)
 
-- Connect swipe with behavior
-    - call LunchMoneyTransactionsLoader.update from UI
-        - Distinguish between Preview (Local) vs Live (LunchMoney)
-    - Edit Category UI
-        - implement for swipe left
-        - update transaction category
-            - 👉 refactor: rename to `Request.updateTransactionSTATUS` 
-            - ✅ refactor: improve branching in Request.makeRequest()
-            - ✅ get true in response
-                - ✅ make UpdateTransactionObject properties optional
-            - ❓ Filter.CategoryFormatIsNested should only apply to getCategories
-            - ✅ get categories
-                - ✅ add getCategories to LunchMoneyInterface protocol
-                - ✅ create Decodable structs
-                - ✅ add LMNetworkInterface.getCategories()
-                - ✅ remove getCategories() from URLSessionBuilder
-                - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
-                - ✅ choose flattened or **nested**[^2]
-    - ✅ find where UI calls update
-        - ✅ implement for swipe right
+- ✅ update transaction category
+    - ✅ refactor: rename to `Request.updateTransactionSTATUS` 
+    - ✅ refactor: improve branching in Request.makeRequest()
+    - ✅ get true in response
+        - ✅ make UpdateTransactionObject properties optional
+    - ❓ Filter.CategoryFormatIsNested should only apply to getCategories
+    - ✅ get categories
+        - ✅ add getCategories to LunchMoneyInterface protocol
+        - ✅ create Decodable structs
+        - ✅ add LMNetworkInterface.getCategories()
+        - ✅ remove getCategories() from URLSessionBuilder
+        - ✅ rename LunchMoneyTransactionLoader (we're working with categories too!)
+        - ✅ choose flattened or **nested**[^2]
+
+
     - ✅ update Transaction
         - ✅ implement in LocalTransactionsLoader
         - ✅ remove throws from NetworkInterface.update
