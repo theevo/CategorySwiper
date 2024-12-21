@@ -71,7 +71,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
         
-        let request = Request.UpdateTransaction(transaction: transaction, newStatus: newStatus).makeRequest()
+        let request = Request.UpdateTransactionStatus(transaction: transaction, newStatus: newStatus).makeRequest()
         
         let builder = makeURLSessionBuilder()
         
@@ -93,7 +93,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     enum Request {
         case GetCategories
         case GetTransactions
-        case UpdateTransaction(transaction: Transaction, newStatus: Transaction.Status)
+        case UpdateTransactionStatus(transaction: Transaction, newStatus: Transaction.Status)
         case UpdateTransactionCategory(transaction: Transaction, newCategory: Category)
         
         private var baseURL: URL? {
@@ -102,7 +102,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
                 URL(string: endpoint)
             case .GetTransactions:
                 URL(string: endpoint)
-            case .UpdateTransaction(transaction: let transaction, newStatus: _), .UpdateTransactionCategory(transaction: let transaction, newCategory: _):
+            case .UpdateTransactionStatus(transaction: let transaction, newStatus: _), .UpdateTransactionCategory(transaction: let transaction, newCategory: _):
                 Request.GetTransactions.baseURL?.appending(path: String(transaction.id))
             }
         }
@@ -111,7 +111,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             switch self {
             case .GetCategories:
                 "https://dev.lunchmoney.app/v1/categories"
-            case .GetTransactions, .UpdateTransaction(_, _), .UpdateTransactionCategory(_, _):
+            case .GetTransactions, .UpdateTransactionStatus(_, _), .UpdateTransactionCategory(_, _):
                 "https://dev.lunchmoney.app/v1/transactions"
             }
         }
@@ -131,7 +131,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
                 return baseRequest(filters: [.CategoryFormatIsNested])
             case .GetTransactions:
                 return baseRequest(filters: filters)
-            case .UpdateTransaction(_, _), .UpdateTransactionCategory(_, _):
+            case .UpdateTransactionStatus(_, _), .UpdateTransactionCategory(_, _):
                 var baseRequest = baseRequest(filters: filters)
                 baseRequest = try? newPutRequest(baseRequest: baseRequest)
                 return baseRequest
@@ -163,7 +163,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             var putBody: PutBodyObject
             
             switch self {
-            case .UpdateTransaction(let transaction, let status):
+            case .UpdateTransactionStatus(let transaction, let status):
                 putBody = PutBodyObject(transaction: transaction, newStatus: status)
             case .UpdateTransactionCategory(let transaction, let category):
                 putBody = PutBodyObject(transaction: transaction, newCategory: category)
