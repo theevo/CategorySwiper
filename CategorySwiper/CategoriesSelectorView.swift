@@ -17,7 +17,16 @@ class CategoriesSelectorViewModel: ObservableObject {
     
     init(categories: [Category]) {
         self.categories = categories
-        self.selectedCategory = categories.randomElement()!
+        
+        let lastGroup = categories.last!
+        
+        if let justice = lastGroup.children?.first(where: { $0.name.contains("Justice") }) {
+            self.selectedCategory = justice
+        } else {
+            self.selectedCategory = categories.first!
+        }
+        
+        print("Selected Category: \(selectedCategoryName)")
     }
     
     init(categories: [Category], selectedCategory: Category) {
@@ -34,15 +43,15 @@ struct CategoriesSelectorView: View {
             Picker("Select Category", selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
                     if let children = category.children {
-                        Text(category.name)
                         ForEach(children) { child in
-                            Text(" ↳ " + child.name).tag(child)
+                            Text("\(category.name) ~ " + child.name).tag(child)
                         }
                     } else {
                         Text(category.name).tag(category)
                     }
                 }
             }
+            .pickerStyle(.inline)
         }
 
 //        NavigationView {

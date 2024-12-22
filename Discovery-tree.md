@@ -7,7 +7,8 @@
 - CategoriesSelectorView
     - make it selectable
         - make group names not selectable, children selectable
-            - 👉 disable group names
+            - 👉 scroll to the bottom if the last item is selected
+            - ✅ disable group names
             - ✅ indent children in Picker
         - add checkmarks like in Settings > General > Dictionary
             - ✅ make it work with Picker[^3]
