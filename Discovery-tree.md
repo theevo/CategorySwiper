@@ -7,7 +7,8 @@
 - CategoriesSelectorView
     - make it selectable
         - make group names not selectable, children selectable
-            - 👉 indent children in Picker
+            - 👉 disable group names
+            - ✅ indent children in Picker
         - add checkmarks like in Settings > General > Dictionary
             - ✅ make it work with Picker[^3]
     - ✅ show children under groups

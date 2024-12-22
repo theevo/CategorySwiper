@@ -33,7 +33,14 @@ struct CategoriesSelectorView: View {
         Form {
             Picker("Select Category", selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
-                    Text(category.name).tag(category)
+                    if let children = category.children {
+                        Text(category.name)
+                        ForEach(children) { child in
+                            Text(" ↳ " + child.name).tag(child)
+                        }
+                    } else {
+                        Text(category.name).tag(category)
+                    }
                 }
             }
         }
