@@ -12,7 +12,11 @@ class CategoriesSelectorViewModel: ObservableObject {
     @Published var selectedCategory: Category
     
     var selectedCategoryName: String {
-        selectedCategory.name
+        if let groupId = selectedCategory.group_id,
+           let parent = categories.first(where: { $0.id == groupId }) {
+            return parent.name + " ~ " + selectedCategory.name
+        }
+        return selectedCategory.name
     }
     
     init(categories: [Category]) {
@@ -39,7 +43,10 @@ struct CategoriesSelectorView: View {
     @ObservedObject var model: CategoriesSelectorViewModel
     
     var body: some View {
-        Text("Selected: \(model.selectedCategoryName)")
+        HStack {
+            Text("Selected: \(model.selectedCategoryName)")
+            Button("Save") { }
+        }
         Form {
             Picker("Select Category", selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in

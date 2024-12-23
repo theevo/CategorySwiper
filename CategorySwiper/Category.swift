@@ -12,6 +12,7 @@ struct Category: Decodable, Identifiable {
     var name: String
     var is_income: Bool
     var is_group: Bool
+    var group_id: Int?
     var children: [Category]?
 }
 
