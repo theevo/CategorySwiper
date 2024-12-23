@@ -11,6 +11,7 @@ struct SwipeableCardsView: View {
     @ObservedObject var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
+    @State var cardToEdit: CardViewModel?
     
     private let swipeThreshold: CGFloat = 100.0
     
@@ -44,6 +45,7 @@ struct SwipeableCardsView: View {
                                     let swipeDirection: CardViewModel.SwipeDirection = self.dragState.width > 0 ? .right : .left
                                     model.updateTopCardSwipeDirection(swipeDirection)
                                     if swipeDirection == .left {
+                                        cardToEdit = card.wrappedValue
                                         showModal()
                                     }
                                     
@@ -65,7 +67,7 @@ struct SwipeableCardsView: View {
                 }
             }
             .sheet(isPresented: $showingSheet) {
-                SheetView(showingSheet: $showingSheet)
+                SheetView(showingSheet: $showingSheet, card: $cardToEdit)
             }
         }
     }
@@ -78,8 +80,15 @@ struct SwipeableCardsView: View {
 struct SheetView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var showingSheet: Bool
+    @Binding var card: CardViewModel?
 
     var body: some View {
+        if let card {
+            VStack {
+                Text(card.merchant)
+                Text(card.category)
+            }
+        }
         Button("Press to dismiss") {
             showingSheet = false
             dismiss()

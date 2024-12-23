@@ -23,7 +23,9 @@
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
         - show CategoriesSelectorView as modal after swipe left
-            - 👉 send Transaction's category to modal
+            - fetch all Categories during CategoriesSelectorViewModel.init
+            - 👉 show Merchant name and amount in CategoriesSelectorView
+            - ✅ send Transaction's category to modal
             - ✅ show modal after last card swiped left
                 - ✅ share state of showingSheet
             - ✅ show simple modal after swipe left
