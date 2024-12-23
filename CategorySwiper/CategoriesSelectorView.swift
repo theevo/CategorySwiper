@@ -37,6 +37,26 @@ class CategoriesSelectorViewModel: ObservableObject {
         self.categories = categories
         self.selectedCategory = selectedCategory
     }
+    
+    init?(categories: [Category], card: CardViewModel) {
+        self.categories = categories
+        
+        var flattenedCategories = categories
+        
+        let parents = categories.filter { $0.is_group }
+        
+        for parent in parents {
+            if let children = parent.children {
+                flattenedCategories.append(contentsOf: children)
+            }
+        }
+        
+        if let category = flattenedCategories.first(where: { $0.id == card.category_id }) {
+            self.selectedCategory = category
+        } else {
+            return nil
+        }
+    }
 }
 
 struct CategoriesSelectorView: View {
@@ -92,7 +112,16 @@ struct CategoriesSelectorView: View {
     }
 }
 
-#Preview {
+#Preview("Init with Card") {
+    CategoriesSelectorView(model:
+        CategoriesSelectorViewModel(
+            categories: try! LMLocalInterface().getCategories().categories,
+            card: CardViewModel(transaction: Transaction.example)
+        )!
+    )
+}
+
+#Preview("Select Last") {
     CategoriesSelectorView(model:
         CategoriesSelectorViewModel(
             categories: try! LMLocalInterface().getCategories().categories

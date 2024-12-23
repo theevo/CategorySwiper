@@ -13,6 +13,7 @@ struct CardViewModel: Identifiable {
     var date: String
     var amount: Float
     var rawCurrency: String
+    var category_id: Int?
     var category_name: String?
     var transaction: Transaction
     
@@ -36,6 +37,7 @@ struct CardViewModel: Identifiable {
         self.date = transaction.date
         self.amount = transaction.to_base
         self.rawCurrency = transaction.currency
+        self.category_id = transaction.category_id
         self.category_name = transaction.category_name
         self.transaction = transaction
     }

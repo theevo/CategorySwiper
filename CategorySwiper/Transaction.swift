@@ -99,6 +99,7 @@ extension Transaction {
                                      to_base: 17.53,
                                      currency: "usd",
                                      payee: "Central Market",
+                                     category_id: 909221,
                                      category_name: "Groceries",
                                      is_income: false,
                                      status: .uncleared,

@@ -24,7 +24,10 @@
     - swipe left calls LMNetworkInterface.update
         - show CategoriesSelectorView as modal after swipe left
             - fetch all Categories during CategoriesSelectorViewModel.init
-            - 👉 show Merchant name and amount in CategoriesSelectorView
+            - show Merchant name and amount in CategoriesSelectorView
+                - 👉 synthesize Category in CardViewModel.init
+                - ✅ init CategoriesSelectorViewModel with CardViewModel
+                    - ✅ search children for category
             - ✅ send Transaction's category to modal
             - ✅ show modal after last card swiped left
                 - ✅ share state of showingSheet
