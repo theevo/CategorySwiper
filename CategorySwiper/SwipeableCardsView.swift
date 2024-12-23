@@ -17,7 +17,7 @@ struct SwipeableCardsView: View {
     var body: some View {
         if model.isEmpty {
             NoTransactionsView()
-        } else if model.isDoneSwiping {
+        } else if model.isDoneSwiping, !showingSheet {
             SwipedAllCardsView()
         }
         else {
@@ -65,7 +65,7 @@ struct SwipeableCardsView: View {
                 }
             }
             .sheet(isPresented: $showingSheet) {
-                SheetView()
+                SheetView(showingSheet: $showingSheet)
             }
         }
     }
@@ -77,9 +77,11 @@ struct SwipeableCardsView: View {
 
 struct SheetView: View {
     @Environment(\.dismiss) var dismiss
+    @Binding var showingSheet: Bool
 
     var body: some View {
         Button("Press to dismiss") {
+            showingSheet = false
             dismiss()
         }
         .font(.title)
