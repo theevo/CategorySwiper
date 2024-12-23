@@ -10,6 +10,7 @@ import SwiftUI
 struct SwipeableCardsView: View {
     @ObservedObject var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
+    @State private var showingSheet = false
     
     private let swipeThreshold: CGFloat = 100.0
     
@@ -42,6 +43,9 @@ struct SwipeableCardsView: View {
                                 if abs(self.dragState.width) > swipeThreshold {
                                     let swipeDirection: CardViewModel.SwipeDirection = self.dragState.width > 0 ? .right : .left
                                     model.updateTopCardSwipeDirection(swipeDirection)
+                                    if swipeDirection == .left {
+                                        showModal()
+                                    }
                                     
                                     withAnimation(.easeOut(duration: 0.5)) {
                                         self.dragState.width = self.dragState.width > 0 ? 1000 : -1000
@@ -60,7 +64,27 @@ struct SwipeableCardsView: View {
                     )
                 }
             }
+            .sheet(isPresented: $showingSheet) {
+                SheetView()
+            }
         }
+    }
+    
+    func showModal() {
+        showingSheet = true
+    }
+}
+
+struct SheetView: View {
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        Button("Press to dismiss") {
+            dismiss()
+        }
+        .font(.title)
+        .padding()
+        .background(.black)
     }
 }
 

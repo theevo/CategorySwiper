@@ -22,7 +22,9 @@
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
-        - 👉 show CategoriesSelectorView as modal after swipe left
+        - show CategoriesSelectorView as modal after swipe left
+            - 😅👉 show modal after last card swiped left
+            - ✅ show simple modal after swipe left
     - ✅ find where UI calls update
         - ✅ implement for swipe right
 

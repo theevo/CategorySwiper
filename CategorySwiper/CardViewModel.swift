@@ -46,7 +46,7 @@ struct CardViewModel: Identifiable {
             _ = try? LMLocalInterface().update(transaction: transaction, newStatus: .cleared)
             print("\(merchant) has been cleared")
         case .left:
-            print("implement me plz 😄")
+            print("Swiped left.")
         case .none:
             print("this card has not been swiped. no action taken.")
         }
