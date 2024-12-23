@@ -39,6 +39,7 @@ struct CategoriesSelectorView: View {
     @ObservedObject var model: CategoriesSelectorViewModel
     
     var body: some View {
+        Text("Selected: \(model.selectedCategoryName)")
         Form {
             Picker("Select Category", selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
