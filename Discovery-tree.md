@@ -4,9 +4,9 @@
 
 - Format date
 
-- CategoriesSelectorView
-    - workaround: show selected item at the top 
-        - 👉 show parent of selected item
+- ✅ CategoriesSelectorView
+    - ✅ workaround: show selected item at the top 
+        - ✅ show parent of selected item
         - ✅ show selected item at the top
     - ✅ make it selectable
         - ✅ make group names not selectable, children selectable
@@ -21,7 +21,8 @@
 - Distinguish between Preview (Local) vs Live (LunchMoney)
 
 - Connect swipe with behavior
-    - swipe left calls LMNetworkInterface.update 
+    - swipe left calls LMNetworkInterface.update
+        - 👉 show CategoriesSelectorView as modal after swipe left
     - ✅ find where UI calls update
         - ✅ implement for swipe right
 
