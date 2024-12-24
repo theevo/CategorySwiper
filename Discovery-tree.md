@@ -22,9 +22,10 @@
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
-        - show CategoriesSelectorView as modal after swipe left
-            - fetch all Categories during CategoriesSelectorViewModel.init
+        - 👉 show CategoriesSelectorView as modal after swipe left
+            - ❌ fetch all Categories during CategoriesSelectorViewModel.init[^6]
             - ✅ show Merchant name and amount in CategoriesSelectorView
+                - ✅ handle empty case
                 - ✅ remove failable init; return first if find fails
                 - ✅ init CategoriesSelectorViewModel with 2 params: categories, card
                 - ❌ synthesize Category in CardViewModel.init[^5]
@@ -211,3 +212,4 @@
 [^3]: Valuable lessons learned from using my own ViewModel with Picker: 1) make the ViewModel conform to ObservableObject 2) if your selection: parameter is an instance of yourObject, add `.tag(yourObject)` next to `Text(yourObject.name)`. This will let the Picker know you are selecting this instance of yourObject and not the string `name`. 3) add `@Published` to the properties of the ViewModel to receive 2-way binding in the View.
 [^4]: I tried wrapping `CategoriesSelectorView.body` with a `ScrollViewReader` so I could call `proxy.scrollTo(model.selectedCategory)`, but it does not work. My guess is that the proxy can't see it. It would likely require creation of a new view, which I'm not willing to do at this time for such a small feature. 
 [^5]: This is not technically possible. To make this possible, `Category` would need to see the list of categories and then search for the `Category` by the card's category id. Currently, I've only given this list to `CategoriesSelectorViewModel`, so I can continue to develop with just this. I need to remember that `CategoriesSelectorView` needs a list of categories and provides the selected category. Since it's already holding on to the list, it can synthesize a Category from the incoming Card.
+[^6]: Changed my mind. I think some other object will inject the list of categories.

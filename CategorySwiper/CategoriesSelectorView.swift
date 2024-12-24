@@ -9,18 +9,19 @@ import SwiftUI
 
 class CategoriesSelectorViewModel: ObservableObject {
     var categories: [Category]
-    @Published var selectedCategory: Category
+    @Published var selectedCategory: Category?
     @Published var card: CardViewModel
     
     var selectedCategoryName: String {
-        if let groupId = selectedCategory.group_id,
+        if let selectedCategory = selectedCategory,
+           let groupId = selectedCategory.group_id,
            let parent = categories.first(where: { $0.id == groupId }) {
             return parent.name + " ~ " + selectedCategory.name
         }
-        return selectedCategory.name
+        return "<no category>"
     }
     
-    init(categories: [Category], selectedCategory: Category, card: CardViewModel) {
+    init(categories: [Category], selectedCategory: Category?, card: CardViewModel) {
         self.categories = categories
         self.selectedCategory = selectedCategory
         self.card = card
@@ -35,7 +36,7 @@ class CategoriesSelectorViewModel: ObservableObject {
             card: card)
     }
     
-    static func find(id: Int?, in categories: [Category]) -> Category {
+    static func find(id: Int?, in categories: [Category]) -> Category? {
         var flattenedCategories = categories
         
         let parents = categories.filter { $0.is_group }
@@ -46,15 +47,11 @@ class CategoriesSelectorViewModel: ObservableObject {
             }
         }
         
-        var selectedCategory: Category
-        
         if let foundCategory = flattenedCategories.first(where: { $0.id == id }) {
-            selectedCategory = foundCategory
+            return foundCategory
         } else {
-            selectedCategory = categories.first!
+            return nil
         }
-        
-        return selectedCategory
     }
 }
 
@@ -123,6 +120,7 @@ struct CategoriesSelectorView: View {
         )
     )
 }
+
 #Preview("Sangha") {
     CategoriesSelectorView(model:
         CategoriesSelectorViewModel(
@@ -132,3 +130,11 @@ struct CategoriesSelectorView: View {
     )
 }
 
+#Preview("Empty") {
+    CategoriesSelectorView(model:
+        CategoriesSelectorViewModel(
+            categories: [],
+            card: CardViewModel(transaction: Transaction.exampleOpenSourceCollective)
+        )
+    )
+}
