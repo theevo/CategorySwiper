@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CategoriesSelectorView: View {
+    @Environment(\.dismiss) var dismiss
+    @Binding var showingSheet: Bool
     @ObservedObject var model: CategoriesSelectorViewModel
     
     var body: some View {
@@ -18,7 +20,10 @@ struct CategoriesSelectorView: View {
         HStack {
             Text("Selected: \(model.selectedCategoryName)")
         }
-        Button("Save") { }
+        Button("Save") {
+            showingSheet = false
+            dismiss()
+        }
         Form {
             Picker("Select Category", selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
@@ -36,29 +41,45 @@ struct CategoriesSelectorView: View {
     }
 }
 
+struct CategorySelectorPreviewView: View {
+    @State var showingSheet: Bool = true
+    var model: CategoriesSelectorViewModel
+    
+    var body: some View {
+        CategoriesSelectorView(
+            showingSheet: $showingSheet,
+            model: model
+        )
+    }
+}
+
 #Preview("Groceries") {
-    CategoriesSelectorView(model:
-        CategoriesSelectorViewModel(
+    CategorySelectorPreviewView(
+        model: CategoriesSelectorViewModel(
             categories: try! LMLocalInterface().getCategories().categories,
-            card: CardViewModel(transaction: Transaction.exampleCentralMarket)
+            card: CardViewModel(
+                transaction: Transaction.exampleCentralMarket
+            )
         )
     )
 }
 
 #Preview("Sangha") {
-    CategoriesSelectorView(model:
+    CategorySelectorPreviewView(model:
         CategoriesSelectorViewModel(
             categories: try! LMLocalInterface().getCategories().categories,
-            card: CardViewModel(transaction: Transaction.exampleOpenSourceCollective)
+            card: CardViewModel(
+                transaction: Transaction.exampleOpenSourceCollective)
         )
     )
 }
 
 #Preview("Empty") {
-    CategoriesSelectorView(model:
+    CategorySelectorPreviewView(model:
         CategoriesSelectorViewModel(
             categories: [],
-            card: CardViewModel(transaction: Transaction.exampleOpenSourceCollective)
+            card: CardViewModel(
+                transaction: Transaction.exampleOpenSourceCollective)
         )
     )
 }

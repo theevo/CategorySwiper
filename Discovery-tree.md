@@ -22,7 +22,13 @@
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
-        - 👉 show CategoriesSelectorView as modal after swipe left
+        - find where update should be called
+        - show CategoriesSelectorView as modal after swipe left
+            - 👉 make SwipeableCardsView.cardToEdit an obvious dummy
+            - ✅ fix selected category name in CategoriesSelectorView
+            - ✅ add Environment dismiss
+            - ✅ add Binding bool showingSheet
+            - ✅ make the SwipeableCardsView.cardToEdit not optional[^7]
             - ❌ fetch all Categories during CategoriesSelectorViewModel.init[^6]
             - ✅ show Merchant name and amount in CategoriesSelectorView
                 - ✅ handle empty case
@@ -213,3 +219,4 @@
 [^4]: I tried wrapping `CategoriesSelectorView.body` with a `ScrollViewReader` so I could call `proxy.scrollTo(model.selectedCategory)`, but it does not work. My guess is that the proxy can't see it. It would likely require creation of a new view, which I'm not willing to do at this time for such a small feature. 
 [^5]: This is not technically possible. To make this possible, `Category` would need to see the list of categories and then search for the `Category` by the card's category id. Currently, I've only given this list to `CategoriesSelectorViewModel`, so I can continue to develop with just this. I need to remember that `CategoriesSelectorView` needs a list of categories and provides the selected category. Since it's already holding on to the list, it can synthesize a Category from the incoming Card.
 [^6]: Changed my mind. I think some other object will inject the list of categories.
+[^7]: At some point, you must create certainty. You can't hide a nil value forever.

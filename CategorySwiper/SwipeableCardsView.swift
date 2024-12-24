@@ -11,7 +11,7 @@ struct SwipeableCardsView: View {
     @ObservedObject var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
-    @State var cardToEdit: CardViewModel?
+    @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleCentralMarket) // TODO: - make this a more obvious dummy
     
     private let swipeThreshold: CGFloat = 100.0
     
@@ -67,7 +67,12 @@ struct SwipeableCardsView: View {
                 }
             }
             .sheet(isPresented: $showingSheet) {
-                SheetView(showingSheet: $showingSheet, card: $cardToEdit)
+                CategoriesSelectorView(showingSheet: $showingSheet, model: CategoriesSelectorViewModel(
+                    categories: try! LMLocalInterface().getCategories().categories,
+                    card: CardViewModel(
+                        transaction: Transaction.exampleCentralMarket
+                    )
+                ))
             }
         }
     }
@@ -80,14 +85,12 @@ struct SwipeableCardsView: View {
 struct SheetView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var showingSheet: Bool
-    @Binding var card: CardViewModel?
+    @Binding var card: CardViewModel
 
     var body: some View {
-        if let card {
-            VStack {
-                Text(card.merchant)
-                Text(card.category)
-            }
+        VStack {
+            Text(card.merchant)
+            Text(card.category)
         }
         Button("Press to dismiss") {
             showingSheet = false
