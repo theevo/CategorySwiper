@@ -47,7 +47,7 @@ final class NetworkTests: XCTestCase {
         let interface = LMNetworkInterface()
         
         do {
-            let response = try await interface.update(transaction: Transaction.example, newStatus: .cleared)
+            let response = try await interface.update(transaction: Transaction.exampleCentralMarket, newStatus: .cleared)
             XCTAssertTrue(response)
         } catch {
             XCTFail("Error: LMNetworkInterface returned this error: \(error)")
@@ -69,7 +69,7 @@ final class NetworkTests: XCTestCase {
         let interface = LMNetworkInterface()
         
         do {
-            let response = try await interface.update(transaction: Transaction.example, newCategory: Category.exampleGroceries)
+            let response = try await interface.update(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
             XCTAssertTrue(response)
         } catch {
             XCTFail("Error: LMNetworkInterface returned this error: \(error)")

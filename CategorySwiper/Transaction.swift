@@ -93,16 +93,34 @@ struct Transaction: Decodable, Equatable {
 }
 
 extension Transaction {
-    static let example = Transaction(id: 2239190824,
-                                     date: "2024-11-10",
-                                     amount: "17.5300",
-                                     to_base: 17.53,
-                                     currency: "usd",
-                                     payee: "Central Market",
-                                     category_id: 909221,
-                                     category_name: "Groceries",
-                                     is_income: false,
-                                     status: .uncleared,
-                                     created_at: "2024-11-13T03:07:10.365Z",
-                                     updated_at: "2024-11-13T03:07:10.365Z")
+    static let exampleCentralMarket = Transaction(
+        id: 2239190824,
+        date: "2024-11-10",
+        amount: "17.5300",
+        to_base: 17.53,
+        currency: "usd",
+        payee: "Central Market",
+        category_id: 909221,
+        category_name: "Groceries",
+        is_income: false,
+        status: .uncleared,
+        created_at: "2024-11-13T03:07:10.365Z",
+        updated_at: "2024-11-13T03:07:10.365Z"
+    )
+    static let exampleOpenSourceCollective = Transaction(
+        id: 2242779588,
+        date: "2024-12-02",
+        amount: "8.0000",
+        to_base: 8,
+        currency: "usd",
+        payee: "Open Source Collective",
+        category_id: 930334,
+        category_name: "Sangha",
+        category_group_id: 930333,
+        category_group_name: "Values",
+        is_income: false,
+        status: .uncleared,
+        created_at: "2024-12-05T03:39:35.102Z",
+        updated_at: "2024-12-05T03:39:35.102Z"
+    )
 }
