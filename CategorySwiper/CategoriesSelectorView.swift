@@ -13,12 +13,12 @@ class CategoriesSelectorViewModel: ObservableObject {
     @Published var card: CardViewModel
     
     var selectedCategoryName: String {
-        if let selectedCategory = selectedCategory,
+        guard let selectedCategory = selectedCategory,
            let groupId = selectedCategory.group_id,
-           let parent = categories.first(where: { $0.id == groupId }) {
-            return parent.name + " ~ " + selectedCategory.name
+           let parent = categories.first(where: { $0.id == groupId }) else {
+            return "<no category>"
         }
-        return "<no category>"
+        return parent.name + " ~ " + selectedCategory.name
     }
     
     init(categories: [Category], selectedCategory: Category?, card: CardViewModel) {
