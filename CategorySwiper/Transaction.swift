@@ -107,6 +107,20 @@ extension Transaction {
         created_at: "2024-11-13T03:07:10.365Z",
         updated_at: "2024-11-13T03:07:10.365Z"
     )
+    static let exampleDummy = Transaction(
+        id: 666,
+        date: "2024-11-10",
+        amount: "0.0000",
+        to_base: 0.0,
+        currency: "usd",
+        payee: "<no transaction>",
+        category_id: 000000,
+        category_name: "<no category>",
+        is_income: false,
+        status: .uncleared,
+        created_at: "2024-11-13T03:07:10.365Z",
+        updated_at: "2024-11-13T03:07:10.365Z"
+    )
     static let exampleOpenSourceCollective = Transaction(
         id: 2242779588,
         date: "2024-12-02",

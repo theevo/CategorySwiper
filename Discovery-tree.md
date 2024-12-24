@@ -22,9 +22,9 @@
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
-        - find where update should be called
-        - show CategoriesSelectorView as modal after swipe left
-            - 👉 make SwipeableCardsView.cardToEdit an obvious dummy
+        - 👉 find where update should be called
+        - ✅ show CategoriesSelectorView as modal after swipe left
+            - ✅ make SwipeableCardsView.cardToEdit an obvious dummy
             - ✅ fix selected category name in CategoriesSelectorView
             - ✅ add Environment dismiss
             - ✅ add Binding bool showingSheet

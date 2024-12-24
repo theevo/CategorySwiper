@@ -11,7 +11,7 @@ struct SwipeableCardsView: View {
     @ObservedObject var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
-    @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleCentralMarket) // TODO: - make this a more obvious dummy
+    @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleDummy)
     
     private let swipeThreshold: CGFloat = 100.0
     
