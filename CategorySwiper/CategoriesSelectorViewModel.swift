@@ -36,6 +36,14 @@ class CategoriesSelectorViewModel: ObservableObject {
             card: card)
     }
     
+    func updateCategory() {
+        guard selectedCategory?.id != card.category_id else { return }
+        
+        // make the API call with this selectedCategory?.id to card.transaction
+    }
+}
+
+extension CategoriesSelectorViewModel {
     static func find(id: Int?, in categories: [Category]) -> Category? {
         var flattenedCategories = categories
         

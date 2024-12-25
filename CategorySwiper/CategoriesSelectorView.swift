@@ -22,6 +22,7 @@ struct CategoriesSelectorView: View {
         }
         Button("Save") {
             showingSheet = false
+            model.updateCategory()
             dismiss()
         }
         Form {
