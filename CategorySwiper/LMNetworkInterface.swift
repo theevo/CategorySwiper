@@ -49,6 +49,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     }
     
     func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
+        guard transaction.category_id != newCategory.id else { return false }
         
         let request = Request.UpdateTransactionCategory(transaction: transaction, newCategory: newCategory).makeRequest()
         
@@ -70,6 +71,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     }
     
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
+        guard transaction.status != newStatus else { return false }
         
         let request = Request.UpdateTransactionStatus(transaction: transaction, newStatus: newStatus).makeRequest()
         

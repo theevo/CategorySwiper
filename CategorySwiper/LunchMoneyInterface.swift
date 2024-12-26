@@ -57,8 +57,9 @@ struct LMLocalInterface: LunchMoneyInterface {
         return true
     }
     
-    // TODO: - throws not needed 👇
-    func update(transaction: Transaction, newStatus: Transaction.Status) throws -> Bool {
+    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool {
+        guard transaction.status != newStatus else { return false }
+        
         return true
     }
 }

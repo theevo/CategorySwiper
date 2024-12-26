@@ -22,6 +22,7 @@
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
+        - handle false return from update
         - find where update should be called
             - 👉 update category with local interface
                 - call update
