@@ -4,6 +4,8 @@
 
 - Format date
 
+- display no action taken when no update returns false
+
 - ✅ CategoriesSelectorView
     - ✅ workaround: show selected item at the top 
         - ✅ show parent of selected item
@@ -19,13 +21,14 @@
     - ✅ show all categories flat 
 
 - Distinguish between Preview (Local) vs Live (LunchMoney)
+    - create InterfaceManager to manage Network vs Local
+        - call async vs non-async func
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
-        - handle false return from update
         - find where update should be called
-            - 👉 update category with local interface
-                - call update
+            - ✅ update category with local interface
+                - ✅ call update
                 - ✅ implement update category for LMLocalInterface
             - ✅ create method to facilitate update of transaction's category
         - ✅ show CategoriesSelectorView as modal after swipe left

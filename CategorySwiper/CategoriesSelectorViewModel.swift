@@ -37,9 +37,10 @@ class CategoriesSelectorViewModel: ObservableObject {
     }
     
     func updateCategory() {
-        guard selectedCategory?.id != card.category_id else { return }
+        guard let selectedCategory = selectedCategory else { return }
         
-        // make the API call with this selectedCategory?.id to card.transaction
+        let wasUpdated = LMLocalInterface().update(transaction: card.transaction, newCategory: selectedCategory)
+        wasUpdated ? print("Updated to \(selectedCategory.name)") : print("No change was made.")
     }
 }
 
