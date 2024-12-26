@@ -54,7 +54,7 @@ final class NetworkTests: XCTestCase {
         }
     }
     
-    func test_LMNetworkInterface_getCategories_returnIsNotEmpty() async {
+    func test_InterfaceManager_getCategories_returnIsNotEmpty() async {
         let manager = InterfaceManager()
         
         do {
