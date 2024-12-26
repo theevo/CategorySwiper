@@ -23,7 +23,9 @@
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
         - find where update should be called
-            - 👉 update category with local interface  
+            - 👉 update category with local interface
+                - call update
+                - ✅ implement update category for LMLocalInterface
             - ✅ create method to facilitate update of transaction's category
         - ✅ show CategoriesSelectorView as modal after swipe left
             - ✅ make SwipeableCardsView.cardToEdit an obvious dummy

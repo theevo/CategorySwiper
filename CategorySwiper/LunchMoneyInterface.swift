@@ -10,6 +10,7 @@ import Foundation
 protocol LunchMoneyInterface {
     func getCategories() async throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper
+    func update(transaction: Transaction, newCategory: Category) async throws -> Bool
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
@@ -50,6 +51,13 @@ struct LMLocalInterface: LunchMoneyInterface {
         }
     }
     
+    func update(transaction: Transaction, newCategory: Category) -> Bool {
+        guard transaction.category_id != newCategory.id else { return false }
+        
+        return true
+    }
+    
+    // TODO: - throws not needed 👇
     func update(transaction: Transaction, newStatus: Transaction.Status) throws -> Bool {
         return true
     }
