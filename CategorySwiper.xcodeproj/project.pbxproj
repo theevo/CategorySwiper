@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2710B2D82D1DCF4E00E7676B /* InterfaceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2710B2D72D1DCF4E00E7676B /* InterfaceManager.swift */; };
 		271319942D1683B0000D75A3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271319932D1683B0000D75A3 /* Category.swift */; };
 		27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27158EB52CFC1AF90093421F /* CardViewModel.swift */; };
 		272F16032D0276240040A272 /* SwipedAllCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16022D0276240040A272 /* SwipedAllCardsView.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2710B2D72D1DCF4E00E7676B /* InterfaceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceManager.swift; sourceTree = "<group>"; };
 		271319932D1683B0000D75A3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		27158EB52CFC1AF90093421F /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		272F16022D0276240040A272 /* SwipedAllCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipedAllCardsView.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				27D638192CFBD22C00B43DE1 /* CardView.swift */,
 				272F16062D0279060040A272 /* ReceiptView.swift */,
 				276498072D01128E005A7916 /* SwipeableCardsView.swift */,
+				2710B2D72D1DCF4E00E7676B /* InterfaceManager.swift */,
 				27E554622D03B9A400186D6F /* NoTransactionsView.swift */,
 				272F16042D0277630040A272 /* SwipeableCardsModel.swift */,
 				272F16022D0276240040A272 /* SwipedAllCardsView.swift */,
@@ -331,6 +334,7 @@
 				27D638182CFBBE0A00B43DE1 /* Collection+notEmpty.swift in Sources */,
 				271319942D1683B0000D75A3 /* Category.swift in Sources */,
 				27A13ABE2CFA6AD200430ABF /* URLSessionBuilder.swift in Sources */,
+				2710B2D82D1DCF4E00E7676B /* InterfaceManager.swift in Sources */,
 				27D259CA2CFABADE004A4CAD /* Transaction.swift in Sources */,
 				27B5CE402D079EE1002B961B /* Data+jsonFlatString.swift in Sources */,
 				27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */,
