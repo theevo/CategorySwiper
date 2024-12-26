@@ -43,4 +43,28 @@ final class LocalTests: XCTestCase {
             XCTFail("Error: \(#function) returned this error: \(error)")
         }
     }
+    
+    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsDifferent_returnsTrue() async {
+        let manager = InterfaceManager(localMode: true)
+        let transaction = Transaction.exampleCentralMarket
+        
+        do {
+            let result = try await manager.update(transaction: transaction, newCategory: Category.exampleMusic)
+            XCTAssertTrue(result)
+        } catch {
+            XCTFail("Error: \(#function) returned this error: \(error)")
+        }
+    }
+    
+    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsSame_returnsFalse() async {
+        let manager = InterfaceManager(localMode: true)
+        let transaction = Transaction.exampleCentralMarket
+        
+        do {
+            let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGroceries)
+            XCTAssertFalse(result)
+        } catch {
+            XCTFail("Error: \(#function) returned this error: \(error)")
+        }
+    }
 }
