@@ -28,18 +28,19 @@ final class LocalTests: XCTestCase {
         XCTAssertEqual(transactions.count, 5)
     }
     
-    func test_LMLocalInterface_getCategories_returnsNonEmptyCategoriesArray() throws {
-        let interface = LMLocalInterface()
-        let response = try interface.getCategories()
-        XCTAssertTrue(response.categories.notEmpty)
-    }
-    
-    func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async throws {
-        let exp = expectation(description: "wait for categories")
+    func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async {
         let manager = InterfaceManager(localMode: true)
-        try await manager.getCategories()
-        exp.fulfill()
-        wait(for: [exp], timeout: 10)
-        XCTAssertTrue(manager.categories.notEmpty)
+        
+        do {
+            try await manager.getCategories()
+            XCTAssertTrue(manager.categories.notEmpty)
+            
+            let category = manager.categories.first {
+                $0.name.contains("Apple")
+            }
+            XCTAssertEqual(category?.name, "Apples")
+        } catch {
+            XCTFail("Error: \(#function) returned this error: \(error)")
+        }
     }
 }

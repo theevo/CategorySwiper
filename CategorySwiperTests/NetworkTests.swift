@@ -55,13 +55,23 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_LMNetworkInterface_getCategories_returnIsNotEmpty() async {
-        let interface = LMNetworkInterface()
+        let manager = InterfaceManager()
         
         do {
-            let response = try await interface.getCategories()
-            XCTAssertTrue(response.categories.notEmpty)
+            try await manager.getCategories()
+            XCTAssertTrue(manager.categories.notEmpty)
+            
+            let category = manager.categories.first {
+                $0.name.contains("1 Off")
+            }
+            XCTAssertEqual(category?.name, "1 Off")
+            
+            let category2 = manager.categories.first {
+                $0.name.contains("Apple")
+            }
+            XCTAssertNil(category2)
         } catch {
-            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
+            XCTFail("Error: \(#function) returned this error: \(error)")
         }
     }
     

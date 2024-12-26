@@ -21,8 +21,10 @@
     - ✅ show all categories flat 
 
 - Distinguish between Preview (Local) vs Live (LunchMoney)
-    - create InterfaceManager to manage Network vs Local
-        - call async vs non-async func
+    - 👉 create InterfaceManager to manage Network vs Local
+        - get transactions
+        - ✅ get categories
+        - ✅ call async vs non-async func[^8]
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
@@ -228,3 +230,4 @@
 [^5]: This is not technically possible. To make this possible, `Category` would need to see the list of categories and then search for the `Category` by the card's category id. Currently, I've only given this list to `CategoriesSelectorViewModel`, so I can continue to develop with just this. I need to remember that `CategoriesSelectorView` needs a list of categories and provides the selected category. Since it's already holding on to the list, it can synthesize a Category from the incoming Card.
 [^6]: Changed my mind. I think some other object will inject the list of categories.
 [^7]: At some point, you must create certainty. You can't hide a nil value forever.
+[^8]: I declared the LunchMoneyInterace protocol with `async throws`. It seems that if that is the type that is used, Swift assumes that you will be calling it with async even if the concrete type doesn't use async.
