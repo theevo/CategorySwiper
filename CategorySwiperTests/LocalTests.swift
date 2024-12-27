@@ -56,15 +56,11 @@ final class LocalTests: XCTestCase {
         }
     }
     
-    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsSame_returnsFalse() async {
+    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsSame_returnsFalse() async throws {
         let manager = InterfaceManager(localMode: true)
         let transaction = Transaction.exampleCentralMarket
         
-        do {
-            let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGroceries)
-            XCTAssertFalse(result)
-        } catch {
-            XCTFail("Error: \(#function) returned this error: \(error)")
-        }
+        let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGas)
+        XCTAssertFalse(result)
     }
 }

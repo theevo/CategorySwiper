@@ -21,6 +21,13 @@ struct CategoryResponseWrapper: Decodable {
 }
 
 extension Category {
+    static let exampleGas = Category(
+        id: 909219,
+        name: "Gas, Transportation",
+        is_income: false,
+        is_group: false,
+        group_id: nil
+    )
     static let exampleGroceries = Category(
         id: 909221,
         name: "Groceries",
