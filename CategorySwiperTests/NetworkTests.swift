@@ -39,7 +39,7 @@ final class NetworkTests: XCTestCase {
     }
     
     func test_InterfaceManager_updateTransactionStatus_returnsTrueInResponse() async throws {
-        let manager = LMNetworkInterface()
+        let manager = InterfaceManager()
         let response = try await manager.update(transaction: Transaction.exampleCentralMarket, newStatus: .cleared)
         XCTAssertTrue(response)
     }
