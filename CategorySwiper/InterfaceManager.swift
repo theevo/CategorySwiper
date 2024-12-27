@@ -33,4 +33,8 @@ class InterfaceManager: ObservableObject {
     public func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
         return try await interface.update(transaction: transaction, newCategory: newCategory)
     }
+    
+    public func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
+        return try await interface.update(transaction: transaction, newStatus: newStatus)
+    }
 }

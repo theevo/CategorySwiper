@@ -38,15 +38,10 @@ final class NetworkTests: XCTestCase {
         XCTAssertTrue(manager.transactions.notEmpty)
     }
     
-    func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {
-        let interface = LMNetworkInterface()
-        
-        do {
-            let response = try await interface.update(transaction: Transaction.exampleCentralMarket, newStatus: .cleared)
-            XCTAssertTrue(response)
-        } catch {
-            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
-        }
+    func test_InterfaceManager_updateTransactionStatus_returnsTrueInResponse() async throws {
+        let manager = LMNetworkInterface()
+        let response = try await manager.update(transaction: Transaction.exampleCentralMarket, newStatus: .cleared)
+        XCTAssertTrue(response)
     }
     
     func test_InterfaceManager_getCategories_returnIsNotEmpty() async {

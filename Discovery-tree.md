@@ -20,13 +20,12 @@
     - ✅ show children under groups
     - ✅ show all categories flat 
 
-- Distinguish between Preview (Local) vs Live (LunchMoney)
-    - 👉 create InterfaceManager to manage Network vs Local
-        - update transaction status
-        - ✅ get transactions
-        - ✅ update transaction category
-        - ✅ get categories
-        - ✅ call async vs non-async func[^8]
+- 👉 create InterfaceManager to manage Network (live app) vs Local (SwiftUI Preview)
+    - ✅ update transaction status
+    - ✅ get transactions
+    - ✅ update transaction category
+    - ✅ get categories
+    - ✅ call async vs non-async func[^8]
 
 - Connect swipe with behavior
     - swipe left calls LMNetworkInterface.update
