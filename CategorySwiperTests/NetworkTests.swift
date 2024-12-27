@@ -32,15 +32,10 @@ final class NetworkTests: XCTestCase {
         XCTAssertEqual(response.statusCode, 401)
     }
     
-    func test_LunchMoneyTransactionLoader_with_VALID_BearerToken_resultsIn_200statusCode() async {
-        let interface = LMNetworkInterface()
-        
-        do {
-            let response = try await interface.getTransactions()
-            XCTAssertTrue(response.transactions.notEmpty)
-        } catch {
-            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
-        }
+    func test_InterfaceManager_resultsIn_nonEmptyTransactions() async throws {
+        let manager = InterfaceManager()
+        try await manager.getTransactions()
+        XCTAssertTrue(manager.transactions.notEmpty)
     }
     
     func test_LunchMoneyTransactionLoader_updateTransactionStatus_returnsTrueInResponse() async {

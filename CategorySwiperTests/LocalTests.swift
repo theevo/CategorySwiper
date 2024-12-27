@@ -10,16 +10,16 @@ import XCTest
 
 final class LocalTests: XCTestCase {
     
-    func test_TransactionsLoader_returns_nonEmptyTransactionsArray_andStatusCode200() async throws {
-        let interface = LMLocalInterface()
-        let object = try interface.getTransactions()
-        XCTAssertTrue(object.transactions.notEmpty)
+    func test_InterfaceManager_returns_nonEmptyTransactionsArray() async throws {
+        let manager = InterfaceManager(localMode: true)
+        try await manager.getTransactions()
+        XCTAssertTrue(manager.transactions.notEmpty)
     }
     
-    func test_TransactionsLoader_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
-        let interface = LMLocalInterface()
-        let object = try interface.getTransactions(showUnclearedOnly: true)
-        XCTAssertEqual(object.transactions.count, object.uncleared.count)
+    func test_InterfaceManager_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
+        let manager = InterfaceManager(localMode: true)
+        try await manager.getTransactions(showUnclearedOnly: true)
+        XCTAssertEqual(manager.transactions.count, manager.uncleared.count)
     }
     
     func test_LocalTransactionsLoader_request5_get5Transactions() async throws {

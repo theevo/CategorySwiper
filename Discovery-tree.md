@@ -22,7 +22,9 @@
 
 - Distinguish between Preview (Local) vs Live (LunchMoney)
     - 👉 create InterfaceManager to manage Network vs Local
-        - get transactions
+        - update transaction status
+        - ✅ get transactions
+        - ✅ update transaction category
         - ✅ get categories
         - ✅ call async vs non-async func[^8]
 
