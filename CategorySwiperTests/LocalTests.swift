@@ -28,32 +28,23 @@ final class LocalTests: XCTestCase {
         XCTAssertEqual(transactions.count, 5)
     }
     
-    func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async {
+    func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async throws {
         let manager = InterfaceManager(localMode: true)
+        try await manager.getCategories()
+        XCTAssertTrue(manager.categories.notEmpty)
         
-        do {
-            try await manager.getCategories()
-            XCTAssertTrue(manager.categories.notEmpty)
-            
-            let category = manager.categories.first {
-                $0.name.contains("Apple")
-            }
-            XCTAssertEqual(category?.name, "Apples")
-        } catch {
-            XCTFail("Error: \(#function) returned this error: \(error)")
+        let category = manager.categories.first {
+            $0.name.contains("Apple")
         }
+        XCTAssertEqual(category?.name, "Apples")
     }
     
-    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsDifferent_returnsTrue() async {
+    func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsDifferent_returnsTrue() async throws {
         let manager = InterfaceManager(localMode: true)
         let transaction = Transaction.exampleCentralMarket
         
-        do {
-            let result = try await manager.update(transaction: transaction, newCategory: Category.exampleMusic)
-            XCTAssertTrue(result)
-        } catch {
-            XCTFail("Error: \(#function) returned this error: \(error)")
-        }
+        let result = try await manager.update(transaction: transaction, newCategory: Category.exampleMusic)
+        XCTAssertTrue(result)
     }
     
     func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsSame_returnsFalse() async throws {

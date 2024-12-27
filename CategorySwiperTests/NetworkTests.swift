@@ -44,35 +44,26 @@ final class NetworkTests: XCTestCase {
         XCTAssertTrue(response)
     }
     
-    func test_InterfaceManager_getCategories_returnIsNotEmpty() async {
+    func test_InterfaceManager_getCategories_returnIsNotEmpty() async throws {
         let manager = InterfaceManager()
+        try await manager.getCategories()
+        XCTAssertTrue(manager.categories.notEmpty)
         
-        do {
-            try await manager.getCategories()
-            XCTAssertTrue(manager.categories.notEmpty)
-            
-            let category = manager.categories.first {
-                $0.name.contains("1 Off")
-            }
-            XCTAssertEqual(category?.name, "1 Off")
-            
-            let category2 = manager.categories.first {
-                $0.name.contains("Apple")
-            }
-            XCTAssertNil(category2)
-        } catch {
-            XCTFail("Error: \(#function) returned this error: \(error)")
+        let category = manager.categories.first {
+            $0.name.contains("1 Off")
         }
+        XCTAssertEqual(category?.name, "1 Off")
+        
+        let category2 = manager.categories.first {
+            $0.name.contains("Apple")
+        }
+        XCTAssertNil(category2)
     }
     
-    func test_InterfaceManager_updateTransaction_newCategory_responseIsTrue() async {
+    func test_InterfaceManager_updateTransaction_newCategory_responseIsTrue() async throws {
         let manager = InterfaceManager()
         
-        do {
-            let response = try await manager.update(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
-            XCTAssertTrue(response)
-        } catch {
-            XCTFail("Error: LMNetworkInterface returned this error: \(error)")
-        }
+        let response = try await manager.update(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
+        XCTAssertTrue(response)
     }
 }
