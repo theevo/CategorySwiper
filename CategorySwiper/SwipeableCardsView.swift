@@ -73,6 +73,7 @@ struct SwipeableCardsView: View {
                         transaction: Transaction.exampleCentralMarket
                     )
                 ))
+                .interactiveDismissDisabled()
             }
         }
     }

@@ -7,6 +7,7 @@
 - display no action taken when no update returns false
 
 - ✅ CategoriesSelectorView
+    - ✅ disable swiping down to dismiss modal
     - ✅ workaround: show selected item at the top 
         - ✅ show parent of selected item
         - ✅ show selected item at the top
