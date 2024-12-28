@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SwipeableCardsView: View {
+    @EnvironmentObject var manager: InterfaceManager
     @ObservedObject var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
@@ -109,6 +110,7 @@ struct SheetView: View {
             transactions: CardViewModel.getExamples(shuffled: true)
         )
     )
+    .environmentObject(InterfaceManager(localMode: true))
 }
 
 #Preview("0 Transactions") {
@@ -117,4 +119,5 @@ struct SheetView: View {
             transactions: []
         )
     )
+    .environmentObject(InterfaceManager(localMode: true))
 }

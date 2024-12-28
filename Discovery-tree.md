@@ -7,6 +7,8 @@
 - display no action taken when no update returns false
 
 - 👟 First run
+    - load InterfaceManager with transactions, categories
+    - ✅ inject InterfaceManager as EnvironmentObject
     - ✅ Delete ContentView
 
 - ✅ CategoriesSelectorView

@@ -16,6 +16,7 @@ struct CategorySwiperApp: App {
                     transactions: CardViewModel.getExamples()
                 )
             )
+            .environmentObject(InterfaceManager())
         }
     }
 }
