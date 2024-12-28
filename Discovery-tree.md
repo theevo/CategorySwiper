@@ -29,9 +29,9 @@
     - ✅ get categories
     - ✅ call async vs non-async func[^8]
 
-- Connect swipe with behavior
-    - swipe left calls LMNetworkInterface.update
-        - find where update should be called
+- ✅ Connect swipe with behavior
+    - ✅ swipe left calls LMNetworkInterface.update
+        - ✅ find where update should be called
             - ✅ update category with local interface
                 - ✅ call update
                 - ✅ implement update category for LMLocalInterface
