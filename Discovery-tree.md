@@ -6,6 +6,9 @@
 
 - display no action taken when no update returns false
 
+- 👟 First run
+    - ✅ Delete ContentView
+
 - ✅ CategoriesSelectorView
     - ✅ disable swiping down to dismiss modal
     - ✅ workaround: show selected item at the top 

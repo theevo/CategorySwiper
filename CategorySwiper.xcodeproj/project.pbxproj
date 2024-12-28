@@ -28,7 +28,6 @@
 		27E554632D03B9A400186D6F /* NoTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E554622D03B9A400186D6F /* NoTransactionsView.swift */; };
 		27E554652D03EDF500186D6F /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E554642D03EDF500186D6F /* NetworkTests.swift */; };
 		27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */; };
-		27F3EC992CDAC26400851CCB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3EC982CDAC26400851CCB /* ContentView.swift */; };
 		27F3EC9B2CDAC26500851CCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F3EC9A2CDAC26500851CCB /* Assets.xcassets */; };
 		27F3EC9E2CDAC26500851CCB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F3EC9D2CDAC26500851CCB /* Preview Assets.xcassets */; };
 		27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECA72CDAC26500851CCB /* LocalTests.swift */; };
@@ -77,7 +76,6 @@
 		27E554642D03EDF500186D6F /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		27F3EC932CDAC26400851CCB /* CategorySwiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategorySwiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperApp.swift; sourceTree = "<group>"; };
-		27F3EC982CDAC26400851CCB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27F3EC9A2CDAC26500851CCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27F3EC9D2CDAC26500851CCB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		27F3ECA32CDAC26500851CCB /* CategorySwiperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CategorySwiperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,7 +138,6 @@
 				27F88AAB2D11FD89000D8DFF /* example-categories.json */,
 				27656D502D0243F100877E8B /* example-transactions.json */,
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
-				27F3EC982CDAC26400851CCB /* ContentView.swift */,
 				27C924F12D173E170081849D /* CategoriesSelectorView.swift */,
 				27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */,
 				27D638192CFBD22C00B43DE1 /* CardView.swift */,
@@ -330,7 +327,6 @@
 				27D6381A2CFBD22C00B43DE1 /* CardView.swift in Sources */,
 				27C924F22D173E170081849D /* CategoriesSelectorView.swift in Sources */,
 				272F16072D0279060040A272 /* ReceiptView.swift in Sources */,
-				27F3EC992CDAC26400851CCB /* ContentView.swift in Sources */,
 				27D638182CFBBE0A00B43DE1 /* Collection+notEmpty.swift in Sources */,
 				271319942D1683B0000D75A3 /* Category.swift in Sources */,
 				27A13ABE2CFA6AD200430ABF /* URLSessionBuilder.swift in Sources */,
