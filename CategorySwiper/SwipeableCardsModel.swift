@@ -12,10 +12,15 @@ class SwipeableCardsModel: ObservableObject {
     @Published var unswipedCards: [CardViewModel]
     @Published var swipedCards: [CardViewModel]
     
-    init(transactions: [CardViewModel]) {
-        self.originalCards = transactions
-        self.unswipedCards = transactions
+    init(cards: [CardViewModel]) {
+        self.originalCards = cards
+        self.unswipedCards = cards
         self.swipedCards = []
+    }
+    
+    convenience init(transactions: [Transaction]) {
+        let cards = transactions.map { CardViewModel(transaction: $0) }
+        self.init(cards: cards)
     }
     
     var isEmpty: Bool {

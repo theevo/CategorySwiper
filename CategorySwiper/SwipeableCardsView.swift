@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwipeableCardsView: View {
     @EnvironmentObject var manager: InterfaceManager
-    @ObservedObject var model: SwipeableCardsModel
+    @State var model: SwipeableCardsModel
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
     @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleDummy)
@@ -17,13 +17,13 @@ struct SwipeableCardsView: View {
     private let swipeThreshold: CGFloat = 100.0
     
     var body: some View {
-        if model.isEmpty {
-            NoTransactionsView()
-        } else if model.isDoneSwiping, !showingSheet {
-            SwipedAllCardsView()
-        }
-        else {
-            ZStack {
+        ZStack {
+            if model.isEmpty {
+                NoTransactionsView()
+            } else if model.isDoneSwiping, !showingSheet {
+                SwipedAllCardsView()
+            }
+            else {
                 ForEach($model.unswipedCards.reversed()) { card in
                     let isTop = model.isTopCard(card: card.wrappedValue)
                     let isSecond = model.isSecondCard(card: card.wrappedValue)
@@ -67,15 +67,22 @@ struct SwipeableCardsView: View {
                     )
                 }
             }
-            .sheet(isPresented: $showingSheet) {
-                CategoriesSelectorView(showingSheet: $showingSheet, model: CategoriesSelectorViewModel(
-                    categories: try! LMLocalInterface().getCategories().categories,
-                    card: CardViewModel(
-                        transaction: Transaction.exampleCentralMarket
-                    )
-                ))
-                .interactiveDismissDisabled()
+        }
+        .onAppear(perform: {
+            Task {
+                try await manager.loadData()
+                model = SwipeableCardsModel(transactions: manager.transactions)
+                
             }
+        })
+        .sheet(isPresented: $showingSheet) {
+            CategoriesSelectorView(showingSheet: $showingSheet, model: CategoriesSelectorViewModel(
+                categories: try! LMLocalInterface().getCategories().categories,
+                card: CardViewModel(
+                    transaction: Transaction.exampleCentralMarket
+                )
+            ))
+            .interactiveDismissDisabled()
         }
     }
     
@@ -107,7 +114,7 @@ struct SheetView: View {
 #Preview("5") {
     SwipeableCardsView(
         model: SwipeableCardsModel(
-            transactions: CardViewModel.getExamples(shuffled: true)
+            cards: CardViewModel.getExamples(shuffled: true)
         )
     )
     .environmentObject(InterfaceManager(localMode: true))
@@ -116,7 +123,7 @@ struct SheetView: View {
 #Preview("0 Transactions") {
     SwipeableCardsView(
         model: SwipeableCardsModel(
-            transactions: []
+            cards: []
         )
     )
     .environmentObject(InterfaceManager(localMode: true))

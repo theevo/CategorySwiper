@@ -9,14 +9,15 @@ import SwiftUI
 
 @main
 struct CategorySwiperApp: App {
+    var manager = InterfaceManager()
+    
     var body: some Scene {
         WindowGroup {
             SwipeableCardsView(
-                model: SwipeableCardsModel(
-                    transactions: CardViewModel.getExamples()
-                )
+                model:
+                    SwipeableCardsModel(transactions: manager.transactions)
             )
-            .environmentObject(InterfaceManager())
+            .environmentObject(manager)
         }
     }
 }

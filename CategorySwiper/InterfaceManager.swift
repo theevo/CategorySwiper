@@ -7,10 +7,10 @@
 
 import Foundation
 
-class InterfaceManager: ObservableObject {
+@MainActor class InterfaceManager: ObservableObject {
     private let interface: LunchMoneyInterface
-    var categories: [Category] = []
-    var transactions: [Transaction] = []
+    @Published var categories: [Category] = []
+    @Published var transactions: [Transaction] = []
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })
@@ -20,14 +20,22 @@ class InterfaceManager: ObservableObject {
         self.interface = localMode ? LMLocalInterface() : LMNetworkInterface()
     }
     
+    func loadData() async throws {
+        async let getTheCategories: () = getCategories()
+        async let getTheTransactions: () = getTransactions(showUnclearedOnly: true)
+        let _ = try await (getTheCategories, getTheTransactions)
+    }
+    
     public func getCategories() async throws {
         let response = try await interface.getCategories()
         self.categories = response.categories
+        print("☑️ finished loading \(self.categories.count) categories")
     }
     
     public func getTransactions(showUnclearedOnly: Bool = false) async throws {
         let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly)
         self.transactions = response.transactions
+        print("☑️ finished loading \(self.transactions.count) transactions")
     }
     
     public func update(transaction: Transaction, newCategory: Category) async throws -> Bool {

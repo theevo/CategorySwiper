@@ -7,7 +7,9 @@
 - display no action taken when no update returns false
 
 - 👟 First run
-    - load InterfaceManager with transactions, categories
+    - inject InterfaceManager.categories when editing
+    - ✅ convert Transactions to SwipeableCardsModel[^10]
+    - ✅ load InterfaceManager with transactions, categories
     - ✅ inject InterfaceManager as EnvironmentObject
     - ✅ Delete ContentView
 
@@ -243,3 +245,4 @@
 [^7]: At some point, you must create certainty. You can't hide a nil value forever.
 [^8]: I declared the LunchMoneyInterace protocol with `async throws`. It seems that if that is the type that is used, Swift assumes that you will be calling it with async even if the concrete type doesn't use async.
 [^9]: Interesting refactor. If you write do-try-catch in a test, you can add `throws` to the test method and remove the do-try-catch frame, leaving the contents of the do block.
+[^10]: It doesn't feel right for a View to initiate an API call and then transform the received data into ViewModels. Curious if there's a better way.
