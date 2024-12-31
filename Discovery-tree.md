@@ -6,9 +6,15 @@
 
 - display no action taken when no update returns false
 
+- 4 states
+    - onAppear calls load -> Spinner
+    - load returns no transactions -> NoTransactionsView
+    - load returns transactions -> swipe cards
+    - all cards swiped -> SwipedAllCardsView
+
 - 👟 First run
-    - fix SwipeableCardsView preview 0
-        - add InterfaceManager.empty
+    - 🔀 fix SwipeableCardsView preview 0[^11]
+        - ❌ add InterfaceManager.empty[^12]
         - ✅ make InterfaceManager the source of truth 
         - ✅ rename CardView param from transaction to card  
     - ✅ inject InterfaceManager.categories when editing
@@ -250,3 +256,5 @@
 [^8]: I declared the LunchMoneyInterace protocol with `async throws`. It seems that if that is the type that is used, Swift assumes that you will be calling it with async even if the concrete type doesn't use async.
 [^9]: Interesting refactor. If you write do-try-catch in a test, you can add `throws` to the test method and remove the do-try-catch frame, leaving the contents of the do block.
 [^10]: It doesn't feel right for a View to initiate an API call and then transform the received data into ViewModels. Curious if there's a better way.
+[^11]: Having a "0" preview is ambiguous. There are two unique states where transactions could be zero. First, if we load transactions and the return completes with no new transactions. Second, we load 1+ transactions and swipe through all of them. I wonder if the states can be clearly captured in a single view. This will be necessary for MVP but not necessary for a First Run. 
+[^12]: Not possible if the view calls manager.load. Maybe we need a 3rd LMInterface named LMLocalEmptyInterface?
