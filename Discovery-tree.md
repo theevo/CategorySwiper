@@ -13,10 +13,11 @@
     - all cards swiped -> SwipedAllCardsView, batch API updates calls
 
 - 👟 First run
-    - create StatesView[^13]
-        - absorb the conditional logic of SwipeableCardsModel's state
-    - 🔀 fix SwipeableCardsView preview 0[^11]
-        - ❌ add InterfaceManager.empty[^12]
+    - 👉 create StatesView[^13]
+        - inform StatesView when SwipeableCardsView swiping complete
+        - ✅ absorb the conditional logic of SwipeableCardsModel's state[^14]
+    - 🔀 fix SwipeableCardsView preview 0[^11][^14]
+        - ❌ add InterfaceManager.empty[^12][^14]
         - ✅ make InterfaceManager the source of truth 
         - ✅ rename CardView param from transaction to card  
     - ✅ inject InterfaceManager.categories when editing
@@ -261,3 +262,4 @@
 [^11]: Having a "0" preview is ambiguous. There are two unique states where transactions could be zero. First, if we load transactions and the return completes with no new transactions. Second, we load 1+ transactions and swipe through all of them. I wonder if the states can be clearly captured in a single view. This will be necessary for MVP but not necessary for a First Run. 
 [^12]: Not possible if the view calls manager.load. Maybe we need a 3rd LMInterface named LMLocalEmptyInterface?
 [^13]: Because I present a sheet after the card is swiped left, the removal of the said card takes place BEFORE the user chooses a new category. I'm not sure how the app can know to watch the swipedCards array for a recently appended card that was swiped left and then call the API to update its category. Another possibility, which seems inevitable now, is to process all swipedCards in batch after all swiping is complete.
+[^14]: I'm embracing non-linear development. I was able to accomplish returning zero transactions by creating a new LunchMoneyInterface: LMEmptyInterface. What forced this to happen was the need for an empty case in the just minted StatesView.

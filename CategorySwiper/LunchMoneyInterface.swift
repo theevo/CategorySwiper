@@ -83,3 +83,21 @@ enum LoaderError: LocalizedError {
         }
     }
 }
+
+struct LMEmptyInterface: LunchMoneyInterface {
+    func getCategories() async throws -> CategoryResponseWrapper {
+        return CategoryResponseWrapper(categories: [])
+    }
+    
+    func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper {
+        return TransactionsResponseWrapper(transactions: [])
+    }
+    
+    func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
+        return false
+    }
+    
+    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
+        return false
+    }
+}
