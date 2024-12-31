@@ -7,7 +7,8 @@
 - display no action taken when no update returns false
 
 - 👟 First run
-    - inject InterfaceManager.categories when editing
+    - fix SwipeableCardsView preview 0
+    - ✅ inject InterfaceManager.categories when editing
     - ✅ convert Transactions to SwipeableCardsModel[^10]
     - ✅ load InterfaceManager with transactions, categories
     - ✅ inject InterfaceManager as EnvironmentObject

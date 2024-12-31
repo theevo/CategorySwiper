@@ -76,12 +76,13 @@ struct SwipeableCardsView: View {
             }
         })
         .sheet(isPresented: $showingSheet) {
-            CategoriesSelectorView(showingSheet: $showingSheet, model: CategoriesSelectorViewModel(
-                categories: try! LMLocalInterface().getCategories().categories,
-                card: CardViewModel(
-                    transaction: Transaction.exampleCentralMarket
+            CategoriesSelectorView(
+                showingSheet: $showingSheet,
+                model: CategoriesSelectorViewModel(
+                    categories: manager.categories,
+                    card: cardToEdit
                 )
-            ))
+            )
             .interactiveDismissDisabled()
         }
     }
