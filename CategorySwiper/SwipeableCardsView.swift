@@ -29,7 +29,7 @@ struct SwipeableCardsView: View {
                     let isSecond = model.isSecondCard(card: card.wrappedValue)
                     
                     CardView(
-                        transaction: card,
+                        card: card,
                         isTop: isTop,
                         isSecond: isSecond,
                         dragOffset: dragState

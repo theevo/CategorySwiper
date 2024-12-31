@@ -8,6 +8,9 @@
 
 - 👟 First run
     - fix SwipeableCardsView preview 0
+        - add InterfaceManager.empty
+        - make InterfaceManager the source of truth 
+        - ✅ rename CardView param from transaction to card  
     - ✅ inject InterfaceManager.categories when editing
     - ✅ convert Transactions to SwipeableCardsModel[^10]
     - ✅ load InterfaceManager with transactions, categories

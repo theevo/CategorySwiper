@@ -12,7 +12,7 @@ enum PreviewScreen {
 }
 
 struct CardView: View {
-    @Binding var transaction: CardViewModel
+    @Binding var card: CardViewModel
     var isTop: Bool = false
     var isSecond: Bool = false
     var size: CGSize = PreviewScreen.size
@@ -35,14 +35,14 @@ struct CardView: View {
                 .fill(.background)
                 .shadow(color: getShadowColor(), radius: 10)
             VStack {
-                Text(transaction.category + "?")
+                Text(card.category + "?")
                     .font(.largeTitle)
                 Text("\n")
                 VStack {
-                    Text(transaction.merchant)
+                    Text(card.merchant)
                         .font(.title2)
-                    Text(transaction.date)
-                    Text(transaction.amount, format: .currency(code: transaction.currency))
+                    Text(card.date)
+                    Text(card.amount, format: .currency(code: card.currency))
                 }
                 .padding()
                 .background(HierarchicalShapeStyle.quinary)
@@ -72,7 +72,7 @@ struct CardViewWithExamplePreview: View {
     var dragOffset: CGSize = .zero
     
     var body: some View {
-        CardView(transaction: $example, isTop: isTop, dragOffset: dragOffset)
+        CardView(card: $example, isTop: isTop, dragOffset: dragOffset)
     }
 }
 
