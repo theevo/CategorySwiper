@@ -44,18 +44,33 @@ class SwipeableCardsModel: ObservableObject {
             guard let card = unswipedCards.first else { return }
             unswipedCards.removeFirst()
             swipedCards.append(card)
+            print("\(card.merchant) was moved to swipedCards")
         }
     }
     
     func updateTopCardSwipeDirection(_ direction: CardViewModel.SwipeDirection) {
         if !unswipedCards.isEmpty {
-            unswipedCards[0].swipeDirection = direction
+            var card = unswipedCards[0]
+            card.swipeDirection = direction
+            applyAction(card: card)
         }
     }
     
     func reset() {
         unswipedCards = originalCards
         swipedCards = []
+    }
+    
+    private func applyAction(card: CardViewModel) {
+        switch card.swipeDirection {
+        case .right:
+//            _ = try? LMLocalInterface().update(transaction: transaction, newStatus: .cleared)
+            print("\(card.merchant) has been cleared")
+        case .left:
+            print("\(card.merchant) was swiped left.")
+        case .none:
+            print("this card has not been swiped. no action taken.")
+        }
     }
 }
 

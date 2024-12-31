@@ -17,11 +17,7 @@ struct CardViewModel: Identifiable {
     var category_name: String?
     var transaction: Transaction
     
-    var swipeDirection: SwipeDirection = .none {
-        didSet {
-            applyAction()
-        }
-    }
+    var swipeDirection: SwipeDirection = .none
     
     var currency: String {
         rawCurrency.uppercased()
@@ -40,18 +36,6 @@ struct CardViewModel: Identifiable {
         self.category_id = transaction.category_id
         self.category_name = transaction.category_name
         self.transaction = transaction
-    }
-    
-    func applyAction() {
-        switch swipeDirection {
-        case .right:
-            _ = try? LMLocalInterface().update(transaction: transaction, newStatus: .cleared)
-            print("\(merchant) has been cleared")
-        case .left:
-            print("Swiped left.")
-        case .none:
-            print("this card has not been swiped. no action taken.")
-        }
     }
 }
 

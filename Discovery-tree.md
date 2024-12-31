@@ -10,9 +10,11 @@
     - onAppear calls load -> Spinner
     - load returns no transactions -> NoTransactionsView
     - load returns transactions -> swipe cards
-    - all cards swiped -> SwipedAllCardsView
+    - all cards swiped -> SwipedAllCardsView, batch API updates calls
 
 - 👟 First run
+    - create StatesView[^13]
+        - absorb the conditional logic of SwipeableCardsModel's state
     - 🔀 fix SwipeableCardsView preview 0[^11]
         - ❌ add InterfaceManager.empty[^12]
         - ✅ make InterfaceManager the source of truth 
@@ -258,3 +260,4 @@
 [^10]: It doesn't feel right for a View to initiate an API call and then transform the received data into ViewModels. Curious if there's a better way.
 [^11]: Having a "0" preview is ambiguous. There are two unique states where transactions could be zero. First, if we load transactions and the return completes with no new transactions. Second, we load 1+ transactions and swipe through all of them. I wonder if the states can be clearly captured in a single view. This will be necessary for MVP but not necessary for a First Run. 
 [^12]: Not possible if the view calls manager.load. Maybe we need a 3rd LMInterface named LMLocalEmptyInterface?
+[^13]: Because I present a sheet after the card is swiped left, the removal of the said card takes place BEFORE the user chooses a new category. I'm not sure how the app can know to watch the swipedCards array for a recently appended card that was swiped left and then call the API to update its category. Another possibility, which seems inevitable now, is to process all swipedCards in batch after all swiping is complete.
