@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwipeableCardsView: View {
     @EnvironmentObject var manager: InterfaceManager
-    @State var model: SwipeableCardsModel
+    @State private var model: SwipeableCardsModel = SwipeableCardsModel.empty
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
     @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleDummy)
@@ -96,7 +96,7 @@ struct SheetView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var showingSheet: Bool
     @Binding var card: CardViewModel
-
+    
     var body: some View {
         VStack {
             Text(card.merchant)
@@ -113,19 +113,11 @@ struct SheetView: View {
 }
 
 #Preview("5") {
-    SwipeableCardsView(
-        model: SwipeableCardsModel(
-            cards: CardViewModel.getExamples(shuffled: true)
-        )
-    )
-    .environmentObject(InterfaceManager(localMode: true))
+    SwipeableCardsView()
+        .environmentObject(InterfaceManager(localMode: true))
 }
 
 #Preview("0 Transactions") {
-    SwipeableCardsView(
-        model: SwipeableCardsModel(
-            cards: []
-        )
-    )
-    .environmentObject(InterfaceManager(localMode: true))
+    SwipeableCardsView()
+        .environmentObject(InterfaceManager(localMode: true))
 }

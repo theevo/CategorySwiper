@@ -13,11 +13,8 @@ struct CategorySwiperApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SwipeableCardsView(
-                model:
-                    SwipeableCardsModel(transactions: manager.transactions)
-            )
-            .environmentObject(manager)
+            SwipeableCardsView()
+                .environmentObject(manager)
         }
     }
 }

@@ -58,3 +58,7 @@ class SwipeableCardsModel: ObservableObject {
         swipedCards = []
     }
 }
+
+extension SwipeableCardsModel {
+    public static var empty: SwipeableCardsModel = SwipeableCardsModel(cards: [])
+}
