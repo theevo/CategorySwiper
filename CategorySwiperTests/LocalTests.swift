@@ -23,13 +23,13 @@ final class LocalTests: XCTestCase {
         XCTAssertEqual(manager.transactions.count, manager.uncleared.count)
     }
     
-    func test_LocalTransactionsLoader_request5_get5Transactions() async throws {
+    func test_LocalInterface_request5_get5Transactions() async throws {
         let interface = LMLocalInterface()
         let transactions = try interface.loadTransactions(limit: 5)
         XCTAssertEqual(transactions.count, 5)
     }
     
-    func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async throws {
+    func test_InterfaceManager_getCategories_containsApplesCategory() async throws {
         let manager = InterfaceManager(dataSource: .Local)
         try await manager.getCategories()
         XCTAssertTrue(manager.categories.notEmpty)

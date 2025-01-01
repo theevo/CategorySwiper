@@ -33,7 +33,7 @@ final class NetworkTests: XCTestCase {
         XCTAssertEqual(response.statusCode, 401)
     }
     
-    func test_InterfaceManager_resultsIn_nonEmptyTransactions() async throws {
+    func test_InterfaceManager_getTransactions_resultsInNonEmptyTransactions() async throws {
         let manager = InterfaceManager()
         try await manager.getTransactions()
         XCTAssertTrue(manager.transactions.notEmpty)
