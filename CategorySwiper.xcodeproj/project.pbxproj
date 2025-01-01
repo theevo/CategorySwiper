@@ -10,6 +10,9 @@
 		2710B2D82D1DCF4E00E7676B /* InterfaceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2710B2D72D1DCF4E00E7676B /* InterfaceManager.swift */; };
 		271319942D1683B0000D75A3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271319932D1683B0000D75A3 /* Category.swift */; };
 		27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27158EB52CFC1AF90093421F /* CardViewModel.swift */; };
+		2715AA0F2D25C90F00273F2D /* MonthRangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2715AA0E2D25C90F00273F2D /* MonthRangeBuilder.swift */; };
+		2715AA122D25CB3F00273F2D /* Time in Frameworks */ = {isa = PBXBuildFile; productRef = 2715AA112D25CB3F00273F2D /* Time */; };
+		2715AA142D25CBDC00273F2D /* MonthRangeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2715AA132D25CBDC00273F2D /* MonthRangeBuilderTests.swift */; };
 		272F16032D0276240040A272 /* SwipedAllCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16022D0276240040A272 /* SwipedAllCardsView.swift */; };
 		272F16052D0277630040A272 /* SwipeableCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16042D0277630040A272 /* SwipeableCardsModel.swift */; };
 		272F16072D0279060040A272 /* ReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F16062D0279060040A272 /* ReceiptView.swift */; };
@@ -58,6 +61,8 @@
 		2710B2D72D1DCF4E00E7676B /* InterfaceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceManager.swift; sourceTree = "<group>"; };
 		271319932D1683B0000D75A3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		27158EB52CFC1AF90093421F /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		2715AA0E2D25C90F00273F2D /* MonthRangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRangeBuilder.swift; sourceTree = "<group>"; };
+		2715AA132D25CBDC00273F2D /* MonthRangeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRangeBuilderTests.swift; sourceTree = "<group>"; };
 		272F16022D0276240040A272 /* SwipedAllCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipedAllCardsView.swift; sourceTree = "<group>"; };
 		272F16042D0277630040A272 /* SwipeableCardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCardsModel.swift; sourceTree = "<group>"; };
 		272F16062D0279060040A272 /* ReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptView.swift; sourceTree = "<group>"; };
@@ -93,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2715AA122D25CB3F00273F2D /* Time in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +166,7 @@
 				27D638152CFBBD7C00B43DE1 /* LunchMoneyInterface.swift */,
 				276BF6A52D15F9720063935D /* LMNetworkInterface.swift */,
 				27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */,
+				2715AA0E2D25C90F00273F2D /* MonthRangeBuilder.swift */,
 			);
 			path = CategorySwiper;
 			sourceTree = "<group>";
@@ -177,6 +184,7 @@
 			children = (
 				27F3ECA72CDAC26500851CCB /* LocalTests.swift */,
 				27E554642D03EDF500186D6F /* NetworkTests.swift */,
+				2715AA132D25CBDC00273F2D /* MonthRangeBuilderTests.swift */,
 			);
 			path = CategorySwiperTests;
 			sourceTree = "<group>";
@@ -278,6 +286,9 @@
 				Base,
 			);
 			mainGroup = 27F3EC8A2CDAC26400851CCB;
+			packageReferences = (
+				2715AA102D25CB3F00273F2D /* XCRemoteSwiftPackageReference "time" */,
+			);
 			productRefGroup = 27F3EC942CDAC26400851CCB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -331,6 +342,7 @@
 				27D6381A2CFBD22C00B43DE1 /* CardView.swift in Sources */,
 				27C924F22D173E170081849D /* CategoriesSelectorView.swift in Sources */,
 				272F16072D0279060040A272 /* ReceiptView.swift in Sources */,
+				2715AA0F2D25C90F00273F2D /* MonthRangeBuilder.swift in Sources */,
 				27D638182CFBBE0A00B43DE1 /* Collection+notEmpty.swift in Sources */,
 				271319942D1683B0000D75A3 /* Category.swift in Sources */,
 				27A13ABE2CFA6AD200430ABF /* URLSessionBuilder.swift in Sources */,
@@ -351,6 +363,7 @@
 			files = (
 				27E554652D03EDF500186D6F /* NetworkTests.swift in Sources */,
 				27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */,
+				2715AA142D25CBDC00273F2D /* MonthRangeBuilderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +685,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2715AA102D25CB3F00273F2D /* XCRemoteSwiftPackageReference "time" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davedelong/time";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2715AA112D25CB3F00273F2D /* Time */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2715AA102D25CB3F00273F2D /* XCRemoteSwiftPackageReference "time" */;
+			productName = Time;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 27F3EC8B2CDAC26400851CCB /* Project object */;
 }
