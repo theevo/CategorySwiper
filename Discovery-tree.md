@@ -131,7 +131,10 @@
 
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
 
-- query by month
+- 👉 query by month
+    - ✅ fix tests due to InterfaceManager changes
+        - ✅ @MainActor
+        - ✅ dataSource param
 
 - ✅ divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
     - ✅ remove lunchMoney strings from URLSessionBuilder

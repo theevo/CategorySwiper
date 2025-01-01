@@ -8,16 +8,17 @@
 import XCTest
 @testable import CategorySwiper
 
+@MainActor
 final class LocalTests: XCTestCase {
     
     func test_InterfaceManager_returns_nonEmptyTransactionsArray() async throws {
-        let manager = InterfaceManager(localMode: true)
+        let manager = InterfaceManager(dataSource: .Local)
         try await manager.getTransactions()
         XCTAssertTrue(manager.transactions.notEmpty)
     }
     
     func test_InterfaceManager_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
-        let manager = InterfaceManager(localMode: true)
+        let manager = InterfaceManager(dataSource: .Local)
         try await manager.getTransactions(showUnclearedOnly: true)
         XCTAssertEqual(manager.transactions.count, manager.uncleared.count)
     }
@@ -29,7 +30,7 @@ final class LocalTests: XCTestCase {
     }
     
     func test_InterfaceManager_getCategories_returnsNonEmptyCategoriesArray() async throws {
-        let manager = InterfaceManager(localMode: true)
+        let manager = InterfaceManager(dataSource: .Local)
         try await manager.getCategories()
         XCTAssertTrue(manager.categories.notEmpty)
         
@@ -40,7 +41,7 @@ final class LocalTests: XCTestCase {
     }
     
     func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsDifferent_returnsTrue() async throws {
-        let manager = InterfaceManager(localMode: true)
+        let manager = InterfaceManager(dataSource: .Local)
         let transaction = Transaction.exampleCentralMarket
         
         let result = try await manager.update(transaction: transaction, newCategory: Category.exampleMusic)
@@ -48,7 +49,7 @@ final class LocalTests: XCTestCase {
     }
     
     func test_InterfaceManager_updateTransactionCategory_whenNewCategoryIsSame_returnsFalse() async throws {
-        let manager = InterfaceManager(localMode: true)
+        let manager = InterfaceManager(dataSource: .Local)
         let transaction = Transaction.exampleCentralMarket
         
         let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGas)

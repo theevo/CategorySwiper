@@ -8,6 +8,7 @@
 import XCTest
 @testable import CategorySwiper
 
+@MainActor
 final class NetworkTests: XCTestCase {
 
     func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
