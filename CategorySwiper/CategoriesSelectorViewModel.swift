@@ -7,10 +7,10 @@
 
 import Foundation
 
-class CategoriesSelectorViewModel: ObservableObject {
+struct CategoriesSelectorViewModel {
     var categories: [Category]
-    @Published var selectedCategory: Category?
-    @Published var card: CardViewModel
+    var selectedCategory: Category?
+    var card: CardViewModel
     
     var selectedCategoryName: String {
         if let selectedCategory = selectedCategory,
@@ -27,7 +27,7 @@ class CategoriesSelectorViewModel: ObservableObject {
         self.card = card
     }
     
-    convenience init(categories: [Category], card: CardViewModel) {
+    init(categories: [Category], card: CardViewModel) {
         let category = CategoriesSelectorViewModel.find(id: card.category_id, in: categories)
                 
         self.init(
@@ -62,4 +62,6 @@ extension CategoriesSelectorViewModel {
             return nil
         }
     }
+    
+    static let dummy = CategoriesSelectorViewModel(categories: [], card: CardViewModel.dummy)
 }

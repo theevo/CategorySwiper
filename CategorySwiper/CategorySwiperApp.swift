@@ -13,7 +13,6 @@ struct CategorySwiperApp: App {
     
     var body: some Scene {
         WindowGroup {
-            //            SwipeableCardsView()
             StatesView()
                 .environmentObject(manager)
         }

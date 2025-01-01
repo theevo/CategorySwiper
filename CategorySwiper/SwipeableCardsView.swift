@@ -9,78 +9,62 @@ import SwiftUI
 
 struct SwipeableCardsView: View {
     @EnvironmentObject var manager: InterfaceManager
-    @State private var model: SwipeableCardsModel = SwipeableCardsModel.empty
     @State private var dragState = CGSize.zero
     @State private var showingSheet = false
-    @State var cardToEdit: CardViewModel = CardViewModel(transaction: Transaction.exampleDummy)
+    @State var categoriesModel: CategoriesSelectorViewModel = CategoriesSelectorViewModel.dummy
     
     private let swipeThreshold: CGFloat = 100.0
     
     var body: some View {
-        VStack {
-            if model.isDoneSwiping, !showingSheet {
-                Text("Finished swiping")
-            } else {
-                ZStack {
-                    ForEach($model.unswipedCards.reversed()) { card in
-                        let isTop = model.isTopCard(card: card.wrappedValue)
-                        let isSecond = model.isSecondCard(card: card.wrappedValue)
-                        
-                        CardView(
-                            card: card,
-                            isTop: isTop,
-                            isSecond: isSecond,
-                            dragOffset: dragState
-                        )
-                        .offset(x: isTop ? dragState.width : 0)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { gesture in
-                                    self.dragState = gesture.translation
-                                    //                    self.cardRotation = Double(gesture.translation.width) / rotationFactor
+        ZStack {
+            ForEach($manager.cardsModel.unswipedCards.reversed()) { card in
+                let isTop = manager.cardsModel.isTopCard(card: card.wrappedValue)
+                let isSecond = manager.cardsModel.isSecondCard(card: card.wrappedValue)
+                
+                CardView(
+                    card: card,
+                    isTop: isTop,
+                    isSecond: isSecond,
+                    dragOffset: dragState
+                )
+                .offset(x: isTop ? dragState.width : 0)
+                .gesture(
+                    DragGesture()
+                        .onChanged { gesture in
+                            self.dragState = gesture.translation
+                            //                    self.cardRotation = Double(gesture.translation.width) / rotationFactor
+                        }
+                        .onEnded { value in
+                            if abs(self.dragState.width) > swipeThreshold {
+                                let swipeDirection: CardViewModel.SwipeDirection = self.dragState.width > 0 ? .right : .left
+                                manager.cardsModel.updateTopCardSwipeDirection(swipeDirection)
+                                if swipeDirection == .left {
+                                    let cardToEdit = card.wrappedValue
+                                    categoriesModel = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+                                    showModal()
                                 }
-                                .onEnded { value in
-                                    if abs(self.dragState.width) > swipeThreshold {
-                                        let swipeDirection: CardViewModel.SwipeDirection = self.dragState.width > 0 ? .right : .left
-                                        model.updateTopCardSwipeDirection(swipeDirection)
-                                        if swipeDirection == .left {
-                                            cardToEdit = card.wrappedValue
-                                            showModal()
-                                        }
-                                        
-                                        withAnimation(.easeOut(duration: 0.5)) {
-                                            self.dragState.width = self.dragState.width > 0 ? 1000 : -1000
-                                        }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                            self.model.removeTopCard()
-                                            self.dragState = .zero
-                                        }
-                                    } else {
-                                        withAnimation(.bouncy(extraBounce:0.21)) {
-                                            self.dragState = .zero
-                                            //                            self.cardRotation = 0
-                                        }
-                                    }
+                                
+                                withAnimation(.easeOut(duration: 0.5)) {
+                                    self.dragState.width = self.dragState.width > 0 ? 1000 : -1000
                                 }
-                        )
-                    }
-                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    self.manager.cardsModel.removeTopCard()
+                                    self.dragState = .zero
+                                }
+                            } else {
+                                withAnimation(.bouncy(extraBounce:0.21)) {
+                                    self.dragState = .zero
+                                    //                            self.cardRotation = 0
+                                }
+                            }
+                        }
+                )
             }
         }
-        .onAppear(perform: {
-            Task {
-                try await manager.loadData()
-                model = SwipeableCardsModel(transactions: manager.transactions)
-                
-            }
-        })
         .sheet(isPresented: $showingSheet) {
             CategoriesSelectorView(
                 showingSheet: $showingSheet,
-                model: CategoriesSelectorViewModel(
-                    categories: manager.categories,
-                    card: cardToEdit
-                )
+                model: $categoriesModel
             )
             .interactiveDismissDisabled()
         }
@@ -111,7 +95,7 @@ struct SheetView: View {
     }
 }
 
-#Preview("5") {
+#Preview("Some") {
     SwipeableCardsView()
         .environmentObject(InterfaceManager(dataSource: .Local))
 }

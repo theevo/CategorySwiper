@@ -9,14 +9,17 @@ import Foundation
 
 @MainActor class InterfaceManager: ObservableObject {
     private let interface: LunchMoneyInterface
-    @Published var categories: [Category] = []
-    @Published var transactions: [Transaction] = []
+    var categories: [Category] = []
+    var transactions: [Transaction] = []
+    @Published var appState: AppState = .Fetching
+    @Published var cardsModel: SwipeableCardsModel = SwipeableCardsModel.empty
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })
     }
     
     init(dataSource: DataSource = .Production) {
+        print("💿 running in \(dataSource)")
         switch dataSource {
         case .Production:
             self.interface = LMNetworkInterface()
@@ -24,6 +27,29 @@ import Foundation
             self.interface = LMLocalInterface()
         case .Empty:
             self.interface = LMEmptyInterface()
+        }
+        runTaskAndAdvanceState()
+    }
+    
+    public func runTaskAndAdvanceState() {
+        switch appState {
+        case .Fetching:
+            Task {
+                print("calling loadData")
+                try await loadData()
+                if transactions.isEmpty {
+                    appState = .FetchEmpty
+                } else {
+                    appState = .Swiping
+                    cardsModel = SwipeableCardsModel(transactions: transactions)
+                }
+            }
+        case .FetchEmpty:
+            print("no transactions")
+        case .Swiping:
+            appState = .Done
+        case .Done:
+            print("done swiping")
         }
     }
     
@@ -36,13 +62,13 @@ import Foundation
     public func getCategories() async throws {
         let response = try await interface.getCategories()
         self.categories = response.categories
-        print("☑️ finished loading \(self.categories.count) categories")
+        print("☑️ finished loading \(self.categories.count) categories at \(Date().formatted())")
     }
     
     public func getTransactions(showUnclearedOnly: Bool = false) async throws {
         let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly)
         self.transactions = response.transactions
-        print("☑️ finished loading \(self.transactions.count) transactions")
+        print("☑️ finished loading \(self.transactions.count) transactions at \(Date().formatted())")
     }
     
     public func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
@@ -60,5 +86,12 @@ extension InterfaceManager {
     /// __Empty__: Zero transactions, Zero categories. Great for Tests and Previews.
     enum DataSource {
         case Production, Local, Empty
+    }
+    
+    enum AppState: String {
+        case Fetching
+        case FetchEmpty
+        case Swiping
+        case Done
     }
 }

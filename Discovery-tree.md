@@ -7,14 +7,16 @@
 - display no action taken when no update returns false
 
 - 4 states
-    - onAppear calls load -> Spinner
-    - load returns no transactions -> NoTransactionsView
-    - load returns transactions -> swipe cards
+    - ✅ onAppear calls load -> Spinner
+    - ✅ load returns no transactions -> NoTransactionsView
+    - ✅ load returns transactions -> swipe cards
     - all cards swiped -> SwipedAllCardsView, batch API updates calls
 
 - 👟 First run
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
+        - ✅ create ViewModels from within InterfaceManager[^15]
+        - ✅ move AppStates into InterfaceManager
         - ✅ absorb the conditional logic of SwipeableCardsModel's state[^14]
     - 🔀 fix SwipeableCardsView preview 0[^11][^14]
         - ❌ add InterfaceManager.empty[^12][^14]
@@ -128,6 +130,8 @@
 ## API calls
 
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
+
+- query by month
 
 - ✅ divorce LunchMoney specifics from NetworkInterface (now URLSessionBuilder)
     - ✅ remove lunchMoney strings from URLSessionBuilder
@@ -263,3 +267,4 @@
 [^12]: Not possible if the view calls manager.load. Maybe we need a 3rd LMInterface named LMLocalEmptyInterface?
 [^13]: Because I present a sheet after the card is swiped left, the removal of the said card takes place BEFORE the user chooses a new category. I'm not sure how the app can know to watch the swipedCards array for a recently appended card that was swiped left and then call the API to update its category. Another possibility, which seems inevitable now, is to process all swipedCards in batch after all swiping is complete.
 [^14]: I'm embracing non-linear development. I was able to accomplish returning zero transactions by creating a new LunchMoneyInterface: LMEmptyInterface. What forced this to happen was the need for an empty case in the just minted StatesView.
+[^15]: I decided to address the nested ObservableObjects problem by making the ViewModels simple structs, removing their ObservableObject conformance, and making them Published properties of InterfaceManager. Blogger [rhonabwy](https://rhonabwy.com/2021/02/13/nested-observable-objects-in-swiftui/) suggests rethinking the model. Taking manual control of Publshing seems like a huge distraction to this app, and this seemed like a necessary evil to achieve a first run.

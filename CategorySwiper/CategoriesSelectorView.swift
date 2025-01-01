@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoriesSelectorView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var showingSheet: Bool
-    @ObservedObject var model: CategoriesSelectorViewModel
+    @Binding var model: CategoriesSelectorViewModel
     
     var body: some View {
         HStack {
@@ -44,12 +44,12 @@ struct CategoriesSelectorView: View {
 
 struct CategorySelectorPreviewView: View {
     @State var showingSheet: Bool = true
-    var model: CategoriesSelectorViewModel
+    @State var model: CategoriesSelectorViewModel
     
     var body: some View {
         CategoriesSelectorView(
             showingSheet: $showingSheet,
-            model: model
+            model: $model
         )
     }
 }

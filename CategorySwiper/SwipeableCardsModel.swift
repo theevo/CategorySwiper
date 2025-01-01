@@ -7,10 +7,10 @@
 
 import Foundation
 
-class SwipeableCardsModel: ObservableObject {
+struct SwipeableCardsModel {
     private var originalCards: [CardViewModel]
-    @Published var unswipedCards: [CardViewModel]
-    @Published var swipedCards: [CardViewModel]
+    var unswipedCards: [CardViewModel]
+    var swipedCards: [CardViewModel]
     
     init(cards: [CardViewModel]) {
         self.originalCards = cards
@@ -18,7 +18,7 @@ class SwipeableCardsModel: ObservableObject {
         self.swipedCards = []
     }
     
-    convenience init(transactions: [Transaction]) {
+    init(transactions: [Transaction]) {
         let cards = transactions.map { CardViewModel(transaction: $0) }
         self.init(cards: cards)
     }
@@ -39,7 +39,7 @@ class SwipeableCardsModel: ObservableObject {
         card == unswipedCards.dropFirst().first
     }
     
-    func removeTopCard() {
+    mutating func removeTopCard() {
         if !unswipedCards.isEmpty {
             guard let card = unswipedCards.first else { return }
             unswipedCards.removeFirst()
@@ -48,7 +48,7 @@ class SwipeableCardsModel: ObservableObject {
         }
     }
     
-    func updateTopCardSwipeDirection(_ direction: CardViewModel.SwipeDirection) {
+    mutating func updateTopCardSwipeDirection(_ direction: CardViewModel.SwipeDirection) {
         if !unswipedCards.isEmpty {
             var card = unswipedCards[0]
             card.swipeDirection = direction
@@ -56,7 +56,7 @@ class SwipeableCardsModel: ObservableObject {
         }
     }
     
-    func reset() {
+    mutating func reset() {
         unswipedCards = originalCards
         swipedCards = []
     }

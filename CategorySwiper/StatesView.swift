@@ -7,20 +7,12 @@
 
 import SwiftUI
 
-enum AppStates: String {
-    case Fetching
-    case FetchEmpty
-    case Swiping
-    case Done
-}
-
 struct StatesView: View {
     @EnvironmentObject var manager: InterfaceManager
-    @State var appState: AppStates = .Fetching
     
     var body: some View {
         VStack {
-            switch appState {
+            switch manager.appState {
             case .Fetching:
                 ProgressView()
             case .FetchEmpty:
@@ -32,16 +24,7 @@ struct StatesView: View {
             }
         }
         .onAppear {
-            Task {
-                if appState == .Fetching {
-                    try await manager.loadData()
-                    if manager.transactions.isEmpty {
-                        appState = .FetchEmpty
-                    } else {
-                        appState = .Swiping
-                    }
-                }
-            }
+            print("🧐 StatesView appeared")
         }
     }
 }

@@ -40,6 +40,7 @@ struct CardViewModel: Identifiable {
 }
 
 extension CardViewModel {
+    static let dummy = CardViewModel(transaction: Transaction.exampleDummy)
     static let example = CardViewModel(transaction: Transaction.exampleCentralMarket)
     
     static func getExamples(showUnclearedOnly: Bool = true, limit: Int = 5, shuffled: Bool = false) -> [CardViewModel] {
