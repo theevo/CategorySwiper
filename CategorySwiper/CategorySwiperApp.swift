@@ -9,12 +9,16 @@ import SwiftUI
 
 @main
 struct CategorySwiperApp: App {
-    var manager = InterfaceManager()
+    private var isProduction: Bool {
+        NSClassFromString("XCTestCase") == nil
+    }
     
     var body: some Scene {
         WindowGroup {
-            StatesView()
-                .environmentObject(manager)
+            if isProduction {
+                StatesView()
+                    .environmentObject(InterfaceManager())
+            }
         }
     }
 }
