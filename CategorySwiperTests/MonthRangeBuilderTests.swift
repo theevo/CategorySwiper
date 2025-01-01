@@ -11,25 +11,23 @@ import XCTest
 class MonthRangeBuilderTests: XCTestCase {
     func test_1monthAgo() {
         let currentDate = utcDate(from: "1980-06-05")
-        let sut = MonthRangeBuilder(currentDate: currentDate)
-        let previousMonth = sut.monthsAgo(1)
-        XCTAssertEqual(previousMonth.month, 5)
+        let sut = MonthRangeBuilder(currentDate: currentDate, monthsAgo: 1)
+        XCTAssertEqual(sut.first, "1980-05-01")
+        XCTAssertEqual(sut.last, "1980-05-31")
     }
     
     func test_2monthsAgo() {
         let currentDate = utcDate(from: "1980-06-05")
-        let sut = MonthRangeBuilder(currentDate: currentDate)
-        let previousMonth = sut.monthsAgo(2)
-        XCTAssertEqual(previousMonth.month, 4)
+        let sut = MonthRangeBuilder(currentDate: currentDate, monthsAgo: 2)
+        XCTAssertEqual(sut.first, "1980-04-01")
+        XCTAssertEqual(sut.last, "1980-04-30")
     }
     
     func test_4MonthsAgo_firstDayAndLastDay() {
         let currentDate = utcDate(from: "1980-06-05")
-        let sut = MonthRangeBuilder(currentDate: currentDate)
-        let previousMonth = sut.monthsAgo(4)
-        XCTAssertEqual(previousMonth.month, 2)
-        XCTAssertEqual(previousMonth.firstAndLastDay.first, "1980-02-01")
-        XCTAssertEqual(previousMonth.firstAndLastDay.last, "1980-02-29")
+        let sut = MonthRangeBuilder(currentDate: currentDate, monthsAgo: 4)
+        XCTAssertEqual(sut.first, "1980-02-01")
+        XCTAssertEqual(sut.last, "1980-02-29")
     }
     
     // MARK: - Helpers

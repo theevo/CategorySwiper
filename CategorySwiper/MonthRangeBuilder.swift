@@ -9,24 +9,25 @@ import Foundation
 import Time
 
 struct MonthRangeBuilder {
-    private var clock: any RegionalClock
+    public var first: String
+    public var last: String
     
-    init(currentDate: Date? = nil) {
+    init(currentDate: Date? = nil, monthsAgo months: UInt) {
+        var clock: any RegionalClock
         if let currentDate = currentDate {
-            self.clock = Clocks.custom(startingFrom: Instant(date: currentDate))
+            clock = Clocks.custom(startingFrom: Instant(date: currentDate))
         } else {
-            self.clock = Clocks.system
+            clock = Clocks.system
         }
-    }
-    
-    public func monthsAgo(_ months: UInt) -> Fixed<Month> {
+        
         var month = clock.currentMonth
         
         for _ in 0..<months {
             month = month.previous
         }
         
-        return month
+        self.first = month.firstAndLastDay.first
+        self.last = month.firstAndLastDay.last
     }
 }
 
