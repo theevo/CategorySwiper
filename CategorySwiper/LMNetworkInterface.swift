@@ -30,9 +30,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
         let builder = makeURLSessionBuilder()
         
         let filters = showUnclearedOnly ? [
-            Filter.Uncleared,
-            Filter.StartDate(string: "2024-12-01"),
-            Filter.EndDate(string: "2024-12-31")
+            LMQueryParams.Transactions.Uncleared,
+            LMQueryParams.Transactions.StartDate(string: "2024-12-01"),
+            LMQueryParams.Transactions.EndDate(string: "2024-12-31")
         ] : []
         
         let request = Request.GetTransactions.makeRequest(filters: filters)
@@ -127,14 +127,14 @@ struct LMNetworkInterface: LunchMoneyInterface {
             return URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         }
         
-        private func queryItems(filters: [Filter]) -> [URLQueryItem] {
+        private func queryItems(filters: [QueryItemBuilder]) -> [URLQueryItem] {
             filters.map { $0.queryItem }
         }
         
-        func makeRequest(filters: [Filter] = []) -> URLRequest? {
+        func makeRequest(filters: [QueryItemBuilder] = []) -> URLRequest? {
             switch self {
             case .GetCategories:
-                return baseRequest(filters: [.CategoryFormatIsNested])
+                return baseRequest(filters: [LMQueryParams.Categories.FormatIsNested])
             case .GetTransactions:
                 return baseRequest(filters: filters)
             case .UpdateTransactionStatus(_, _), .UpdateTransactionCategory(_, _):
@@ -144,7 +144,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             }
         }
         
-        private func baseRequest(filters: [Filter] = []) -> URLRequest? {
+        private func baseRequest(filters: [QueryItemBuilder] = []) -> URLRequest? {
             var components = urlComponents
             components?.queryItems = queryItems(filters: filters)
             guard let url = components?.url else { return nil }
@@ -187,24 +187,38 @@ struct LMNetworkInterface: LunchMoneyInterface {
     }
 }
 
+protocol QueryItemBuilder {
+    var queryItem: URLQueryItem { get }
+}
+
 /// It's a URLQueryItem builder.
-/// StartDate and EndDate require the format YYYY-MM-DD
-enum Filter {
-    case Uncleared
-    case StartDate(string: String)
-    case EndDate(string: String)
-    case CategoryFormatIsNested // TODO: - this should only apply to GetAllCategories
+enum LMQueryParams {
+    enum Categories: QueryItemBuilder {
+        case FormatIsNested
+        
+        var queryItem: URLQueryItem {
+            switch self {
+            case .FormatIsNested:
+                URLQueryItem(name: "format", value: "nested")
+            }
+        }
+    }
     
-    var queryItem: URLQueryItem {
-        switch self {
-        case .Uncleared:
-            URLQueryItem(name: "status", value: Transaction.unclearedStatus)
-        case .StartDate(string: let string):
-            URLQueryItem(name: "start_date", value: string)
-        case .EndDate(string: let string):
-            URLQueryItem(name: "end_date", value: string)
-        case .CategoryFormatIsNested:
-            URLQueryItem(name: "format", value: "nested")
+    /// StartDate and EndDate require the format YYYY-MM-DD, and they must travel together.
+    enum Transactions: QueryItemBuilder {
+        case Uncleared
+        case StartDate(string: String)
+        case EndDate(string: String)
+        
+        var queryItem: URLQueryItem {
+            switch self {
+            case .Uncleared:
+                URLQueryItem(name: "status", value: Transaction.unclearedStatus)
+            case .StartDate(string: let string):
+                URLQueryItem(name: "start_date", value: string)
+            case .EndDate(string: let string):
+                URLQueryItem(name: "end_date", value: string)
+            }
         }
     }
 }

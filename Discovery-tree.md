@@ -132,11 +132,12 @@
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
 
 - 👉 query by month
-    - refactor Filters
-        - rename to LMQueryParams
-        - create 2 groups: Transactions, Categories
-        - allow getTransactions to accept only LMQueryParams.Transactions
-        - allow getCategories to accept only LMQueryParams.Categories
+    - refactor Filters (now LMQueryParams)
+        - make StartDate and EndDate travel together
+        - ✅ rename to LMQueryParams
+        - ✅ create 2 groups: Transactions, Categories
+        - ✅ allow getTransactions to accept only LMQueryParams.Transactions
+        - ✅ allow getCategories to accept only LMQueryParams.Categories
     - ✅ get transactions from previous month (12/2024)
     - ✅ fix tests due to InterfaceManager changes
         - ✅ @MainActor
@@ -277,3 +278,4 @@
 [^13]: Because I present a sheet after the card is swiped left, the removal of the said card takes place BEFORE the user chooses a new category. I'm not sure how the app can know to watch the swipedCards array for a recently appended card that was swiped left and then call the API to update its category. Another possibility, which seems inevitable now, is to process all swipedCards in batch after all swiping is complete.
 [^14]: I'm embracing non-linear development. I was able to accomplish returning zero transactions by creating a new LunchMoneyInterface: LMEmptyInterface. What forced this to happen was the need for an empty case in the just minted StatesView.
 [^15]: I decided to address the nested ObservableObjects problem by making the ViewModels simple structs, removing their ObservableObject conformance, and making them Published properties of InterfaceManager. Blogger [rhonabwy](https://rhonabwy.com/2021/02/13/nested-observable-objects-in-swiftui/) suggests rethinking the model. Taking manual control of Publshing seems like a huge distraction to this app, and this seemed like a necessary evil to achieve a first run.
+[^16]: My wish to have separation between query params that belong to two distinct groups ran into a problem. These query params feed into a URLRequest builder which demanded a concrete type. How do I satisfy this need to have separation between the groups and not duplicate the URLRequest builder in order to satistfy each group? Answer: Protocol. I can tell the URLRequest builder that it will receive some type that conforms to the Protocol. Each group will conform to the protocol. 😸
