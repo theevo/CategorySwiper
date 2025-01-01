@@ -9,12 +9,6 @@ import XCTest
 @testable import CategorySwiper
 
 class MonthRangeBuilderTests: XCTestCase {
-    func test_initWithDate_yieldsCorrectString() {
-        let currentDate = utcDate(from: "1980-06-05")
-        let sut = MonthRangeBuilder(currentDate: currentDate)
-        XCTAssertEqual(sut.clock.currentDay.format(date: .short), "6/5/80")
-    }
-    
     func test_1monthAgo() {
         let currentDate = utcDate(from: "1980-06-05")
         let sut = MonthRangeBuilder(currentDate: currentDate)
@@ -29,10 +23,19 @@ class MonthRangeBuilderTests: XCTestCase {
         XCTAssertEqual(previousMonth.month, 4)
     }
     
+    func test_4MonthsAgo_firstDayAndLastDay() {
+        let currentDate = utcDate(from: "1980-06-05")
+        let sut = MonthRangeBuilder(currentDate: currentDate)
+        let previousMonth = sut.monthsAgo(4)
+        XCTAssertEqual(previousMonth.month, 2)
+        XCTAssertEqual(previousMonth.firstAndLastDay.first, "1980-02-01")
+        XCTAssertEqual(previousMonth.firstAndLastDay.last, "1980-02-29")
+    }
+    
     // MARK: - Helpers
     fileprivate func utcDate(from str: String) -> Date {
         let formatter = DateFormatter.inUTCTimeZone()
-        guard let date = formatter.date(from: str) else { fatalError() }
+        guard let date = formatter.date(from: str) else { fatalError() } // TODO: - this can be optional
         return date
     }
 }

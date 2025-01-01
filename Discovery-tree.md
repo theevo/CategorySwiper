@@ -135,8 +135,8 @@
 
 - 👉 query by month
     - generate strings for first, last day of month
-        - format in ISO (YYYY-MM-DD)
-        - ✅ test Time package
+        - ✅ format in ISO8601 (YYYY-MM-DD)
+        - ✅ test Time package[^18]
     - ✅ refactor Filters (now LMQueryParams)
         - ✅ make StartDate and EndDate travel together
         - ✅ rename to LMQueryParams
@@ -285,3 +285,4 @@
 [^15]: I decided to address the nested ObservableObjects problem by making the ViewModels simple structs, removing their ObservableObject conformance, and making them Published properties of InterfaceManager. Blogger [rhonabwy](https://rhonabwy.com/2021/02/13/nested-observable-objects-in-swiftui/) suggests rethinking the model. Taking manual control of Publshing seems like a huge distraction to this app, and this seemed like a necessary evil to achieve a first run.
 [^16]: My wish to have separation between query params that belong to two distinct groups ran into a problem. These query params feed into a URLRequest builder which demanded a concrete type. How do I satisfy this need to have separation between the groups and not duplicate the URLRequest builder in order to satistfy each group? Answer: Protocol. I can tell the URLRequest builder that it will receive some type that conforms to the Protocol. Each group will conform to the protocol. 😸
 [^17]: The print statements I added in InterfaceManager revealed that my app was loading data from Production during unit testing. The solution turned out to be quite simple. Thank you, Reid-San. [Bypass SwiftUI App Launch During Unit Testing](https://qualitycoding.org/bypass-swiftui-app-launch-unit-testing/)
+[^18]: Dave DeLong's Swift Package: [Time](https://github.com/davedelong/time)

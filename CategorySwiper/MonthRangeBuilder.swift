@@ -9,7 +9,7 @@ import Foundation
 import Time
 
 struct MonthRangeBuilder {
-    var clock: any RegionalClock
+    private var clock: any RegionalClock
     
     init(currentDate: Date? = nil) {
         if let currentDate = currentDate {
@@ -27,5 +27,22 @@ struct MonthRangeBuilder {
         }
         
         return month
+    }
+}
+
+extension Fixed<Month> {
+    public var firstAndLastDay: (first: String, last: String) {
+        let first = self.firstDay.formatISO8601
+        let last = self.lastDay.formatISO8601
+        return (first, last)
+    }
+}
+
+extension Fixed<Day> {
+    public var formatISO8601: String {
+        let year = self.format(year: .naturalDigits)
+        let month = self.format(month: .twoDigits)
+        let day = self.format(day: .twoDigits)
+        return "\(year)-\(month)-\(day)"
     }
 }
