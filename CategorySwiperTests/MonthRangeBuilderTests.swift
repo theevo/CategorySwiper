@@ -22,6 +22,13 @@ class MonthRangeBuilderTests: XCTestCase {
         XCTAssertEqual(previousMonth.month, 5)
     }
     
+    func test_2monthsAgo() {
+        let currentDate = utcDate(from: "1980-06-05")
+        let sut = MonthRangeBuilder(currentDate: currentDate)
+        let previousMonth = sut.monthsAgo(2)
+        XCTAssertEqual(previousMonth.month, 4)
+    }
+    
     // MARK: - Helpers
     fileprivate func utcDate(from str: String) -> Date {
         let formatter = DateFormatter.inUTCTimeZone()

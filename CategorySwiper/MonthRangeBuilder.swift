@@ -20,6 +20,12 @@ struct MonthRangeBuilder {
     }
     
     public func monthsAgo(_ months: UInt) -> Fixed<Month> {
-        return clock.previousMonth
+        var month = clock.currentMonth
+        
+        for _ in 0..<months {
+            month = month.previous
+        }
+        
+        return month
     }
 }
