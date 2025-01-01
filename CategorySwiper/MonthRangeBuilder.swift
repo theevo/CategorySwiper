@@ -18,4 +18,8 @@ struct MonthRangeBuilder {
             self.clock = Clocks.system
         }
     }
+    
+    public func monthsAgo(_ months: UInt) -> Fixed<Month> {
+        return clock.previousMonth
+    }
 }
