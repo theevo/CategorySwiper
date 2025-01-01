@@ -29,7 +29,11 @@ struct LMNetworkInterface: LunchMoneyInterface {
     func getTransactions(showUnclearedOnly: Bool = false) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
-        let filters = showUnclearedOnly ? [Filter.Uncleared] : []
+        let filters = showUnclearedOnly ? [
+            Filter.Uncleared,
+            Filter.StartDate(string: "2024-12-01"),
+            Filter.EndDate(string: "2024-12-31")
+        ] : []
         
         let request = Request.GetTransactions.makeRequest(filters: filters)
         
@@ -183,14 +187,22 @@ struct LMNetworkInterface: LunchMoneyInterface {
     }
 }
 
-enum Filter: String {
+/// It's a URLQueryItem builder.
+/// StartDate and EndDate require the format YYYY-MM-DD
+enum Filter {
     case Uncleared
+    case StartDate(string: String)
+    case EndDate(string: String)
     case CategoryFormatIsNested // TODO: - this should only apply to GetAllCategories
     
     var queryItem: URLQueryItem {
         switch self {
         case .Uncleared:
             URLQueryItem(name: "status", value: Transaction.unclearedStatus)
+        case .StartDate(string: let string):
+            URLQueryItem(name: "start_date", value: string)
+        case .EndDate(string: let string):
+            URLQueryItem(name: "end_date", value: string)
         case .CategoryFormatIsNested:
             URLQueryItem(name: "format", value: "nested")
         }

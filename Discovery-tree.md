@@ -132,6 +132,12 @@
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
 
 - 👉 query by month
+    - refactor Filters
+        - rename to LMQueryParams
+        - create 2 groups: Transactions, Categories
+        - allow getTransactions to accept only LMQueryParams.Transactions
+        - allow getCategories to accept only LMQueryParams.Categories
+    - ✅ get transactions from previous month (12/2024)
     - ✅ fix tests due to InterfaceManager changes
         - ✅ @MainActor
         - ✅ dataSource param

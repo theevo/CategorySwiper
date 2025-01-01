@@ -35,8 +35,13 @@ final class NetworkTests: XCTestCase {
     
     func test_InterfaceManager_getTransactions_resultsInNonEmptyTransactions() async throws {
         let manager = InterfaceManager()
-        try await manager.getTransactions()
+        try await manager.getTransactions(showUnclearedOnly: true)
         XCTAssertTrue(manager.transactions.notEmpty)
+        
+        let transaction = manager.transactions.first {
+            $0.date.contains("2024")
+        }
+        XCTAssertNotNil(transaction)
     }
     
     func test_InterfaceManager_updateTransactionStatus_returnsTrueInResponse() async throws {
