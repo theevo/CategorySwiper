@@ -31,8 +31,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         
         let filters = showUnclearedOnly ? [
             LMQueryParams.Transactions.Uncleared,
-            LMQueryParams.Transactions.StartDate(string: "2024-12-01"),
-            LMQueryParams.Transactions.EndDate(string: "2024-12-31")
+            LMQueryParams.Transactions.DateRange(startDate: "2024-12-01", endDate: "2024-12-31")
         ] : []
         
         let request = Request.GetTransactions.makeRequest(filters: filters)
@@ -128,7 +127,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
         
         private func queryItems(filters: [QueryItemBuilder]) -> [URLQueryItem] {
-            filters.map { $0.queryItem }
+            filters.flatMap { $0.queryItems }
         }
         
         func makeRequest(filters: [QueryItemBuilder] = []) -> URLRequest? {
@@ -188,7 +187,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
 }
 
 protocol QueryItemBuilder {
-    var queryItem: URLQueryItem { get }
+    var queryItems: [URLQueryItem] { get }
 }
 
 /// It's a URLQueryItem builder.
@@ -196,10 +195,10 @@ enum LMQueryParams {
     enum Categories: QueryItemBuilder {
         case FormatIsNested
         
-        var queryItem: URLQueryItem {
+        var queryItems: [URLQueryItem] {
             switch self {
             case .FormatIsNested:
-                URLQueryItem(name: "format", value: "nested")
+                [URLQueryItem(name: "format", value: "nested")]
             }
         }
     }
@@ -207,17 +206,17 @@ enum LMQueryParams {
     /// StartDate and EndDate require the format YYYY-MM-DD, and they must travel together.
     enum Transactions: QueryItemBuilder {
         case Uncleared
-        case StartDate(string: String)
-        case EndDate(string: String)
+        case DateRange(startDate: String, endDate: String)
         
-        var queryItem: URLQueryItem {
+        var queryItems: [URLQueryItem] {
             switch self {
             case .Uncleared:
-                URLQueryItem(name: "status", value: Transaction.unclearedStatus)
-            case .StartDate(string: let string):
-                URLQueryItem(name: "start_date", value: string)
-            case .EndDate(string: let string):
-                URLQueryItem(name: "end_date", value: string)
+                [URLQueryItem(name: "status", value: Transaction.unclearedStatus)]
+            case .DateRange(let startDate, let endDate):
+                [
+                    URLQueryItem(name: "start_date", value: startDate),
+                    URLQueryItem(name: "end_date", value: endDate)
+                ]
             }
         }
     }

@@ -132,8 +132,9 @@
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
 
 - 👉 query by month
-    - refactor Filters (now LMQueryParams)
-        - make StartDate and EndDate travel together
+    - generate strings for first, last day of month
+    - ✅ refactor Filters (now LMQueryParams)
+        - ✅ make StartDate and EndDate travel together
         - ✅ rename to LMQueryParams
         - ✅ create 2 groups: Transactions, Categories
         - ✅ allow getTransactions to accept only LMQueryParams.Transactions
