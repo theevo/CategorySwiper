@@ -134,6 +134,7 @@
 - ✅ stop View from loading during testing[^17]
 
 - 👉 query by month
+    - integrate MonthRangeBuilder in LMQueryParams
     - ✅ generate strings for first, last day of month
         - ✅ format in ISO8601 (YYYY-MM-DD)
         - ✅ test Time package[^18]
