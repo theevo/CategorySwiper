@@ -6,6 +6,9 @@
 
 - display no action taken when no update returns false
 
+- 👉 BEWARE: "Uncategorized" transactions will have nil `category_id`
+    - make "Uncategorized" category the default placeholder
+
 - 4 states
     - ✅ onAppear calls load -> Spinner
     - ✅ load returns no transactions -> NoTransactionsView
@@ -133,8 +136,8 @@
 
 - ✅ stop View from loading during testing[^17]
 
-- 👉 query by month
-    - integrate MonthRangeBuilder in LMQueryParams
+- ✅ query by month
+    - ✅ integrate MonthRangeBuilder in LMQueryParams
     - ✅ generate strings for first, last day of month
         - ✅ format in ISO8601 (YYYY-MM-DD)
         - ✅ test Time package[^18]

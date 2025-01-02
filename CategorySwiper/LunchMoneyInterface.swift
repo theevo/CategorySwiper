@@ -9,7 +9,7 @@ import Foundation
 
 protocol LunchMoneyInterface {
     func getCategories() async throws -> CategoryResponseWrapper
-    func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) async throws -> TransactionsResponseWrapper
     func update(transaction: Transaction, newCategory: Category) async throws -> Bool
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
@@ -31,7 +31,7 @@ struct LMLocalInterface: LunchMoneyInterface {
         return Array(object.transactions.prefix(limit))
     }
     
-    func getTransactions(showUnclearedOnly: Bool = false) throws -> TransactionsResponseWrapper {
+    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) throws -> TransactionsResponseWrapper {
         let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
         
         do {
@@ -89,7 +89,7 @@ struct LMEmptyInterface: LunchMoneyInterface {
         return CategoryResponseWrapper(categories: [])
     }
     
-    func getTransactions(showUnclearedOnly: Bool) async throws -> TransactionsResponseWrapper {
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
         return TransactionsResponseWrapper(transactions: [])
     }
     

@@ -65,8 +65,8 @@ import Foundation
         print("☑️ finished loading \(self.categories.count) categories at \(Date().formatted())")
     }
     
-    public func getTransactions(showUnclearedOnly: Bool = false) async throws {
-        let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly)
+    public func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws {
+        let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly, monthsAgo: monthsAgo)
         self.transactions = response.transactions
         print("☑️ finished loading \(self.transactions.count) transactions at \(Date().formatted())")
     }

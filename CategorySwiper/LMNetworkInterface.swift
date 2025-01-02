@@ -26,17 +26,27 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
-    func getTransactions(showUnclearedOnly: Bool = false) async throws -> TransactionsResponseWrapper {
+    fileprivate func transactionQueryParams(_ showUnclearedOnly: Bool, _ monthsAgo: UInt?) -> [LMQueryParams.Transactions] {
+        var queryParams: [LMQueryParams.Transactions] = []
+        
+        if showUnclearedOnly {
+            queryParams.append(.Uncleared)
+        }
+        
+        if let monthsAgo = monthsAgo {
+            let monthRange = MonthRangeBuilder(monthsAgo: monthsAgo)
+            queryParams.append(.DateRange(startDate: monthRange.first, endDate: monthRange.last))
+        }
+        
+        return queryParams
+    }
+    
+    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
-        let monthRange = MonthRangeBuilder(monthsAgo: 1)
+        var queryParams = transactionQueryParams(showUnclearedOnly, monthsAgo)
         
-        let filters = showUnclearedOnly ? [
-            LMQueryParams.Transactions.Uncleared,
-            LMQueryParams.Transactions.DateRange(startDate: monthRange.first, endDate: monthRange.last)
-        ] : []
-        
-        let request = Request.GetTransactions.makeRequest(filters: filters)
+        let request = Request.GetTransactions.makeRequest(filters: queryParams)
         
         let result = await builder.execute(request: request)
         
