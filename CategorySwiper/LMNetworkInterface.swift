@@ -29,9 +29,11 @@ struct LMNetworkInterface: LunchMoneyInterface {
     func getTransactions(showUnclearedOnly: Bool = false) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
+        let monthRange = MonthRangeBuilder(monthsAgo: 1)
+        
         let filters = showUnclearedOnly ? [
             LMQueryParams.Transactions.Uncleared,
-            LMQueryParams.Transactions.DateRange(startDate: "2024-12-01", endDate: "2024-12-31")
+            LMQueryParams.Transactions.DateRange(startDate: monthRange.first, endDate: monthRange.last)
         ] : []
         
         let request = Request.GetTransactions.makeRequest(filters: filters)
