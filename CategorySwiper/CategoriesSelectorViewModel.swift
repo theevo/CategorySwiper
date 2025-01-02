@@ -13,6 +13,11 @@ struct CategoriesSelectorViewModel {
     var card: CardViewModel
     
     var selectedCategoryName: String {
+        // if not found in categories, return the card's category name and indicate that it wasn't found
+        guard let _ = CategoriesSelectorViewModel.find(id: card.category_id, in: categories) else {
+            return (card.category_name ?? "") + " ❌🔎"
+        }
+        
         guard let selectedCategory = selectedCategory else { return "<<Uncategorized>>" }
         
         // if it's in a group, prefix the parent name

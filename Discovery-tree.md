@@ -8,7 +8,8 @@
 
 - 👉 BEWARE: "Uncategorized" transactions will have nil `category_id`
     - make "Uncategorized" category the default placeholder
-        - "Uncategorized" vs "No Matching Category"[^19]
+        - refactor: find() will return placeholder Category if not found
+        - ✅ "Uncategorized" vs "No Matching Category"[^19]
         - ✅ add previews for uncategorized Transaction
             - ✅ CategoriesSelectorView
             - ✅ CardView
@@ -296,3 +297,4 @@
 [^17]: The print statements I added in InterfaceManager revealed that my app was loading data from Production during unit testing. The solution turned out to be quite simple. Thank you, Reid-San. [Bypass SwiftUI App Launch During Unit Testing](https://qualitycoding.org/bypass-swiftui-app-launch-unit-testing/)
 [^18]: Dave DeLong's Swift Package: [Time](https://github.com/davedelong/time)
 [^19]: Discovered a strange case in CategoriesSelectorView. (This likelihood of this happening is small, but it bugs me). "Uncategorized" is the category name given to a transaction when its `category_id` is nil. If a Transaction has a non-nil `category_id`, what if it doesn't match against list of categories? "Uncategorized" would be wrong, because it is categorized; we just can't find it's category in our category list. "No matching Category" is one way to describe this scenario. My problem here is I can't tell if the nil selectedCategory was passed in the first place or written there because it wasn't found during the `find()`. The ugly way to do it is to `find()` again before returning the string name. Rather than say "No matching Category", I will suffix the CardViewModel's category name with "❌🔎"
+[^20]: Refactor: rather than selectedCategoryName run another `find()`, I could have `find()` return a placeholder Category with the name "\(card.categoryName) ❌🔎"
