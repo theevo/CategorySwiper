@@ -137,4 +137,20 @@ extension Transaction {
         created_at: "2024-12-05T03:39:35.102Z",
         updated_at: "2024-12-05T03:39:35.102Z"
     )
+    static let exampleUncategorized = Transaction(
+        id: 2239669666,
+        date: "2024-11-14",
+        amount: "39.4900",
+        to_base: 39.49,
+        currency: "usd",
+        payee: "Half Price Books",
+        category_id: nil,
+        category_name: nil,
+        category_group_id: nil,
+        category_group_name: nil,
+        is_income: false,
+        status: .uncleared,
+        created_at: "2024-11-16T03:27:09.074Z",
+        updated_at: "2024-11-16T03:27:09.074Z"
+    )
 }

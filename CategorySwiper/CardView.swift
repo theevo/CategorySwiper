@@ -67,7 +67,7 @@ struct CardView: View {
 }
 
 struct CardViewWithExamplePreview: View {
-    @State var example: CardViewModel = CardViewModel.example
+    @State var example: CardViewModel
     var isTop: Bool = true
     var dragOffset: CGSize = .zero
     
@@ -77,13 +77,25 @@ struct CardViewWithExamplePreview: View {
 }
 
 #Preview("Default") {
-    CardViewWithExamplePreview()
+    CardViewWithExamplePreview(example: CardViewModel.example)
 }
 
 #Preview("Swipe Left") {
-    CardViewWithExamplePreview(dragOffset: CGSize(width: -10, height: 0))
+    CardViewWithExamplePreview(
+        example: CardViewModel.example,
+        dragOffset: CGSize(width: -10, height: 0)
+    )
 }
 
 #Preview("Swipe Right") {
-    CardViewWithExamplePreview(dragOffset: CGSize(width: 10, height: 0))
+    CardViewWithExamplePreview(
+        example: CardViewModel.example,
+        dragOffset: CGSize(width: 10, height: 0)
+    )
+}
+
+#Preview("Uncategorized") {
+    CardViewWithExamplePreview(
+        example: CardViewModel(transaction: Transaction.exampleUncategorized)
+    )
 }

@@ -75,7 +75,17 @@ struct CategorySelectorPreviewView: View {
     )
 }
 
-#Preview("Empty") {
+#Preview("Uncategorized") {
+    CategorySelectorPreviewView(model:
+        CategoriesSelectorViewModel(
+            categories: try! LMLocalInterface().getCategories().categories,
+            card: CardViewModel(
+                transaction: Transaction.exampleUncategorized)
+        )
+    )
+}
+
+#Preview("0 Categories") {
     CategorySelectorPreviewView(model:
         CategoriesSelectorViewModel(
             categories: [],

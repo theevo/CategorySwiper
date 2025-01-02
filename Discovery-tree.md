@@ -8,6 +8,11 @@
 
 - 👉 BEWARE: "Uncategorized" transactions will have nil `category_id`
     - make "Uncategorized" category the default placeholder
+        - "Uncategorized" vs "No Matching Category"[^19]
+        - ✅ add previews for uncategorized Transaction
+            - ✅ CategoriesSelectorView
+            - ✅ CardView
+        - ✅ add example of uncategorized Transaction
 
 - 4 states
     - ✅ onAppear calls load -> Spinner
@@ -290,3 +295,4 @@
 [^16]: My wish to have separation between query params that belong to two distinct groups ran into a problem. These query params feed into a URLRequest builder which demanded a concrete type. How do I satisfy this need to have separation between the groups and not duplicate the URLRequest builder in order to satistfy each group? Answer: Protocol. I can tell the URLRequest builder that it will receive some type that conforms to the Protocol. Each group will conform to the protocol. 😸
 [^17]: The print statements I added in InterfaceManager revealed that my app was loading data from Production during unit testing. The solution turned out to be quite simple. Thank you, Reid-San. [Bypass SwiftUI App Launch During Unit Testing](https://qualitycoding.org/bypass-swiftui-app-launch-unit-testing/)
 [^18]: Dave DeLong's Swift Package: [Time](https://github.com/davedelong/time)
+[^19]: Discovered a strange case in CategoriesSelectorView. (This likelihood of this happening is small, but it bugs me). "Uncategorized" is the category name given to a transaction when its `category_id` is nil. If a Transaction has a non-nil `category_id`, what if it doesn't match against list of categories? "Uncategorized" would be wrong, because it is categorized; we just can't find it's category in our category list. "No matching Category" is one way to describe this scenario. My problem here is I can't tell if the nil selectedCategory was passed in the first place or written there because it wasn't found during the `find()`. The ugly way to do it is to `find()` again before returning the string name. Rather than say "No matching Category", I will suffix the CardViewModel's category name with "❌🔎"

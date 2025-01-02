@@ -24,7 +24,7 @@ struct CardViewModel: Identifiable {
     }
     
     var category: String {
-        category_name ?? "No Category Assigned"
+        category_name ?? "Uncategorized"
     }
     
     init(transaction: Transaction) {

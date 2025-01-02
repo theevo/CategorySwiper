@@ -13,12 +13,15 @@ struct CategoriesSelectorViewModel {
     var card: CardViewModel
     
     var selectedCategoryName: String {
-        if let selectedCategory = selectedCategory,
-           let groupId = selectedCategory.group_id,
+        guard let selectedCategory = selectedCategory else { return "<<Uncategorized>>" }
+        
+        // if it's in a group, prefix the parent name
+        if let groupId = selectedCategory.group_id,
            let parent = categories.first(where: { $0.id == groupId }) {
             return parent.name + " ~ " + selectedCategory.name
         }
-        return selectedCategory?.name ?? "<no category>"
+        
+        return selectedCategory.name
     }
     
     init(categories: [Category], selectedCategory: Category?, card: CardViewModel) {
@@ -46,6 +49,8 @@ struct CategoriesSelectorViewModel {
 
 extension CategoriesSelectorViewModel {
     static func find(id: Int?, in categories: [Category]) -> Category? {
+        guard let id = id else { return nil }
+        
         var flattenedCategories = categories
         
         let parents = categories.filter { $0.is_group }
