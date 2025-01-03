@@ -70,5 +70,31 @@ final class LocalTests: XCTestCase {
         XCTAssertTrue(manager.cardsModel.isDoneSwiping)
     }
     
-    //    func test_whenSwipeAllCardsRight_thenAllSwipedCards_haveDirectionRight() {
+    func test_whenSwipeAllCardsRight_thenAllSwipedCards_haveDirectionRight() {
+        let manager = InterfaceManager(dataSource: .Local)
+        for card in manager.cardsModel.unswipedCards {
+            manager.cardsModel.updateTopCardSwipeDirection(.right)
+            manager.cardsModel.removeTopCard()
+        }
+        let directions = manager.cardsModel.swipedCards.map { card in
+            card.swipeDirection
+        }
+        for direction in directions {
+            XCTAssertEqual(direction, .right)
+        }
+    }
+    
+    func test_whenSwipeAllCardsLeft_thenAllSwipedCards_haveDirectionLeft() {
+        let manager = InterfaceManager(dataSource: .Local)
+        for card in manager.cardsModel.unswipedCards {
+            manager.cardsModel.updateTopCardSwipeDirection(.left)
+            manager.cardsModel.removeTopCard()
+        }
+        let directions = manager.cardsModel.swipedCards.map { card in
+            card.swipeDirection
+        }
+        for direction in directions {
+            XCTAssertEqual(direction, .left)
+        }
+    }
 }

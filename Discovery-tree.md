@@ -23,8 +23,9 @@
 - 👟 First run
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
-            - create tests for isDoneSwiping
-                - test given transactions not empty, when all cards swiped, swipedCards has correct directions
+            - call updateTopCardSwipeDirection from CategoriesSelectorView
+            - ✅ create tests for isDoneSwiping
+                - ✅ test given transactions not empty, when all cards swiped, swipedCards has correct directions[^24]
                 - ✅ investigate replacing protocol func with closure property[^23]
                 - ✅ test given transactions not empty, when all cards swiped, then doneSwiping is true[^22]
                 - ✅ test when transactions empty, then isDoneSwiping is false
@@ -311,3 +312,4 @@
 [^21]: If a date range is not specified for a GET request of all transactions, the server will process the request with the current month. Does the response contain the date range? Honestly, I'm expressing laziness at the idea of implementing a date range UI. It seems inevitable. 😮‍💨 Answer: it does not. `httpResponse.url = Optional(https://dev.lunchmoney.app/v1/transactions?status=uncleared)`
 [^22]: async problem. InterfaceManager(.Local) loads Transactions which is async according to the protocol LunchMoneyInterface. test completes before the transactions load. Solution: Protocol. if a protocol function is marked `async`, then the compiler will enforce calls with `await` even if the concrete type is not async. We create a new protocol, duplicate the function signature without the `async`, then conform it to the Protocol that requires `async`. Now this has me thinking about protocol functions as stored properties. rather than defining async in the protocol function, can we instead require a stored property of type closure instead. Can this stored property be async?
 [^23]: A closure property must also be declared as `async` or `throws`. It seems you can't hide away this fact. If the body says `await` or `try`, the compiler won't budge until you make the correct declarations. 
+[^24]: Thank goodness for tests. Uncovered a value-type behavior where if you get the first element of an array `var first = arr.first`, you're getting a copy. Anyway you go about it, you have to access index `[0]` to overwrite it.
