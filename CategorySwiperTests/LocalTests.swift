@@ -55,4 +55,20 @@ final class LocalTests: XCTestCase {
         let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGas)
         XCTAssertFalse(result)
     }
+    
+    func test_whenTransactionsEmpty_thenCardsModel_doneSwipingIsFalse() {
+        let manager = InterfaceManager(dataSource: .Empty)
+        XCTAssertFalse(manager.cardsModel.isDoneSwiping)
+    }
+    
+    func test_whenTransactionsNotEmpty_thenCardsModel_doneSwipingIsTrue() {
+        let manager = InterfaceManager(dataSource: .Local)
+        for card in manager.cardsModel.unswipedCards {
+            manager.cardsModel.updateTopCardSwipeDirection(.right)
+            manager.cardsModel.removeTopCard()
+        }
+        XCTAssertTrue(manager.cardsModel.isDoneSwiping)
+    }
+    
+    //    func test_whenSwipeAllCardsRight_thenAllSwipedCards_haveDirectionRight() {
 }

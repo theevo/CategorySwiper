@@ -23,6 +23,10 @@
 - 👟 First run
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
+            - create tests for isDoneSwiping
+                - investigate replacing protocol func with closure property[^22]
+                - ✅ test given transactions not empty, when all cards swiped, then doneSwiping is true
+                - ✅ test when transactions empty, then isDoneSwiping is false
         - ✅ create ViewModels from within InterfaceManager[^15]
         - ✅ move AppStates into InterfaceManager
         - ✅ absorb the conditional logic of SwipeableCardsModel's state[^14]
@@ -304,3 +308,4 @@
 [^19]: Discovered a strange case in CategoriesSelectorView. (This likelihood of this happening is small, but it bugs me). "Uncategorized" is the category name given to a transaction when its `category_id` is nil. If a Transaction has a non-nil `category_id`, what if it doesn't match against list of categories? "Uncategorized" would be wrong, because it is categorized; we just can't find it's category in our category list. "No matching Category" is one way to describe this scenario. My problem here is I can't tell if the nil selectedCategory was passed in the first place or written there because it wasn't found during the `find()`. The ugly way to do it is to `find()` again before returning the string name. Rather than say "No matching Category", I will suffix the CardViewModel's category name with "❌🔎"
 [^20]: Refactor: rather than selectedCategoryName run another `find()`, I could have `find()` return a placeholder Category with the name "\(card.categoryName) ❌🔎"
 [^21]: If a date range is not specified for a GET request of all transactions, the server will process the request with the current month. Does the response contain the date range? Honestly, I'm expressing laziness at the idea of implementing a date range UI. It seems inevitable. 😮‍💨 Answer: it does not. `httpResponse.url = Optional(https://dev.lunchmoney.app/v1/transactions?status=uncleared)`
+[^22]: async problem. InterfaceManager(.Local) loads Transactions which is async according to the protocol LunchMoneyInterface. test completes before the transactions load. Solution: Protocol. if a protocol function is marked `async`, then the compiler will enforce calls with `await` even if the concrete type is not async. We create a new protocol, duplicate the function signature without the `async`, then conform it to the Protocol that requires `async`. Now this has me thinking about protocol functions as stored properties. rather than defining async in the protocol function, can we instead require a stored property of type closure instead. Can this stored property be async?

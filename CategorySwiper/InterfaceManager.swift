@@ -8,6 +8,7 @@
 import Foundation
 
 @MainActor class InterfaceManager: ObservableObject {
+    private let dataSource: DataSource
     private let interface: LunchMoneyInterface
     var categories: [Category] = []
     var transactions: [Transaction] = []
@@ -20,6 +21,7 @@ import Foundation
     
     init(dataSource: DataSource = .Production) {
         print("💿 running in \(dataSource)")
+        self.dataSource = dataSource
         switch dataSource {
         case .Production:
             self.interface = LMNetworkInterface()
@@ -34,9 +36,19 @@ import Foundation
     public func runTaskAndAdvanceState() {
         switch appState {
         case .Fetching:
-            Task {
-                print("calling loadData")
-                try await loadData()
+            if dataSource == .Production {
+                Task {
+                    print("calling loadData")
+                    try await loadData()
+                    if transactions.isEmpty {
+                        appState = .FetchEmpty
+                    } else {
+                        appState = .Swiping
+                        cardsModel = SwipeableCardsModel(transactions: transactions)
+                    }
+                }
+            } else {
+                loadDataFromLocal()
                 if transactions.isEmpty {
                     appState = .FetchEmpty
                 } else {
@@ -50,6 +62,26 @@ import Foundation
             appState = .Done
         case .Done:
             print("done swiping")
+        }
+    }
+    
+    private func loadDataFromLocal() {
+        var localInterface: any LunchMoneyLocalInterface
+        
+        if dataSource == .Local {
+            localInterface = interface as! LMLocalInterface
+        } else if dataSource == .Empty {
+            localInterface = interface as! LMEmptyInterface
+        } else {
+            return
+        }
+        
+        if let response = try? localInterface.getTransactions(showUnclearedOnly: true, monthsAgo: nil) {
+            self.transactions = response.transactions
+        }
+        
+        if let wrapper = try? localInterface.getCategories() {
+            self.categories = wrapper.categories
         }
     }
     

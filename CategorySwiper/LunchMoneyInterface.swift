@@ -14,7 +14,14 @@ protocol LunchMoneyInterface {
     func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
-struct LMLocalInterface: LunchMoneyInterface {
+protocol LunchMoneyLocalInterface: LunchMoneyInterface {
+    func getCategories() throws -> CategoryResponseWrapper
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) throws -> TransactionsResponseWrapper
+    func update(transaction: Transaction, newCategory: Category) -> Bool
+    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool
+}
+
+struct LMLocalInterface: LunchMoneyLocalInterface {
     func getCategories() throws -> CategoryResponseWrapper {
         let url = Bundle.main.url(forResource: "example-categories", withExtension: "json")!
         
@@ -84,20 +91,20 @@ enum LoaderError: LocalizedError {
     }
 }
 
-struct LMEmptyInterface: LunchMoneyInterface {
-    func getCategories() async throws -> CategoryResponseWrapper {
+struct LMEmptyInterface: LunchMoneyLocalInterface {
+    func getCategories() -> CategoryResponseWrapper {
         return CategoryResponseWrapper(categories: [])
     }
     
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil) -> TransactionsResponseWrapper {
         return TransactionsResponseWrapper(transactions: [])
     }
     
-    func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
+    func update(transaction: Transaction, newCategory: Category) -> Bool {
         return false
     }
     
-    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
+    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool {
         return false
     }
 }
