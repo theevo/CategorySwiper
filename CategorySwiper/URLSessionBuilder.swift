@@ -28,15 +28,15 @@ struct URLSessionBuilder {
         do {
             let (data, urlResponse) = try await session.data(for: request)
             
-            if let httpResponse = urlResponse as? HTTPURLResponse {
-                guard httpResponse.statusCode == 200 else {
-                    return .failure(.HTTPStatusCode(response: httpResponse))
-                }
-            } else {
+            guard let httpResponse = urlResponse as? HTTPURLResponse else {
                 return .failure(.NoHTTPResponse(urlResponse: urlResponse))
             }
             
-            return .success(Response(data: data, urlResponse: urlResponse))
+            guard httpResponse.statusCode == 200 else {
+                return .failure(.HTTPStatusCode(response: httpResponse))
+            }
+            
+            return .success(Response(data: data, httpResponse: httpResponse))
         } catch {
             return .failure(.SessionFailed(details: ErrorDetails(file: #file, function: #function, line: #line, error: error)))
         }
@@ -46,7 +46,7 @@ struct URLSessionBuilder {
 extension URLSessionBuilder {
     struct Response {
         var data: Data
-        var urlResponse: URLResponse
+        var httpResponse: HTTPURLResponse
     }
     
     enum SessionError: LocalizedError {
