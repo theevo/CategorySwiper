@@ -44,7 +44,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
-        var queryParams = transactionQueryParams(showUnclearedOnly, monthsAgo)
+        let queryParams = transactionQueryParams(showUnclearedOnly, monthsAgo)
         
         let request = Request.GetTransactions.makeRequest(filters: queryParams)
         
