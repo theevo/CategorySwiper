@@ -6,9 +6,9 @@
 
 - display no action taken when no update returns false
 
-- 👉 BEWARE: "Uncategorized" transactions will have nil `category_id`
-    - make "Uncategorized" category the default placeholder
-        - refactor: find() will return placeholder Category if not found
+- ✅ BEWARE: "Uncategorized" transactions will have nil `category_id`
+    - ✅ make "Uncategorized" category the default placeholder
+        - ✅ refactor: find() will return placeholder Category if not found
         - ✅ "Uncategorized" vs "No Matching Category"[^19]
         - ✅ add previews for uncategorized Transaction
             - ✅ CategoriesSelectorView
