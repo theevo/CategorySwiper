@@ -137,7 +137,9 @@
 
 ## API calls
 
+- ✅ investigate API response for date range[^21]
     - ✅ change urlResponse to httpResponse 
+
 - ✅ stop View from loading during testing[^17]
 
 - ✅ query by month
@@ -259,6 +261,9 @@
 
 ## Ideas for later
 
+- Surface uncleared transactions before current month
+    - why? the web app offers no visual indication if transactions in previous months are uncleared unless you change the date range. the web app only surfaces uncleared transactions for the date range you specify. this date range defaults to the current month.
+    - could it be less of a grind? rather than make the user advance backward in time in 1 month increments, could we make it appear intelligent? get one year's worth of transactions and limit the search to 1 uncleared transaction. "You have uncleared transactions from MM/YY." "Let's go" Button will jump the user to that month.
 - Add Transaction.account_display_name
     - why? to help the user understand where the expense landed and to help them decide faster
 - Activity Log
@@ -298,3 +303,4 @@
 [^18]: Dave DeLong's Swift Package: [Time](https://github.com/davedelong/time)
 [^19]: Discovered a strange case in CategoriesSelectorView. (This likelihood of this happening is small, but it bugs me). "Uncategorized" is the category name given to a transaction when its `category_id` is nil. If a Transaction has a non-nil `category_id`, what if it doesn't match against list of categories? "Uncategorized" would be wrong, because it is categorized; we just can't find it's category in our category list. "No matching Category" is one way to describe this scenario. My problem here is I can't tell if the nil selectedCategory was passed in the first place or written there because it wasn't found during the `find()`. The ugly way to do it is to `find()` again before returning the string name. Rather than say "No matching Category", I will suffix the CardViewModel's category name with "❌🔎"
 [^20]: Refactor: rather than selectedCategoryName run another `find()`, I could have `find()` return a placeholder Category with the name "\(card.categoryName) ❌🔎"
+[^21]: If a date range is not specified for a GET request of all transactions, the server will process the request with the current month. Does the response contain the date range? Honestly, I'm expressing laziness at the idea of implementing a date range UI. It seems inevitable. 😮‍💨 Answer: it does not. `httpResponse.url = Optional(https://dev.lunchmoney.app/v1/transactions?status=uncleared)`
