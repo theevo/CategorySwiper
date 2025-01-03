@@ -137,8 +137,6 @@
 
 ## API calls
 
-- relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
-
 - ✅ stop View from loading during testing[^17]
 
 - ✅ query by month
@@ -276,6 +274,8 @@
 - History
     - transaction + action you took
     - http links to changes
+- relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
+
 
 [^1]: a putRequest requires a PutBodyObject, which requires a Transaction 
 [^2]: [Get All Categories](https://lunchmoney.dev/#get-all-categories) takes an optional Query param: Flattened (default) or Nested. Flattened will show a Category more than once if it belongs to a Category Group. The said category appears the first time in the "first level" of the array (as if it had no parent) and a second time as a child of the Group (within its children array). Either way, you want to present your UI in a tree like structure. I think Flattened makes sense if you prefer piecing together the child with its parent by its id. On the other hand, you could get the same result with Nested by traversing into children array when you reach a Category Group. With Nested, there's never a fear of duplicating a category.
