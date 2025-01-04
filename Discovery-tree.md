@@ -27,7 +27,8 @@
         - update status and category in one call
         - replace `update(transaction:newCategory:)` with `clear(transaction:)`
         - maintain original transaction in CardViewModel[^27]
-            - save new category in new optional property
+            - refactor: simplify calls to update category
+            - ✅ save new category in new optional property
             - ✅ remove changing of status in CardsModel
     - ✅ create StatesView[^13]
         - ✅ inform ~~StatesView~~ InterfaceManager when SwipeableCardsView swiping complete[^26]

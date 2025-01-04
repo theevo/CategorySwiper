@@ -40,9 +40,7 @@ struct CategoriesSelectorViewModel {
     }
     
     mutating func updateCategory() {
-        guard let selectedCategory = selectedCategory else { return }
-        
-        card.changeCategoryTo(category: selectedCategory)
+        card.changeCategoryTo(category: selectedCategory) // TODO: - move this to manager.cardsModel.cardHasNewCategory
     }
 }
 

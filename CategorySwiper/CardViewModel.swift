@@ -15,6 +15,7 @@ struct CardViewModel: Identifiable {
     var rawCurrency: String
     var category_id: Int?
     var category_name: String?
+    var newCategory: Category?
     var transaction: Transaction
     
     var swipeDirection: SwipeDirection = .none
@@ -38,9 +39,8 @@ struct CardViewModel: Identifiable {
         self.transaction = transaction
     }
     
-    mutating func changeCategoryTo(category: Category) {
-        self.category_id = category.id
-        self.category_name = category.name
+    mutating func changeCategoryTo(category: Category?) {
+        self.newCategory = category
     }
 }
 

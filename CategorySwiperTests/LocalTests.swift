@@ -104,4 +104,23 @@ final class LocalTests: XCTestCase {
             XCTAssertEqual(card.swipeDirection, .left)
         }
     }
+    
+    func test_whenCategoryChanges_thenNewCategoryIsSet() {
+        let manager = InterfaceManager(dataSource: .Local)
+        let cardToEdit = manager.cardsModel.unswipedCards.first!
+        
+        // mimic SwipeableCardsView
+        manager.cardsModel.updateTopCardSwipeDirection(.left)
+        var model = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+        manager.cardsModel.removeTopCard()
+        
+        // mimic CategoriesSelectorView
+        let newCategory = manager.categories.first!
+        model.selectedCategory = newCategory
+        model.updateCategory() // ??? combine?
+        manager.cardsModel.cardHasNewCategory(card: model.card) // ??? combine?
+        
+        let cardToCheck = manager.cardsModel.swipedCards.first!
+        XCTAssertEqual(cardToCheck.newCategory, newCategory)
+    }
 }
