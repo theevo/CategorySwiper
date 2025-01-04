@@ -59,11 +59,7 @@ import Foundation
         case .FetchEmpty:
             print("no transactions")
         case .Swiping:
-            // batch process swipedCards
-            print("processing these swipes...")
-            for card in cardsModel.swipedCards {
-                print("\(card.merchant) - \(card.category)")
-            }
+            processSwipes()
             appState = .Done
         case .Done:
             print("done swiping")
@@ -87,6 +83,23 @@ import Foundation
         
         if let wrapper = try? localInterface.getCategories() {
             self.categories = wrapper.categories
+        }
+    }
+    
+    fileprivate func processSwipes() {
+        // batch process swipedCards
+        for card in cardsModel.swipedCards {
+            Task {
+                let transaction = card.transaction
+                
+                if card.swipeDirection == .right {
+                    let result = try await update(transaction: transaction, newStatus: .cleared)
+                    print("\(card.merchant) status update result: \(result ? "✅" : "❌")")
+                } else if card.swipeDirection == .left {
+//                    let result = try await update(transaction: transaction, newCategory: <#T##Category#>)
+                    print("\(card.merchant) - \(card.category)")
+                }
+            }
         }
     }
     

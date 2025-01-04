@@ -84,7 +84,6 @@ final class LocalTests: XCTestCase {
         
         for card in manager.cardsModel.swipedCards {
             XCTAssertEqual(card.swipeDirection, .right)
-            XCTAssertEqual(card.transaction.status, .cleared)
         }
     }
     
@@ -103,7 +102,6 @@ final class LocalTests: XCTestCase {
 
         for card in manager.cardsModel.swipedCards {
             XCTAssertEqual(card.swipeDirection, .left)
-            XCTAssertEqual(card.transaction.status, .cleared)
         }
     }
 }

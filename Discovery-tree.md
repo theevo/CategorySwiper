@@ -24,6 +24,11 @@
 
 - 👟 First run
     - 👉 batch process the swipedCards
+        - update status and category in one call
+        - replace `update(transaction:newCategory:)` with `clear(transaction:)`
+        - maintain original transaction in CardViewModel[^27]
+            - save new category in new optional property
+            - ✅ remove changing of status in CardsModel
     - ✅ create StatesView[^13]
         - ✅ inform ~~StatesView~~ InterfaceManager when SwipeableCardsView swiping complete[^26]
             - call updateTopCardSwipeDirection from CategoriesSelectorView
@@ -324,3 +329,4 @@
 [^24]: Thank goodness for tests. Uncovered a value-type behavior where if you get the first element of an array `var first = arr.first`, you're getting a copy. Anyway you go about it, you have to access index `[0]` to overwrite it.
 [^25]: Never expected to use slight of hand here. Status quo: always remove from unswipedCards and append it to swipedCards. We need the removal from unswiped for the View's sake, but we can choose not to append if a card is swiped left (aka the old one). The bigger lesson here is to honor the Discovery Tree's need for little to no code. Keeping it high level with "replace the card" gave me room to maneuver; whereas if i wrote "pass around indexes so you can update the card later", i'm setting myself up for sabotage. My original thought of "replacement" was to find the card in the swipedCards and then remove it. But the code completion inspired something so deliciously simple that I couldn't ignore it: just append the updated card without regard of removing the old one. What if the old one was never there to begin with? For that to happen, I would have to not append the card that was just swiped left.
 [^26]: It's tough keeping track of what can talk to what. The cardsModel cannot talk to its parent InterfaceManager to let it know that swiping is done. Instead, the InterfaceManager must poll the cardsModel and ask if swiping is done.
+[^27]: I've given a lot of thought to LunchMoneyInterface guarding against wasteful API calls. if you swipe left and don't change the category, let's not burden the server. This makes absolute sense. That's not the case with update(transaction:newStatus:). Both swipe left and right will update status to cleared. If it's always going to happen, enforcement is not needed. This also has me thinking about whether or not SwipeableCardsModel should update a card's original transaction status. Given that we always clear every transaction, it seems I'm not writing the correct method. The protocol should not require update Transaction with new status, instead it should just CLEAR the transaction.

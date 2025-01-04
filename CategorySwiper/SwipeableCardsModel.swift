@@ -45,7 +45,7 @@ struct SwipeableCardsModel {
         unswipedCards.removeFirst()
         
         if card.swipeDirection == .right {
-            clearStatus(card: card)
+            batch(card: card)
         }
         
         return card
@@ -59,7 +59,7 @@ struct SwipeableCardsModel {
     }
     
     mutating func cardHasNewCategory(card: CardViewModel) {
-        clearStatus(card: card)
+        batch(card: card)
     }
     
     mutating func reset() {
@@ -67,9 +67,7 @@ struct SwipeableCardsModel {
         swipedCards = []
     }
     
-    private mutating func clearStatus(card: CardViewModel) {
-        var card = card
-        card.transaction.status = .cleared
+    private mutating func batch(card: CardViewModel) {
         swipedCards.append(card)
     }
 }
