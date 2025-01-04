@@ -146,6 +146,7 @@
 				27F88AAB2D11FD89000D8DFF /* example-categories.json */,
 				27656D502D0243F100877E8B /* example-transactions.json */,
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
+				27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */,
 				27C924F12D173E170081849D /* CategoriesSelectorView.swift */,
 				27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */,
 				27D638192CFBD22C00B43DE1 /* CardView.swift */,
@@ -165,7 +166,6 @@
 				27D259C92CFABADE004A4CAD /* Transaction.swift */,
 				27D638152CFBBD7C00B43DE1 /* LunchMoneyInterface.swift */,
 				276BF6A52D15F9720063935D /* LMNetworkInterface.swift */,
-				27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */,
 				2715AA0E2D25C90F00273F2D /* MonthRangeBuilder.swift */,
 			);
 			path = CategorySwiper;

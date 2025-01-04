@@ -23,8 +23,9 @@
     - all cards swiped -> SwipedAllCardsView, batch API updates calls
 
 - 👟 First run
-    - 👉 create StatesView[^13]
-        - inform StatesView when SwipeableCardsView swiping complete
+    - 👉 batch process the swipedCards
+    - ✅ create StatesView[^13]
+        - ✅ inform ~~StatesView~~ InterfaceManager when SwipeableCardsView swiping complete[^26]
             - call updateTopCardSwipeDirection from CategoriesSelectorView
                 - ✅ fix tests
                     - ✅ refactor: DRY out setting of cleared status
@@ -322,3 +323,4 @@
 [^23]: A closure property must also be declared as `async` or `throws`. It seems you can't hide away this fact. If the body says `await` or `try`, the compiler won't budge until you make the correct declarations. 
 [^24]: Thank goodness for tests. Uncovered a value-type behavior where if you get the first element of an array `var first = arr.first`, you're getting a copy. Anyway you go about it, you have to access index `[0]` to overwrite it.
 [^25]: Never expected to use slight of hand here. Status quo: always remove from unswipedCards and append it to swipedCards. We need the removal from unswiped for the View's sake, but we can choose not to append if a card is swiped left (aka the old one). The bigger lesson here is to honor the Discovery Tree's need for little to no code. Keeping it high level with "replace the card" gave me room to maneuver; whereas if i wrote "pass around indexes so you can update the card later", i'm setting myself up for sabotage. My original thought of "replacement" was to find the card in the swipedCards and then remove it. But the code completion inspired something so deliciously simple that I couldn't ignore it: just append the updated card without regard of removing the old one. What if the old one was never there to begin with? For that to happen, I would have to not append the card that was just swiped left.
+[^26]: It's tough keeping track of what can talk to what. The cardsModel cannot talk to its parent InterfaceManager to let it know that swiping is done. Instead, the InterfaceManager must poll the cardsModel and ask if swiping is done.

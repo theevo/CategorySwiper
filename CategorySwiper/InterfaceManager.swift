@@ -59,6 +59,11 @@ import Foundation
         case .FetchEmpty:
             print("no transactions")
         case .Swiping:
+            // batch process swipedCards
+            print("processing these swipes...")
+            for card in cardsModel.swipedCards {
+                print("\(card.merchant) - \(card.category)")
+            }
             appState = .Done
         case .Done:
             print("done swiping")

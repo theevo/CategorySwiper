@@ -71,7 +71,6 @@ struct SwipeableCardsModel {
         var card = card
         card.transaction.status = .cleared
         swipedCards.append(card)
-        print("\(card.merchant) was moved to swipedCards")
     }
 }
 

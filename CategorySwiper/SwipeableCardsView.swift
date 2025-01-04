@@ -50,6 +50,7 @@ struct SwipeableCardsView: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     self.manager.cardsModel.removeTopCard()
                                     self.dragState = .zero
+                                    self.checkForCompletion()
                                 }
                             } else {
                                 withAnimation(.bouncy(extraBounce:0.21)) {
@@ -67,6 +68,12 @@ struct SwipeableCardsView: View {
                 model: $categoriesModel
             )
             .interactiveDismissDisabled()
+        }
+    }
+    
+    private func checkForCompletion() {
+        if manager.cardsModel.isDoneSwiping {
+            manager.runTaskAndAdvanceState()
         }
     }
     
