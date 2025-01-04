@@ -28,6 +28,8 @@ struct CategoriesSelectorViewModel {
         self.categories = categories
         self.selectedCategory = selectedCategory
         self.card = card
+        
+        print("CategoriesSelectorVM received card: \(card.merchant) with category: \(card.category_name ?? "Uncategorized")")
     }
     
     init(categories: [Category], card: CardViewModel) {
@@ -39,11 +41,10 @@ struct CategoriesSelectorViewModel {
             card: card)
     }
     
-    func updateCategory() {
+    mutating func updateCategory() {
         guard let selectedCategory = selectedCategory else { return }
         
-        let wasUpdated = LMLocalInterface().update(transaction: card.transaction, newCategory: selectedCategory)
-        wasUpdated ? print("Updated to \(selectedCategory.name)") : print("No change was made.")
+        card.changeCategoryTo(category: selectedCategory)
     }
 }
 

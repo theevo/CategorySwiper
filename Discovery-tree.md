@@ -24,6 +24,8 @@
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
             - call updateTopCardSwipeDirection from CategoriesSelectorView
+                - replace card in swipedCards array
+                - ✅ update the card's category
             - ✅ create tests for isDoneSwiping
                 - ✅ test given transactions not empty, when all cards swiped, swipedCards has correct directions[^24]
                 - ✅ investigate replacing protocol func with closure property[^23]

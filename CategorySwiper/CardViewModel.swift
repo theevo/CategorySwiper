@@ -37,6 +37,11 @@ struct CardViewModel: Identifiable {
         self.category_name = transaction.category_name
         self.transaction = transaction
     }
+    
+    mutating func changeCategoryTo(category: Category) {
+        self.category_id = category.id
+        self.category_name = category.name
+    }
 }
 
 extension CardViewModel {
