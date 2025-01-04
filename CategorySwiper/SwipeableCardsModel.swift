@@ -39,17 +39,17 @@ struct SwipeableCardsModel {
         card == unswipedCards.dropFirst().first
     }
     
-    mutating func removeTopCard() {
-        if !unswipedCards.isEmpty {
-            guard let card = unswipedCards.first else { return }
-            
-            unswipedCards.removeFirst()
-            
-            if card.swipeDirection == .right {
-                swipedCards.append(card)
-                print("\(card.merchant) was moved to swipedCards")
-            }
+    @discardableResult mutating func removeTopCard() -> CardViewModel? {
+        guard let card = unswipedCards.first else { return nil }
+        
+        unswipedCards.removeFirst()
+        
+        if card.swipeDirection == .right {
+            swipedCards.append(card)
+            print("\(card.merchant) was moved to swipedCards")
         }
+        
+        return card
     }
     
     mutating func updateTopCardSwipeDirection(_ direction: CardViewModel.SwipeDirection) {

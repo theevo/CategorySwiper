@@ -72,10 +72,16 @@ final class LocalTests: XCTestCase {
     
     func test_whenSwipeAllCardsRight_thenAllSwipedCards_haveDirectionRight() {
         let manager = InterfaceManager(dataSource: .Local)
-        for card in manager.cardsModel.unswipedCards {
+        
+        let cardCount = manager.cardsModel.unswipedCards.count
+        
+        for _ in manager.cardsModel.unswipedCards {
             manager.cardsModel.updateTopCardSwipeDirection(.right)
             manager.cardsModel.removeTopCard()
         }
+        
+        XCTAssertEqual(manager.cardsModel.swipedCards.count, cardCount, "swipedCards count should be equal to unswipedCards count before swiping")
+        
         let directions = manager.cardsModel.swipedCards.map { card in
             card.swipeDirection
         }
@@ -86,10 +92,17 @@ final class LocalTests: XCTestCase {
     
     func test_whenSwipeAllCardsLeft_thenAllSwipedCards_haveDirectionLeft() {
         let manager = InterfaceManager(dataSource: .Local)
-        for card in manager.cardsModel.unswipedCards {
+        
+        let cardCount = manager.cardsModel.unswipedCards.count
+        
+        for _ in manager.cardsModel.unswipedCards {
             manager.cardsModel.updateTopCardSwipeDirection(.left)
-            manager.cardsModel.removeTopCard()
+            let card = manager.cardsModel.removeTopCard()!
+            manager.cardsModel.cardHasNewCategory(card: card)
         }
+        
+        XCTAssertEqual(manager.cardsModel.swipedCards.count, cardCount, "swipedCards count should be equal to unswipedCards count before swiping")
+
         let directions = manager.cardsModel.swipedCards.map { card in
             card.swipeDirection
         }
