@@ -26,8 +26,8 @@
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
             - call updateTopCardSwipeDirection from CategoriesSelectorView
-                - fix tests
-                    - refactor: DRY out setting of clear status
+                - ✅ fix tests
+                    - ✅ refactor: DRY out setting of cleared status
                     - ✅ swipe left behavior changed. for loop is giving false expectations.
                     - ✅ check for cleared status
                 - ✅ replace card in swipedCards array[^25]

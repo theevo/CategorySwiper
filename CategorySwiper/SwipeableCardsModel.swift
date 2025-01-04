@@ -43,7 +43,11 @@ struct SwipeableCardsModel {
         guard let card = unswipedCards.first else { return nil }
         
         unswipedCards.removeFirst()
-        applyAction(card: card)
+        
+        if card.swipeDirection == .right {
+            clearStatus(card: card)
+        }
+        
         return card
     }
     
@@ -52,13 +56,10 @@ struct SwipeableCardsModel {
         
         first.swipeDirection = direction
         unswipedCards[0] = first
-//        applyAction(card: unswipedCards[0])
     }
     
     mutating func cardHasNewCategory(card: CardViewModel) {
-        var card = card
-        card.transaction.status = .cleared
-        swipedCards.append(card)
+        clearStatus(card: card)
     }
     
     mutating func reset() {
@@ -66,18 +67,11 @@ struct SwipeableCardsModel {
         swipedCards = []
     }
     
-    private mutating func applyAction(card: CardViewModel) {
-        switch card.swipeDirection {
-        case .right:
-            var card = card
-            card.transaction.status = .cleared
-            swipedCards.append(card)
-            print("\(card.merchant) was moved to swipedCards")
-        case .left:
-            print("\(card.merchant) was swiped left.")
-        case .none:
-            print("this card has not been swiped. no action taken.")
-        }
+    private mutating func clearStatus(card: CardViewModel) {
+        var card = card
+        card.transaction.status = .cleared
+        swipedCards.append(card)
+        print("\(card.merchant) was moved to swipedCards")
     }
 }
 
