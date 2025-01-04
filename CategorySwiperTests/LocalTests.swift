@@ -82,11 +82,9 @@ final class LocalTests: XCTestCase {
         
         XCTAssertEqual(manager.cardsModel.swipedCards.count, cardCount, "swipedCards count should be equal to unswipedCards count before swiping")
         
-        let directions = manager.cardsModel.swipedCards.map { card in
-            card.swipeDirection
-        }
-        for direction in directions {
-            XCTAssertEqual(direction, .right)
+        for card in manager.cardsModel.swipedCards {
+            XCTAssertEqual(card.swipeDirection, .right)
+            XCTAssertEqual(card.transaction.status, .cleared)
         }
     }
     
@@ -103,11 +101,9 @@ final class LocalTests: XCTestCase {
         
         XCTAssertEqual(manager.cardsModel.swipedCards.count, cardCount, "swipedCards count should be equal to unswipedCards count before swiping")
 
-        let directions = manager.cardsModel.swipedCards.map { card in
-            card.swipeDirection
-        }
-        for direction in directions {
-            XCTAssertEqual(direction, .left)
+        for card in manager.cardsModel.swipedCards {
+            XCTAssertEqual(card.swipeDirection, .left)
+            XCTAssertEqual(card.transaction.status, .cleared)
         }
     }
 }
