@@ -28,8 +28,6 @@ struct CategoriesSelectorViewModel {
         self.categories = categories
         self.selectedCategory = selectedCategory
         self.card = card
-        
-        print("CategoriesSelectorVM received card: \(card.merchant) with category: \(card.category_name ?? "Uncategorized")")
     }
     
     init(categories: [Category], card: CardViewModel) {

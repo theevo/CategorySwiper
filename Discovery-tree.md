@@ -6,6 +6,8 @@
 
 - display no action taken when no update returns false
 
+- prevent Preview from crashing if Save button pressed in CategoriesSelectorViewModel
+
 - ✅ make "Uncategorized" category the default placeholder
     - ✅ refactor: find() will return placeholder Category if not found
     - ✅ "Uncategorized" vs "No Matching Category"[^19]
@@ -24,7 +26,10 @@
     - 👉 create StatesView[^13]
         - inform StatesView when SwipeableCardsView swiping complete
             - call updateTopCardSwipeDirection from CategoriesSelectorView
-                - replace card in swipedCards array
+                - fix tests
+                    - swipe left behavior changed. for loop is giving false expectations.
+                    - check for cleared status
+                - ✅ replace card in swipedCards array[^25]
                 - ✅ update the card's category
             - ✅ create tests for isDoneSwiping
                 - ✅ test given transactions not empty, when all cards swiped, swipedCards has correct directions[^24]
@@ -315,3 +320,4 @@
 [^22]: async problem. InterfaceManager(.Local) loads Transactions which is async according to the protocol LunchMoneyInterface. test completes before the transactions load. Solution: Protocol. if a protocol function is marked `async`, then the compiler will enforce calls with `await` even if the concrete type is not async. We create a new protocol, duplicate the function signature without the `async`, then conform it to the Protocol that requires `async`. Now this has me thinking about protocol functions as stored properties. rather than defining async in the protocol function, can we instead require a stored property of type closure instead. Can this stored property be async?
 [^23]: A closure property must also be declared as `async` or `throws`. It seems you can't hide away this fact. If the body says `await` or `try`, the compiler won't budge until you make the correct declarations. 
 [^24]: Thank goodness for tests. Uncovered a value-type behavior where if you get the first element of an array `var first = arr.first`, you're getting a copy. Anyway you go about it, you have to access index `[0]` to overwrite it.
+[^25]: Never expected to use slight of hand here. Status quo: always remove from unswipedCards and append it to swipedCards. We need the removal from unswiped for the View's sake, but we can choose not to append if a card is swiped left (aka the old one). The bigger lesson here is to honor the Discovery Tree's need for little to no code. Keeping it high level with "replace the card" gave me room to maneuver; whereas if i wrote "pass around indexes so you can update the card later", i'm setting myself up for sabotage. My original thought of "replacement" was to find the card in the swipedCards and then remove it. But the code completion inspired something so deliciously simple that I couldn't ignore it: just append the updated card without regard of removing the old one. What if the old one was never there to begin with? For that to happen, I would have to not append the card that was just swiped left.

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoriesSelectorView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var manager: InterfaceManager
     @Binding var showingSheet: Bool
     @Binding var model: CategoriesSelectorViewModel
     
@@ -23,6 +24,7 @@ struct CategoriesSelectorView: View {
         Button("Save") {
             showingSheet = false
             model.updateCategory()
+            manager.cardsModel.cardHasNewCategory(card: model.card)
             dismiss()
         }
         Form {
