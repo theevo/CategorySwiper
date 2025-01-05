@@ -24,7 +24,10 @@
 
 - 👟 First run
     - 👉 batch process the swipedCards
-        - update status and category in one call
+        - ✅ update status and category in one call
+            - ✅ refactor: rename UpdateTransactionCategory to UpdateCategoryAndClearStatus 
+            - ✅ refactor: rename UpdateTransactionStatus to ClearStatus
+            - ✅ consolidate PutBodyObject init
         - ✅ replace `update(transaction:newCategory:)` with `clear(transaction:)`
         - ✅ maintain original transaction in CardViewModel[^27]
             - ✅ refactor: ~~simplify~~ consolidate calls to update category

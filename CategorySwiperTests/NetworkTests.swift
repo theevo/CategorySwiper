@@ -79,3 +79,26 @@ final class NetworkTests: XCTestCase {
         XCTAssertTrue(response)
     }
 }
+
+final class NetworkRequestTests: XCTestCase {
+    func test_ClearStatus_containsClearedInBody() throws {
+        let transaction = Transaction.exampleDummy
+        let request = LMNetworkInterface.Request.ClearStatus(transaction: transaction).makeRequest()
+        XCTAssertNotNil(request?.httpBody)
+        
+        let string = request!.httpBody!.jsonFlatString
+        XCTAssertTrue(string.contains("\"cleared"))
+        print(string)
+    }
+    
+    func test_UpdateCategoryAndClearStatus_containsCategoryId_andClearedInBody() throws {
+        let transaction = Transaction.exampleDummy
+        let request = LMNetworkInterface.Request.UpdateCategoryAndClearStatus(transaction: transaction, newCategory: Category.exampleGas).makeRequest()
+        XCTAssertNotNil(request?.httpBody)
+        
+        let string = request!.httpBody!.jsonFlatString
+        XCTAssertTrue(string.contains("\"cleared"))
+        XCTAssertTrue(string.contains("category_id"))
+        print(string)
+    }
+}

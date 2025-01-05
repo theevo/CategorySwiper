@@ -66,7 +66,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     func update(transaction: Transaction, newCategory: Category) async throws -> Bool {
         guard transaction.category_id != newCategory.id else { return false }
         
-        let request = Request.UpdateTransactionCategory(transaction: transaction, newCategory: newCategory).makeRequest()
+        let request = Request.UpdateCategoryAndClearStatus(transaction: transaction, newCategory: newCategory).makeRequest()
         
         let builder = makeURLSessionBuilder()
         
@@ -86,7 +86,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
     }
     
     func clear(transaction: Transaction) async throws -> Bool {
-        let request = Request.UpdateTransactionStatus(transaction: transaction, newStatus: .cleared).makeRequest()
+        let request = Request.ClearStatus(transaction: transaction).makeRequest()
         
         let builder = makeURLSessionBuilder()
         
@@ -108,8 +108,8 @@ struct LMNetworkInterface: LunchMoneyInterface {
     enum Request {
         case GetCategories
         case GetTransactions
-        case UpdateTransactionStatus(transaction: Transaction, newStatus: Transaction.Status)
-        case UpdateTransactionCategory(transaction: Transaction, newCategory: Category)
+        case ClearStatus(transaction: Transaction)
+        case UpdateCategoryAndClearStatus(transaction: Transaction, newCategory: Category)
         
         private var baseURL: URL? {
             switch self {
@@ -117,7 +117,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
                 URL(string: endpoint)
             case .GetTransactions:
                 URL(string: endpoint)
-            case .UpdateTransactionStatus(transaction: let transaction, newStatus: _), .UpdateTransactionCategory(transaction: let transaction, newCategory: _):
+            case .ClearStatus(transaction: let transaction), .UpdateCategoryAndClearStatus(transaction: let transaction, newCategory: _):
                 Request.GetTransactions.baseURL?.appending(path: String(transaction.id))
             }
         }
@@ -126,7 +126,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
             switch self {
             case .GetCategories:
                 "https://dev.lunchmoney.app/v1/categories"
-            case .GetTransactions, .UpdateTransactionStatus(_, _), .UpdateTransactionCategory(_, _):
+            case .GetTransactions, .ClearStatus(_), .UpdateCategoryAndClearStatus(_, _):
                 "https://dev.lunchmoney.app/v1/transactions"
             }
         }
@@ -146,7 +146,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
                 return baseRequest(filters: [LMQueryParams.Categories.FormatIsNested])
             case .GetTransactions:
                 return baseRequest(filters: filters)
-            case .UpdateTransactionStatus(_, _), .UpdateTransactionCategory(_, _):
+            case .ClearStatus(_), .UpdateCategoryAndClearStatus(_, _):
                 var baseRequest = baseRequest(filters: filters)
                 baseRequest = try? newPutRequest(baseRequest: baseRequest)
                 return baseRequest
@@ -178,9 +178,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
             var putBody: PutBodyObject
             
             switch self {
-            case .UpdateTransactionStatus(let transaction, let status):
-                putBody = PutBodyObject(transaction: transaction, newStatus: status)
-            case .UpdateTransactionCategory(let transaction, let category):
+            case .ClearStatus(let transaction):
+                putBody = PutBodyObject(transaction: transaction)
+            case .UpdateCategoryAndClearStatus(let transaction, let category):
                 putBody = PutBodyObject(transaction: transaction, newCategory: category)
             default:
                 return nil
@@ -244,12 +244,8 @@ extension LMNetworkInterface {
 struct PutBodyObject: Encodable {
     var transaction: UpdateTransactionObject
     
-    init(transaction: Transaction, newStatus: Transaction.Status) {
-        self.transaction = UpdateTransactionObject(transaction: transaction, newStatus: newStatus)
-    }
-    
-    init(transaction: Transaction, newCategory: Category) {
-        self.transaction = UpdateTransactionObject(transaction: transaction, newCategory: newCategory)
+    init(transaction: Transaction, newCategory: Category? = nil, status: Transaction.Status = .cleared) {
+        self.transaction = UpdateTransactionObject(transaction: transaction, newCategory: newCategory, status: status)
     }
 }
 
@@ -262,13 +258,9 @@ struct UpdateTransactionObject: Encodable {
     var status: String?
     var category_id: Int?
     
-    init(transaction: Transaction, newStatus: Transaction.Status) {
+    init(transaction: Transaction, newCategory: Category?, status: Transaction.Status) {
         self.id = transaction.id
-        self.status = newStatus.rawValue
-    }
-    
-    init(transaction: Transaction, newCategory: Category) {
-        self.id = transaction.id
-        self.category_id = newCategory.id
+        self.status = status.rawValue
+        self.category_id = newCategory?.id
     }
 }
