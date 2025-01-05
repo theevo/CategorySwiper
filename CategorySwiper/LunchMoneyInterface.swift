@@ -8,20 +8,24 @@
 import Foundation
 
 protocol LunchMoneyInterface {
+    func clear(transaction: Transaction) async throws -> Bool
     func getCategories() async throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) async throws -> TransactionsResponseWrapper
     func update(transaction: Transaction, newCategory: Category) async throws -> Bool
-    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool
 }
 
 protocol LunchMoneyLocalInterface: LunchMoneyInterface {
+    func clear(transaction: Transaction) -> Bool
     func getCategories() throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) throws -> TransactionsResponseWrapper
     func update(transaction: Transaction, newCategory: Category) -> Bool
-    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool
 }
 
 struct LMLocalInterface: LunchMoneyLocalInterface {
+    func clear(transaction: Transaction) -> Bool {
+        return true
+    }
+    
     func getCategories() throws -> CategoryResponseWrapper {
         let url = Bundle.main.url(forResource: "example-categories", withExtension: "json")!
         
@@ -63,12 +67,6 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
         
         return true
     }
-    
-    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool {
-        guard transaction.status != newStatus else { return false }
-        
-        return true
-    }
 }
 
 enum LoaderError: LocalizedError {
@@ -92,6 +90,10 @@ enum LoaderError: LocalizedError {
 }
 
 struct LMEmptyInterface: LunchMoneyLocalInterface {
+    func clear(transaction: Transaction) -> Bool {
+        return true
+    }
+    
     func getCategories() -> CategoryResponseWrapper {
         return CategoryResponseWrapper(categories: [])
     }
@@ -101,10 +103,6 @@ struct LMEmptyInterface: LunchMoneyLocalInterface {
     }
     
     func update(transaction: Transaction, newCategory: Category) -> Bool {
-        return false
-    }
-    
-    func update(transaction: Transaction, newStatus: Transaction.Status) -> Bool {
         return false
     }
 }

@@ -85,10 +85,8 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
-    func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
-        guard transaction.status != newStatus else { return false }
-        
-        let request = Request.UpdateTransactionStatus(transaction: transaction, newStatus: newStatus).makeRequest()
+    func clear(transaction: Transaction) async throws -> Bool {
+        let request = Request.UpdateTransactionStatus(transaction: transaction, newStatus: .cleared).makeRequest()
         
         let builder = makeURLSessionBuilder()
         

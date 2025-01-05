@@ -93,7 +93,7 @@ import Foundation
                 let transaction = card.transaction
                 
                 if card.swipeDirection == .right {
-                    let result = try await update(transaction: transaction, newStatus: .cleared)
+                    let result = try await clear(transaction: transaction)
                     print("\(card.merchant) status update result: \(result ? "✅" : "❌")")
                 } else if card.swipeDirection == .left {
 //                    let result = try await update(transaction: transaction, newCategory: <#T##Category#>)
@@ -125,8 +125,8 @@ import Foundation
         return try await interface.update(transaction: transaction, newCategory: newCategory)
     }
     
-    public func update(transaction: Transaction, newStatus: Transaction.Status) async throws -> Bool {
-        return try await interface.update(transaction: transaction, newStatus: newStatus)
+    public func clear(transaction: Transaction) async throws -> Bool {
+        return try await interface.clear(transaction: transaction)
     }
 }
 
