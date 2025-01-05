@@ -58,7 +58,9 @@ struct SwipeableCardsModel {
         unswipedCards[0] = first
     }
     
-    mutating func cardHasNewCategory(card: CardViewModel) {
+    mutating func set(card: CardViewModel, to category: Category?) {
+        var card = card
+        card.changeCategoryTo(category: category)
         batch(card: card)
     }
     

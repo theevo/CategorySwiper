@@ -23,8 +23,7 @@ struct CategoriesSelectorView: View {
         }
         Button("Save") {
             showingSheet = false
-            model.updateCategory()
-            manager.cardsModel.cardHasNewCategory(card: model.card)
+            manager.cardsModel.set(card: model.card, to: model.selectedCategory)
             dismiss()
         }
         Form {

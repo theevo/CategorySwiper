@@ -26,8 +26,8 @@
     - 👉 batch process the swipedCards
         - update status and category in one call
         - replace `update(transaction:newCategory:)` with `clear(transaction:)`
-        - maintain original transaction in CardViewModel[^27]
-            - refactor: simplify calls to update category
+        - ✅ maintain original transaction in CardViewModel[^27]
+            - ✅ refactor: ~~simplify~~ consolidate calls to update category
             - ✅ save new category in new optional property
             - ✅ remove changing of status in CardsModel
     - ✅ create StatesView[^13]

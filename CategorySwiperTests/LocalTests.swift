@@ -94,8 +94,10 @@ final class LocalTests: XCTestCase {
         
         for _ in manager.cardsModel.unswipedCards {
             manager.cardsModel.updateTopCardSwipeDirection(.left)
-            let card = manager.cardsModel.removeTopCard()!
-            manager.cardsModel.cardHasNewCategory(card: card)
+            let cardToEdit = manager.cardsModel.removeTopCard()!
+            let model = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+            
+            manager.cardsModel.set(card: model.card, to: nil)
         }
         
         XCTAssertEqual(manager.cardsModel.swipedCards.count, cardCount, "swipedCards count should be equal to unswipedCards count before swiping")
@@ -117,8 +119,7 @@ final class LocalTests: XCTestCase {
         // mimic CategoriesSelectorView
         let newCategory = manager.categories.first!
         model.selectedCategory = newCategory
-        model.updateCategory() // ??? combine?
-        manager.cardsModel.cardHasNewCategory(card: model.card) // ??? combine?
+        manager.cardsModel.set(card: model.card, to: model.selectedCategory)
         
         let cardToCheck = manager.cardsModel.swipedCards.first!
         XCTAssertEqual(cardToCheck.newCategory, newCategory)

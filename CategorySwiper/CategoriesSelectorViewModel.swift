@@ -38,10 +38,6 @@ struct CategoriesSelectorViewModel {
             selectedCategory: category,
             card: card)
     }
-    
-    mutating func updateCategory() {
-        card.changeCategoryTo(category: selectedCategory) // TODO: - move this to manager.cardsModel.cardHasNewCategory
-    }
 }
 
 extension CategoriesSelectorViewModel {
