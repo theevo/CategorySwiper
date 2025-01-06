@@ -88,8 +88,7 @@ struct UpdateProgressView: View {
     @StateObject var model: UpdateProgressViewModel
     
     var body: some View {
-        
-        ForEach(model.items) { item in
+        List(model.items) { item in
             HStack {
                 if !item.isDone {
                     ProgressView()
