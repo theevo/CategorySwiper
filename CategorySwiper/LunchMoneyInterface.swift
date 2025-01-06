@@ -11,14 +11,14 @@ protocol LunchMoneyInterface {
     func clear(transaction: Transaction) async throws -> Bool
     func getCategories() async throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) async throws -> TransactionsResponseWrapper
-    func updateAndClear(transaction: Transaction, newCategory: Category) async throws -> Bool
+    func updateAndClear(transaction: Transaction, newCategory: Category?) async throws -> Bool
 }
 
 protocol LunchMoneyLocalInterface: LunchMoneyInterface {
     func clear(transaction: Transaction) -> Bool
     func getCategories() throws -> CategoryResponseWrapper
     func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) throws -> TransactionsResponseWrapper
-    func updateAndClear(transaction: Transaction, newCategory: Category) -> Bool
+    func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool
 }
 
 struct LMLocalInterface: LunchMoneyLocalInterface {
@@ -62,8 +62,9 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
         }
     }
     
-    func updateAndClear(transaction: Transaction, newCategory: Category) -> Bool {
-        guard transaction.category_id != newCategory.id else { return false }
+    func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool {
+        guard let newCategory = newCategory,
+              transaction.category_id != newCategory.id else { return false }
         
         return true
     }
@@ -102,7 +103,7 @@ struct LMEmptyInterface: LunchMoneyLocalInterface {
         return TransactionsResponseWrapper(transactions: [])
     }
     
-    func updateAndClear(transaction: Transaction, newCategory: Category) -> Bool {
+    func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool {
         return false
     }
 }

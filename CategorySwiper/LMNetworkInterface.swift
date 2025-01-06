@@ -63,8 +63,9 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
-    func updateAndClear(transaction: Transaction, newCategory: Category) async throws -> Bool {
-        guard transaction.category_id != newCategory.id else { return false }
+    func updateAndClear(transaction: Transaction, newCategory: Category?) async throws -> Bool {
+        guard let newCategory = newCategory,
+              transaction.category_id != newCategory.id else { return false }
         
         let request = Request.UpdateCategoryAndClearStatus(transaction: transaction, newCategory: newCategory).makeRequest()
         

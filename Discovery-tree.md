@@ -24,7 +24,9 @@
 
 - 👟 First run
     - 👉 batch process the swipedCards
-        - make `updateAndClear(newCategory:)` param optional
+        - TransactionsUpdateLiveView
+            - model
+        - ✅ make `updateAndClear(newCategory:)` param optional
         - ✅ refactor: rename `LunchMoneyInterface.update()` to `updateAndClear()` 
         - ✅ update status and category in one call
             - ✅ refactor: rename UpdateTransactionCategory to UpdateCategoryAndClearStatus 
