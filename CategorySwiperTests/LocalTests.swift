@@ -44,7 +44,7 @@ final class LocalTests: XCTestCase {
         let manager = InterfaceManager(dataSource: .Local)
         let transaction = Transaction.exampleCentralMarket
         
-        let result = try await manager.update(transaction: transaction, newCategory: Category.exampleMusic)
+        let result = try await manager.updateAndClear(transaction: transaction, newCategory: Category.exampleMusic)
         XCTAssertTrue(result)
     }
     
@@ -52,7 +52,7 @@ final class LocalTests: XCTestCase {
         let manager = InterfaceManager(dataSource: .Local)
         let transaction = Transaction.exampleCentralMarket
         
-        let result = try await manager.update(transaction: transaction, newCategory: Category.exampleGas)
+        let result = try await manager.updateAndClear(transaction: transaction, newCategory: Category.exampleGas)
         XCTAssertFalse(result)
     }
     

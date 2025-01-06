@@ -75,7 +75,7 @@ final class NetworkTests: XCTestCase {
     func test_InterfaceManager_updateTransaction_newCategory_responseIsTrue() async throws {
         let manager = InterfaceManager()
         
-        let response = try await manager.update(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
+        let response = try await manager.updateAndClear(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
         XCTAssertTrue(response)
     }
 }
