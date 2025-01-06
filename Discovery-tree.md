@@ -18,7 +18,7 @@
 
 - 👉 UpdateProgressView
     - run 2 child spinners that complete parent spinner
-    - run 2 spinners
+    - ✅ run 2 spinners
     - ✅ run 1 spinner for random amount of time
 
 - ✅ First run
