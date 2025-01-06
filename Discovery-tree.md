@@ -2,12 +2,6 @@
 
 ## UI
 
-- Format date
-
-- display no action taken when no update returns false
-
-- prevent Preview from crashing if Save button pressed in CategoriesSelectorViewModel
-
 - ✅ make "Uncategorized" category the default placeholder
     - ✅ refactor: find() will return placeholder Category if not found
     - ✅ "Uncategorized" vs "No Matching Category"[^19]
@@ -16,18 +10,19 @@
         - ✅ CardView
     - ✅ add example of uncategorized Transaction
 
-- 4 states
+- ✅ 4 states
     - ✅ onAppear calls load -> Spinner
     - ✅ load returns no transactions -> NoTransactionsView
     - ✅ load returns transactions -> swipe cards
-    - all cards swiped -> SwipedAllCardsView, batch API updates calls
+    - ✅ all cards swiped -> SwipedAllCardsView, batch API updates calls
 
-- 👟 First run
-    - 👉 batch process the swipedCards
-        - UpdateProgressView
-            - run 2 child spinners that complete parent spinner
-            - run 2 spinners
-            - ✅ run 1 spinner for random amount of time
+- 👉 UpdateProgressView
+    - run 2 child spinners that complete parent spinner
+    - run 2 spinners
+    - ✅ run 1 spinner for random amount of time
+
+- ✅ First run
+    - ✅ batch process the swipedCards
         - ✅ make `updateAndClear(newCategory:)` param optional
         - ✅ refactor: rename `LunchMoneyInterface.update()` to `updateAndClear()` 
         - ✅ update status and category in one call
@@ -311,6 +306,9 @@
     - transaction + action you took
     - http links to changes
 - relay 404 status code errors ([example](https://lunchmoney.dev/#update-transaction))
+- Format date
+- prevent Preview from crashing if Save button pressed in CategoriesSelectorViewModel
+- display no action taken when clear or updateAndClear returns false
 
 
 [^1]: a putRequest requires a PutBodyObject, which requires a Transaction 
