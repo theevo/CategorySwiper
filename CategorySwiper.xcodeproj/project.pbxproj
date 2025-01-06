@@ -37,6 +37,7 @@
 		27F3ECA82CDAC26500851CCB /* LocalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECA72CDAC26500851CCB /* LocalTests.swift */; };
 		27F3ECB22CDAC26500851CCB /* CategorySwiperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */; };
 		27F3ECB42CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */; };
+		27F567DF2D2C694300990723 /* UpdateProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F567DE2D2C694300990723 /* UpdateProgressView.swift */; };
 		27F88AAC2D11FD89000D8DFF /* example-categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 27F88AAB2D11FD89000D8DFF /* example-categories.json */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		27F3ECAD2CDAC26500851CCB /* CategorySwiperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CategorySwiperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F3ECB12CDAC26500851CCB /* CategorySwiperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITests.swift; sourceTree = "<group>"; };
 		27F3ECB32CDAC26500851CCB /* CategorySwiperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySwiperUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		27F567DE2D2C694300990723 /* UpdateProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProgressView.swift; sourceTree = "<group>"; };
 		27F88AAB2D11FD89000D8DFF /* example-categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "example-categories.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 				27C924F12D173E170081849D /* CategoriesSelectorView.swift */,
 				27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */,
 				27D638192CFBD22C00B43DE1 /* CardView.swift */,
+				27F567DE2D2C694300990723 /* UpdateProgressView.swift */,
 				27158EB52CFC1AF90093421F /* CardViewModel.swift */,
 				272F16062D0279060040A272 /* ReceiptView.swift */,
 				276498072D01128E005A7916 /* SwipeableCardsView.swift */,
@@ -335,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				272F16052D0277630040A272 /* SwipeableCardsModel.swift in Sources */,
+				27F567DF2D2C694300990723 /* UpdateProgressView.swift in Sources */,
 				27B5F4F32D1B182C00ACC463 /* CategoriesSelectorViewModel.swift in Sources */,
 				272F16032D0276240040A272 /* SwipedAllCardsView.swift in Sources */,
 				27E554632D03B9A400186D6F /* NoTransactionsView.swift in Sources */,

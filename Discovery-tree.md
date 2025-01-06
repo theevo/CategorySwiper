@@ -24,8 +24,10 @@
 
 - 👟 First run
     - 👉 batch process the swipedCards
-        - TransactionsUpdateLiveView
-            - model
+        - UpdateProgressView
+            - run 2 child spinners that complete parent spinner
+            - run 2 spinners
+            - ✅ run 1 spinner for random amount of time
         - ✅ make `updateAndClear(newCategory:)` param optional
         - ✅ refactor: rename `LunchMoneyInterface.update()` to `updateAndClear()` 
         - ✅ update status and category in one call
