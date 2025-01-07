@@ -18,6 +18,8 @@
 
 - 👉 UpdateProgressView
     - run 2 child spinners that complete parent spinner
+    - init with CardViewModel
+        - ✅ alias the closure
     - ✅ run 2 spinners
     - ✅ run 1 spinner for random amount of time
 

@@ -65,12 +65,14 @@ class UpdateProgressViewModel: ObservableObject {
 }
 
 struct ProgressItem: Identifiable {
+    typealias Action = () async throws -> Bool
+    
     internal let id: UUID = UUID()
     var isDone: Bool = false
     let name: String
-    let action: () async throws -> Bool
+    let action: Action
     
-    init(name: String, action: @escaping () async throws -> Bool) {
+    init(name: String, action: @escaping Action) {
         self.name = name
         self.action = action
     }
