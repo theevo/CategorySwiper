@@ -39,9 +39,15 @@ class CountdownTimer {
 @MainActor
 class UpdateProgressViewModel: ObservableObject {
     @Published var items: [ProgressItem]
+    @Published var allDone: Bool = false
+    @Published var itemCount: Int
+    
+    private var itemsLeft: Int
     
     init(items: [ProgressItem]) {
         self.items = items
+        self.itemCount = items.count
+        self.itemsLeft = items.count
     }
     
     func startActions() {
@@ -50,6 +56,7 @@ class UpdateProgressViewModel: ObservableObject {
             Task {
                 let result = try await item.action()
                 setDone(for: item, isDone: result)
+                checkAllDone()
             }
         }
     }
@@ -62,6 +69,13 @@ class UpdateProgressViewModel: ObservableObject {
         print("\(newItem.name) isDone set to: \(isDone)")
         newItem.isDone = isDone
         items[index] = newItem
+    }
+    
+    private func checkAllDone() {
+        itemsLeft -= 1
+        if itemsLeft <= 0 {
+            allDone = true
+        }
     }
     
     static var example: UpdateProgressViewModel {

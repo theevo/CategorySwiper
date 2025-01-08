@@ -20,6 +20,10 @@ import Foundation
         transactions.filter({ $0.status == .uncleared })
     }
     
+    var progressModel: UpdateProgressViewModel {
+        UpdateProgressViewModel(items: items)
+    }
+    
     init(dataSource: DataSource = .Production) {
         print("💿 running in \(dataSource)")
         self.dataSource = dataSource

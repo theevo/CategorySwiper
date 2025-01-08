@@ -16,8 +16,8 @@
     - ✅ load returns transactions -> swipe cards
     - ✅ all cards swiped -> SwipedAllCardsView, batch API updates calls
 
-- 👉 UpdateProgressView
-    - run 2 child spinners that complete parent spinner
+- ✅ UpdateProgressView
+    - ✅ run 2 child spinners that complete parent spinner
     - ✅ create array of ProgressItems in InterfaceManager
         - ✅ run UpdateProgressViewModel on main thread
         - ✅ queue items from processSwipes

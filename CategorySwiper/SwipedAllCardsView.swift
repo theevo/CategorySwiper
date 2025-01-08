@@ -8,20 +8,23 @@
 import SwiftUI
 
 struct SwipedAllCardsView: View {
-    var items: [ProgressItem]
+    @ObservedObject var progressModel: UpdateProgressViewModel
     
     var body: some View {
-        VStack {
-            UpdateProgressView(model: UpdateProgressViewModel(items: items))
-            Text("All done!")
-            Text("X transactions updated on MM/DD/YY")
-            Text("Time for a treat! 🍧")
+        Form {
+            Section {
+                UpdateProgressView(model: progressModel)
+            } footer: {
+                if progressModel.allDone {
+                    Text("\(progressModel.itemCount) transactions updated")
+                }
+            }
         }
     }
 }
 
 #Preview {
     SwipedAllCardsView(
-        items: UpdateProgressViewModel.example.items
+        progressModel: UpdateProgressViewModel.example
     )
 }

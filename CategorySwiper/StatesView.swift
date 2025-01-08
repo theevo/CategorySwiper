@@ -20,7 +20,7 @@ struct StatesView: View {
             case .Swiping:
                 SwipeableCardsView()
             case .Done:
-                SwipedAllCardsView(items: manager.items)
+                SwipedAllCardsView(progressModel: manager.progressModel)
             }
         }
         .onAppear {
