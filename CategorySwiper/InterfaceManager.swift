@@ -60,8 +60,10 @@ import Foundation
         case .FetchEmpty:
             print("no transactions")
         case .Swiping:
-            processSwipes()
-            appState = .Done
+            Task {
+                await processSwipes()
+                appState = .Done
+            }
         case .Done:
             print("done swiping")
         }
@@ -87,24 +89,21 @@ import Foundation
         }
     }
     
-    fileprivate func processSwipes() {
+    fileprivate func processSwipes() async {
         // batch process swipedCards
         for card in cardsModel.swipedCards {
-            Task {
-                let transaction = card.transaction
-                
-                if card.swipeDirection == .right {
-                    let result = try await clear(transaction: transaction)
-                    print("\(card.merchant) status update result: \(result ? "✅" : "❌")")
-                    
-//                    let item: ProgressItem = ProgressItem(name: "🤨 Clearing \(card.merchant) in a sketch closure") {
-//                        return try await self.clear(transaction: transaction)
-//                    }
-//                    items.append(item)
-                } else if card.swipeDirection == .left {
-                    let result = try await updateAndClear(transaction: transaction, newCategory: card.newCategory)
-                    print("\(card.merchant) - \(card.newCategory?.name ?? "<no category>") result: \(result ? "✅" : "❌")")
+            let transaction = card.transaction
+            
+            if card.swipeDirection == .right {
+                let item: ProgressItem = ProgressItem(name: "Clear \(card.merchant)") {
+                    return try await self.clear(transaction: transaction)
                 }
+                items.append(item)
+            } else if card.swipeDirection == .left {
+                let item: ProgressItem = ProgressItem(name: "Clear \(card.merchant) -> \(card.newCategory?.name ?? "<no category>")") {
+                    return try await self.updateAndClear(transaction: transaction, newCategory: card.newCategory)
+                }
+                items.append(item)
             }
         }
     }

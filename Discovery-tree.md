@@ -19,7 +19,8 @@
 - 👉 UpdateProgressView
     - run 2 child spinners that complete parent spinner
     - create array of ProgressItems in InterfaceManager
-        - queue items from processSwipes
+        - publish UpdateProgressViewModel on main thread
+        - ✅ queue items from processSwipes
         - ✅ inject items via SwipedAllCardsView
         - ✅ make UpdateProgressView subview of SwipedAllCardsView
         - ❌ load sample items in local interface[^29]
