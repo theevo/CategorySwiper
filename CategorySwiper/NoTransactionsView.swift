@@ -9,7 +9,10 @@ import SwiftUI
 
 struct NoTransactionsView: View {
     var body: some View {
-        Text("No Transactions")
-        Text("Last update: MM/DD/YYYY HH:MM")
+        Text("No uncleared transactions this month.")
     }
+}
+
+#Preview {
+    NoTransactionsView()
 }
