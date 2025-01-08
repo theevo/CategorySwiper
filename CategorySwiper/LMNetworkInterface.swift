@@ -26,7 +26,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
-    fileprivate func transactionQueryParams(_ showUnclearedOnly: Bool, _ monthsAgo: UInt?) -> [LMQueryParams.Transactions] {
+    fileprivate func transactionQueryParams(_ showUnclearedOnly: Bool, _ monthsAgo: UInt?, _ inLastMonths: UInt? = nil) -> [LMQueryParams.Transactions] {
         var queryParams: [LMQueryParams.Transactions] = []
         
         if showUnclearedOnly {
@@ -38,7 +38,39 @@ struct LMNetworkInterface: LunchMoneyInterface {
             queryParams.append(.DateRange(startDate: monthRange.first, endDate: monthRange.last))
         }
         
+        if let inLastMonths = inLastMonths {
+            let monthRange = MonthRangeBuilder(monthsAgoBeforeThisMonth: inLastMonths)
+            queryParams.append(.DateRange(startDate: monthRange.first, endDate: monthRange.last))
+            queryParams.append(.Limit(1))
+        }
+        
         return queryParams
+    }
+    
+    func findOldestUnclearedTransaction(withinPreviousMonths: UInt = 12) async throws -> Transaction? {
+        let builder = makeURLSessionBuilder()
+        
+        let queryParams = transactionQueryParams(true, nil, withinPreviousMonths)
+        
+        let request = Request.GetTransactions.makeRequest(filters: queryParams)
+        
+        let result = await builder.execute(request: request)
+        
+        switch result {
+        case .success(let response):
+            do {
+                let object = try JSONDecoder().decode(TransactionsResponseWrapper.self, from: response.data)
+                guard object.transactions.notEmpty else {
+                    return nil
+                }
+                    
+                return object.transactions.first
+            } catch (let error) {
+                throw LoaderError.JSONFailure(error: error)
+            }
+        case .failure(let error):
+            throw LoaderError.SessionErrorThrown(error: error)
+        }
     }
     
     func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
@@ -218,6 +250,7 @@ enum LMQueryParams {
     enum Transactions: QueryItemBuilder {
         case Uncleared
         case DateRange(startDate: String, endDate: String)
+        case Limit(Int)
         
         var queryItems: [URLQueryItem] {
             switch self {
@@ -228,6 +261,8 @@ enum LMQueryParams {
                     URLQueryItem(name: "start_date", value: startDate),
                     URLQueryItem(name: "end_date", value: endDate)
                 ]
+            case .Limit(let limit):
+                [URLQueryItem(name: "limit", value: String(limit))]
             }
         }
     }

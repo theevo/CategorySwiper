@@ -78,6 +78,14 @@ final class NetworkTests: XCTestCase {
         let response = try await manager.updateAndClear(transaction: Transaction.exampleCentralMarket, newCategory: Category.exampleGroceries)
         XCTAssertTrue(response)
     }
+    
+    func test_NetworkInterface_findOldestUnclearedTransaction_returnsNotNil() async throws {
+        let interface = LMNetworkInterface()
+        
+        let transaction = try await interface.findOldestUnclearedTransaction()
+        print(transaction?.payee, transaction?.date)
+        XCTAssertNotNil(transaction)
+    }
 }
 
 final class NetworkRequestTests: XCTestCase {

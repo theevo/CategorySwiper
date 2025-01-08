@@ -3,7 +3,9 @@
 ## UI
 
 - Surface uncleared transactions before current month
-    - get transactions from last 12 months
+    - get oldest uncleared transactions from last 12 months
+        - get the oldest transaction
+        - ✅ find 1 transaction
     - ✅ preview SwipedAllCardsView with transactions requiring scrolling 
     - ✅ edit NoTransactionsView to "no uncleared transactions this month" 
 
@@ -353,3 +355,4 @@
 [^27]: I've given a lot of thought to LunchMoneyInterface guarding against wasteful API calls. if you swipe left and don't change the category, let's not burden the server. This makes absolute sense. That's not the case with update(transaction:newStatus:). Both swipe left and right will update status to cleared. If it's always going to happen, enforcement is not needed. This also has me thinking about whether or not SwipeableCardsModel should update a card's original transaction status. Given that we always clear every transaction, it seems I'm not writing the correct method. The protocol should not require update Transaction with new status, instead it should just CLEAR the transaction.
 [^28]: My intention was to give CardViewModel a new property of type `Action`. While we're in the for loop of `processSwipes()`, we cannot assign the property of card, because it is a let. While I'm proud of myself for throwing closures around with relative ease, this just feels like too much to build. There has to be a better way.
 [^29]: We cannot force InterfaceManager to load items from within UpdateProgressView, because InterfaceManager is built on the idea of a state machine, and the data won't load until it reaches a specific state (we swipe transactions, then we make Progress Items). Also, this bypassing completely destroys how the state machine is supposed to work. If we just force a bunch of sample data in there just for UpdateProgressView, how is it supposed to behave for StatesView? I'm trying to keep InterfaceManager out of the picture here and just let UpdateProgressView do its thing.
+[^30]: I think limit returns the OLDEST transaction in the range.

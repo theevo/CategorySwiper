@@ -29,6 +29,19 @@ struct MonthRangeBuilder {
         self.first = month.firstAndLastDay.first
         self.last = month.firstAndLastDay.last
     }
+    
+    init(monthsAgoBeforeThisMonth: UInt) {
+        let lastMonth = Clocks.system.currentMonth.previous
+        var monthsAgo = lastMonth
+        
+        for _ in 0..<monthsAgoBeforeThisMonth {
+            monthsAgo = monthsAgo.previous
+        }
+        
+        self.first = monthsAgo.firstAndLastDay.first
+        self.last = lastMonth.firstAndLastDay.last
+        
+    }
 }
 
 extension Fixed<Month> {
