@@ -28,3 +28,9 @@ struct SwipedAllCardsView: View {
         progressModel: UpdateProgressViewModel.example
     )
 }
+
+#Preview("Scroll") {
+    SwipedAllCardsView(
+        progressModel: UpdateProgressViewModel.example18
+    )
+}

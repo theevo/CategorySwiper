@@ -88,6 +88,65 @@ class UpdateProgressViewModel: ObservableObject {
                  )
         ])
     }
+    
+    static var example18: UpdateProgressViewModel {
+        UpdateProgressViewModel(items: [
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 ),
+        ])
+    }
 }
 
 struct ProgressItem: Identifiable {

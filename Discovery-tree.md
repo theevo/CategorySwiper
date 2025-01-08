@@ -4,7 +4,7 @@
 
 - Surface uncleared transactions before current month
     - get transactions from last 12 months
-    - preview SwipedAllCardsView with transactions requiring scrolling 
+    - ✅ preview SwipedAllCardsView with transactions requiring scrolling 
     - ✅ edit NoTransactionsView to "no uncleared transactions this month" 
 
 - ✅ make "Uncategorized" category the default placeholder
