@@ -36,6 +36,7 @@ class CountdownTimer {
     }
 }
 
+@MainActor
 class UpdateProgressViewModel: ObservableObject {
     @Published var items: [ProgressItem]
     
