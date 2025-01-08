@@ -119,12 +119,6 @@ struct UpdateProgressView: View {
     }
 }
 
-#Preview("Random") {
-    UpdateProgressView(
-        model: UpdateProgressViewModel.example
-    )
-}
-
 #Preview("1 second") {
     UpdateProgressView(
         model: UpdateProgressViewModel(
@@ -139,3 +133,10 @@ struct UpdateProgressView: View {
             )
     )
 }
+
+#Preview("Random") {
+    UpdateProgressView(
+        model: UpdateProgressViewModel.example
+    )
+}
+
