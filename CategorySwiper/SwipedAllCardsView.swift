@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SwipedAllCardsView: View {
+    var items: [ProgressItem]
+    
     var body: some View {
         VStack {
+            UpdateProgressView(model: UpdateProgressViewModel(items: items))
             Text("All done!")
             Text("X transactions updated on MM/DD/YY")
             Text("Time for a treat! 🍧")
@@ -18,5 +21,7 @@ struct SwipedAllCardsView: View {
 }
 
 #Preview {
-    SwipedAllCardsView()
+    SwipedAllCardsView(
+        items: UpdateProgressViewModel.example.items
+    )
 }

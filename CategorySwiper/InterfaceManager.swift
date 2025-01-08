@@ -12,6 +12,7 @@ import Foundation
     private let interface: LunchMoneyInterface
     var categories: [Category] = []
     var transactions: [Transaction] = []
+    var items: [ProgressItem] = []
     @Published var appState: AppState = .Fetching
     @Published var cardsModel: SwipeableCardsModel = SwipeableCardsModel.empty
     
@@ -95,6 +96,11 @@ import Foundation
                 if card.swipeDirection == .right {
                     let result = try await clear(transaction: transaction)
                     print("\(card.merchant) status update result: \(result ? "✅" : "❌")")
+                    
+//                    let item: ProgressItem = ProgressItem(name: "🤨 Clearing \(card.merchant) in a sketch closure") {
+//                        return try await self.clear(transaction: transaction)
+//                    }
+//                    items.append(item)
                 } else if card.swipeDirection == .left {
                     let result = try await updateAndClear(transaction: transaction, newCategory: card.newCategory)
                     print("\(card.merchant) - \(card.newCategory?.name ?? "<no category>") result: \(result ? "✅" : "❌")")

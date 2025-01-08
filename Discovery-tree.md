@@ -18,7 +18,12 @@
 
 - 👉 UpdateProgressView
     - run 2 child spinners that complete parent spinner
-    - init with CardViewModel
+    - create array of ProgressItems in InterfaceManager
+        - queue items from processSwipes
+        - ✅ inject items via SwipedAllCardsView
+        - ✅ make UpdateProgressView subview of SwipedAllCardsView
+        - ❌ load sample items in local interface[^29]
+    - ❌ init with CardViewModel[^28]
         - ✅ alias the closure
     - ✅ run 2 spinners
     - ✅ run 1 spinner for random amount of time
@@ -340,3 +345,5 @@
 [^25]: Never expected to use slight of hand here. Status quo: always remove from unswipedCards and append it to swipedCards. We need the removal from unswiped for the View's sake, but we can choose not to append if a card is swiped left (aka the old one). The bigger lesson here is to honor the Discovery Tree's need for little to no code. Keeping it high level with "replace the card" gave me room to maneuver; whereas if i wrote "pass around indexes so you can update the card later", i'm setting myself up for sabotage. My original thought of "replacement" was to find the card in the swipedCards and then remove it. But the code completion inspired something so deliciously simple that I couldn't ignore it: just append the updated card without regard of removing the old one. What if the old one was never there to begin with? For that to happen, I would have to not append the card that was just swiped left.
 [^26]: It's tough keeping track of what can talk to what. The cardsModel cannot talk to its parent InterfaceManager to let it know that swiping is done. Instead, the InterfaceManager must poll the cardsModel and ask if swiping is done.
 [^27]: I've given a lot of thought to LunchMoneyInterface guarding against wasteful API calls. if you swipe left and don't change the category, let's not burden the server. This makes absolute sense. That's not the case with update(transaction:newStatus:). Both swipe left and right will update status to cleared. If it's always going to happen, enforcement is not needed. This also has me thinking about whether or not SwipeableCardsModel should update a card's original transaction status. Given that we always clear every transaction, it seems I'm not writing the correct method. The protocol should not require update Transaction with new status, instead it should just CLEAR the transaction.
+[^28]: My intention was to give CardViewModel a new property of type `Action`. While we're in the for loop of `processSwipes()`, we cannot assign the property of card, because it is a let. While I'm proud of myself for throwing closures around with relative ease, this just feels like too much to build. There has to be a better way.
+[^29]: We cannot force InterfaceManager to load items from within UpdateProgressView, because InterfaceManager is built on the idea of a state machine, and the data won't load until it reaches a specific state (we swipe transactions, then we make Progress Items). Also, this bypassing completely destroys how the state machine is supposed to work. If we just force a bunch of sample data in there just for UpdateProgressView, how is it supposed to behave for StatesView? I'm trying to keep InterfaceManager out of the picture here and just let UpdateProgressView do its thing.

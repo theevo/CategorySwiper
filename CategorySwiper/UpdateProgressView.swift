@@ -62,6 +62,17 @@ class UpdateProgressViewModel: ObservableObject {
         newItem.isDone = isDone
         items[index] = newItem
     }
+    
+    static var example: UpdateProgressViewModel {
+        UpdateProgressViewModel(items: [
+            .init(name: "Central Market",
+                  randomTimerUpTo: 6
+                 ),
+            .init(name: "Timemore -> Gifts",
+                  randomTimerUpTo: 6
+                 )
+        ])
+    }
 }
 
 struct ProgressItem: Identifiable {
@@ -101,7 +112,7 @@ struct UpdateProgressView: View {
             }
         }
         .onAppear {
-            print("😄 appeared!")
+            print("😄 UpdateProgressView appeared!")
             model.startActions()
         }
     }
@@ -109,16 +120,7 @@ struct UpdateProgressView: View {
 
 #Preview("Random") {
     UpdateProgressView(
-        model: UpdateProgressViewModel(
-            items: [
-                .init(name: "Central Market",
-                      randomTimerUpTo: 6
-                     ),
-                .init(name: "Timemore -> Gifts",
-                      randomTimerUpTo: 6
-                     )
-            ]
-            )
+        model: UpdateProgressViewModel.example
     )
 }
 
