@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SwipedAllCardsView: View {
+    @EnvironmentObject var manager: InterfaceManager
     @ObservedObject var progressModel: UpdateProgressViewModel
     
     var body: some View {
@@ -20,6 +21,9 @@ struct SwipedAllCardsView: View {
                 }
             }
         }
+        .onAppear {
+            manager.runTaskAndAdvanceState()
+        }
     }
 }
 
@@ -27,10 +31,12 @@ struct SwipedAllCardsView: View {
     SwipedAllCardsView(
         progressModel: UpdateProgressViewModel.example
     )
+    .environmentObject(InterfaceManager(dataSource: .Empty))
 }
 
 #Preview("Scroll") {
     SwipedAllCardsView(
         progressModel: UpdateProgressViewModel.example18
     )
+    .environmentObject(InterfaceManager(dataSource: .Empty))
 }
