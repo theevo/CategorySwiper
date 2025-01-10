@@ -62,7 +62,16 @@ import Foundation
                 }
             }
         case .FetchEmpty:
-            print("no transactions")
+            print("0️⃣ no transactions in current month")
+            Task {
+                print("🔎 searching previous months...")
+                try await loadData(willSearchPrecedingMonths: true)
+                if transactions.notEmpty {
+                    print(" we have \(transactions.count) transactions!")
+                } else {
+                    print(" no transactions in previous months.")
+                }
+            }
         case .Swiping:
             Task {
                 await processSwipes()
@@ -112,9 +121,10 @@ import Foundation
         }
     }
     
-    func loadData() async throws {
+    func loadData(willSearchPrecedingMonths: Bool = false) async throws {
+        let withinPrecedingMonths: UInt? = willSearchPrecedingMonths ? 12 : nil
         async let getTheCategories: () = getCategories()
-        async let getTheTransactions: () = getUnclearedTransactions()
+        async let getTheTransactions: () = getUnclearedTransactions(withinPrecedingMonths: withinPrecedingMonths)
         let _ = try await (getTheCategories, getTheTransactions)
     }
     
