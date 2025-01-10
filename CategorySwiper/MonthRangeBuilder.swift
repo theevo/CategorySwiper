@@ -30,11 +30,18 @@ struct MonthRangeBuilder {
         self.last = month.firstAndLastDay.last
     }
     
-    init(monthsAgoBeforeThisMonth: UInt) {
-        let lastMonth = Clocks.system.currentMonth.previous
+    init(currentDate: Date? = nil, precedingMonthsBeforeThisMonth: UInt) {
+        var clock: any RegionalClock
+        if let currentDate = currentDate {
+            clock = Clocks.custom(startingFrom: Instant(date: currentDate))
+        } else {
+            clock = Clocks.system
+        }
+        
+        let lastMonth = clock.currentMonth.previous
         var monthsAgo = lastMonth
         
-        for _ in 0..<monthsAgoBeforeThisMonth {
+        for _ in 0..<(precedingMonthsBeforeThisMonth-1) {
             monthsAgo = monthsAgo.previous
         }
         

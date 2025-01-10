@@ -39,7 +39,7 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
         
         if let inLastMonths = inLastMonths {
-            let monthRange = MonthRangeBuilder(monthsAgoBeforeThisMonth: inLastMonths)
+            let monthRange = MonthRangeBuilder(precedingMonthsBeforeThisMonth: inLastMonths)
             queryParams.append(.DateRange(startDate: monthRange.first, endDate: monthRange.last))
             queryParams.append(.Limit(1))
         }

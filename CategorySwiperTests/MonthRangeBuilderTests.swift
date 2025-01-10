@@ -30,6 +30,13 @@ class MonthRangeBuilderTests: XCTestCase {
         XCTAssertEqual(sut.last, "1980-02-29")
     }
     
+    func test_precedingMonthsBeforeThisMonth() {
+        let currentDate = dateFromISO(string: "1978-11-26")
+        let sut = MonthRangeBuilder(currentDate: currentDate, precedingMonthsBeforeThisMonth: 3)
+        XCTAssertEqual(sut.first, "1978-08-01")
+        XCTAssertEqual(sut.last, "1978-10-31")
+    }
+    
     // MARK: - Helpers
     fileprivate func dateFromISO(string: String) -> Date? {
         let formatter = DateFormatter.inUTCTimeZone()
