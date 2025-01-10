@@ -5,7 +5,7 @@
 - Surface uncleared transactions before current month
     - get oldest uncleared transactions from last 12 months
         - show small sheet with date of oldest
-        - refactor: make getTransactions helper to preserve public methods
+        - ✅ refactor: rename to getUnclearedTransactions
         - ✅ get the oldest transaction
         - ✅ test `MonthRangeBuilder(:precedingMonthsBeforeThisMonth:)`
         - ✅ find 1 transaction

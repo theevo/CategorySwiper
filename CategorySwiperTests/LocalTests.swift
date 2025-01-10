@@ -13,13 +13,13 @@ final class LocalTests: XCTestCase {
     
     func test_InterfaceManager_returns_nonEmptyTransactionsArray() async throws {
         let manager = InterfaceManager(dataSource: .Local)
-        try await manager.getTransactions()
+        try await manager.getUnclearedTransactions()
         XCTAssertTrue(manager.transactions.notEmpty)
     }
     
     func test_InterfaceManager_requestUnclearedTransactionsOnly_allResponseStatusesAreUncleared() async throws {
         let manager = InterfaceManager(dataSource: .Local)
-        try await manager.getTransactions(showUnclearedOnly: true)
+        try await manager.getUnclearedTransactions()
         XCTAssertEqual(manager.transactions.count, manager.uncleared.count)
     }
     

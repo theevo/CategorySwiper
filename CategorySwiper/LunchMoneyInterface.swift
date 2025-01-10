@@ -10,14 +10,14 @@ import Foundation
 protocol LunchMoneyInterface {
     func clear(transaction: Transaction) async throws -> Bool
     func getCategories() async throws -> CategoryResponseWrapper
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?, withinPrecedingMonths: UInt?) async throws -> TransactionsResponseWrapper
+    func getUnclearedTransactions(withinPrecedingMonths: UInt?) async throws -> TransactionsResponseWrapper
     func updateAndClear(transaction: Transaction, newCategory: Category?) async throws -> Bool
 }
 
 protocol LunchMoneyLocalInterface: LunchMoneyInterface {
     func clear(transaction: Transaction) -> Bool
     func getCategories() throws -> CategoryResponseWrapper
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?, withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper
+    func getUnclearedTransactions(withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper
     func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool
 }
 
@@ -40,6 +40,10 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
         let object = try getTransactions(showUnclearedOnly: showUnclearedOnly)
         return Array(object.transactions.prefix(limit))
+    }
+    
+    func getUnclearedTransactions(withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper {
+        return try getTransactions(showUnclearedOnly: true, withinPrecedingMonths: withinPrecedingMonths)
     }
     
     func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) throws -> TransactionsResponseWrapper {
@@ -99,7 +103,7 @@ struct LMEmptyInterface: LunchMoneyLocalInterface {
         return CategoryResponseWrapper(categories: [])
     }
     
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) -> TransactionsResponseWrapper {
+    func getUnclearedTransactions(withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper {
         return TransactionsResponseWrapper(transactions: [], has_more: false)
     }
     

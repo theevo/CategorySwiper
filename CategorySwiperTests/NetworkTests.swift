@@ -35,19 +35,8 @@ final class NetworkTests: XCTestCase {
     
     func test_InterfaceManager_getTransactions_resultsInNonEmptyTransactions() async throws {
         let manager = InterfaceManager()
-        try await manager.getTransactions(showUnclearedOnly: false)
+        try await manager.getUnclearedTransactions(withinPrecedingMonths: 12)
         XCTAssertTrue(manager.transactions.notEmpty)
-    }
-    
-    func test_InterfaceManager_getTransactions_2MonthAgo_resultsInNonEmptyTransactions() async throws {
-        let manager = InterfaceManager()
-        try await manager.getTransactions(showUnclearedOnly: true, monthsAgo: 2)
-        XCTAssertTrue(manager.transactions.notEmpty)
-        
-        let transaction = manager.transactions.first {
-            $0.date.contains("2024-11")
-        }
-        XCTAssertNotNil(transaction)
     }
     
     func test_InterfaceManager_updateTransactionStatus_returnsTrueInResponse() async throws {

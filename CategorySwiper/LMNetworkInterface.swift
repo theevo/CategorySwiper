@@ -56,6 +56,10 @@ struct LMNetworkInterface: LunchMoneyInterface {
         return response.transactions.first
     }
     
+    func getUnclearedTransactions(withinPrecedingMonths: UInt?) async throws -> TransactionsResponseWrapper {
+        return try await getTransactions(showUnclearedOnly: true, withinPrecedingMonths: withinPrecedingMonths)
+    }
+    
     func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
