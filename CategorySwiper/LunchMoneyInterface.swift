@@ -10,14 +10,14 @@ import Foundation
 protocol LunchMoneyInterface {
     func clear(transaction: Transaction) async throws -> Bool
     func getCategories() async throws -> CategoryResponseWrapper
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) async throws -> TransactionsResponseWrapper
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?, withinPrecedingMonths: UInt?) async throws -> TransactionsResponseWrapper
     func updateAndClear(transaction: Transaction, newCategory: Category?) async throws -> Bool
 }
 
 protocol LunchMoneyLocalInterface: LunchMoneyInterface {
     func clear(transaction: Transaction) -> Bool
     func getCategories() throws -> CategoryResponseWrapper
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?) throws -> TransactionsResponseWrapper
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt?, withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper
     func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool
 }
 
@@ -42,7 +42,7 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
         return Array(object.transactions.prefix(limit))
     }
     
-    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) throws -> TransactionsResponseWrapper {
+    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) throws -> TransactionsResponseWrapper {
         let url = Bundle.main.url(forResource: "example-transactions", withExtension: "json")!
         
         do {
@@ -54,7 +54,7 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
             
             let filteredTransactions = object.transactions.filter { $0.status == .uncleared }
             
-            let newObject = TransactionsResponseWrapper(transactions: filteredTransactions)
+            let newObject = TransactionsResponseWrapper(transactions: filteredTransactions, has_more: false)
             
             return newObject
         } catch {
@@ -99,8 +99,8 @@ struct LMEmptyInterface: LunchMoneyLocalInterface {
         return CategoryResponseWrapper(categories: [])
     }
     
-    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil) -> TransactionsResponseWrapper {
-        return TransactionsResponseWrapper(transactions: [])
+    func getTransactions(showUnclearedOnly: Bool, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) -> TransactionsResponseWrapper {
+        return TransactionsResponseWrapper(transactions: [], has_more: false)
     }
     
     func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool {

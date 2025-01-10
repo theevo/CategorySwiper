@@ -9,6 +9,7 @@ import Foundation
 
 struct TransactionsResponseWrapper: Decodable {
     var transactions: [Transaction]
+    var has_more: Bool
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })

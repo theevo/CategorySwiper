@@ -41,42 +41,25 @@ struct LMNetworkInterface: LunchMoneyInterface {
         if let inLastMonths = inLastMonths {
             let monthRange = MonthRangeBuilder(precedingMonthsBeforeThisMonth: inLastMonths)
             queryParams.append(.DateRange(startDate: monthRange.first, endDate: monthRange.last))
-            queryParams.append(.Limit(1))
         }
         
         return queryParams
     }
     
-    func findOldestUnclearedTransaction(withinPreviousMonths: UInt = 12) async throws -> Transaction? {
-        let builder = makeURLSessionBuilder()
+    func findOldestUnclearedTransaction(withinPrecedingMonths: UInt = 12) async throws -> Transaction? {
+        let response = try await getTransactions(showUnclearedOnly: true, withinPrecedingMonths: withinPrecedingMonths)
         
-        let queryParams = transactionQueryParams(true, nil, withinPreviousMonths)
-        
-        let request = Request.GetTransactions.makeRequest(filters: queryParams)
-        
-        let result = await builder.execute(request: request)
-        
-        switch result {
-        case .success(let response):
-            do {
-                let object = try JSONDecoder().decode(TransactionsResponseWrapper.self, from: response.data)
-                guard object.transactions.notEmpty else {
-                    return nil
-                }
-                    
-                return object.transactions.first
-            } catch (let error) {
-                throw LoaderError.JSONFailure(error: error)
-            }
-        case .failure(let error):
-            throw LoaderError.SessionErrorThrown(error: error)
+        guard response.transactions.notEmpty else {
+            return nil
         }
+        
+        return response.transactions.first
     }
     
-    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws -> TransactionsResponseWrapper {
+    func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil, withinPrecedingMonths: UInt? = nil) async throws -> TransactionsResponseWrapper {
         let builder = makeURLSessionBuilder()
         
-        let queryParams = transactionQueryParams(showUnclearedOnly, monthsAgo)
+        let queryParams = transactionQueryParams(showUnclearedOnly, monthsAgo, withinPrecedingMonths)
         
         let request = Request.GetTransactions.makeRequest(filters: queryParams)
         

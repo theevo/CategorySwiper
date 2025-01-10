@@ -83,7 +83,6 @@ final class NetworkTests: XCTestCase {
         let interface = LMNetworkInterface()
         
         let transaction = try await interface.findOldestUnclearedTransaction()
-        print(transaction?.payee, transaction?.date)
         XCTAssertNotNil(transaction)
     }
 }

@@ -84,7 +84,7 @@ import Foundation
             return
         }
         
-        if let response = try? localInterface.getTransactions(showUnclearedOnly: true, monthsAgo: nil) {
+        if let response = try? localInterface.getTransactions(showUnclearedOnly: true, monthsAgo: nil, withinPrecedingMonths: nil) {
             self.transactions = response.transactions
         }
         
@@ -125,7 +125,7 @@ import Foundation
     }
     
     public func getTransactions(showUnclearedOnly: Bool = false, monthsAgo: UInt? = nil) async throws {
-        let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly, monthsAgo: monthsAgo)
+        let response = try await interface.getTransactions(showUnclearedOnly: showUnclearedOnly, monthsAgo: monthsAgo, withinPrecedingMonths: nil)
         self.transactions = response.transactions
         print("☑️ finished loading \(self.transactions.count) transactions at \(Date().formatted())")
     }
