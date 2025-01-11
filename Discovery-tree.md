@@ -3,14 +3,14 @@
 ## UI
 
 - Surface uncleared transactions before current month
-    - get oldest uncleared transactions from last 12 months
-        - show small sheet with date of oldest
+    - set state to Swiping after Go pressed
+    - ✅ show small sheet with date of oldest
         - ✅ get transactions from previous months after swiping done
         - ✅ get transactions from previous months if nothing this month
         - ✅ refactor: rename to getUnclearedTransactions
         - ✅ get the oldest transaction
         - ✅ test `MonthRangeBuilder(:precedingMonthsBeforeThisMonth:)`
-        - ✅ find 1 transaction
+        - ✅ find 1 transaction from last 12 months
     - ✅ preview SwipedAllCardsView with transactions requiring scrolling 
     - ✅ edit NoTransactionsView to "no uncleared transactions this month" 
 

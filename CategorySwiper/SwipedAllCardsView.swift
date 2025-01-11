@@ -24,6 +24,9 @@ struct SwipedAllCardsView: View {
         .onAppear {
             manager.runTaskAndAdvanceState()
         }
+        .sheet(isPresented: $manager.didFindOldTransactions) {
+            OldTransactionsFoundView(dateOfOldest: manager.oldestTransactionDate)
+        }
     }
 }
 
@@ -32,6 +35,13 @@ struct SwipedAllCardsView: View {
         progressModel: UpdateProgressViewModel.example
     )
     .environmentObject(InterfaceManager(dataSource: .Empty))
+}
+
+#Preview("Found Old Transactions") {
+    SwipedAllCardsView(
+        progressModel: UpdateProgressViewModel.example
+    )
+    .environmentObject(InterfaceManager.previewOldTransactionFound)
 }
 
 #Preview("Scroll") {

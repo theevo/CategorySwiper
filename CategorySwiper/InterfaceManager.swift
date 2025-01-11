@@ -15,6 +15,7 @@ import Foundation
     var items: [ProgressItem] = []
     @Published var appState: AppState = .Fetching
     @Published var cardsModel: SwipeableCardsModel = SwipeableCardsModel.empty
+    @Published var didFindOldTransactions = false
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })
@@ -67,7 +68,7 @@ import Foundation
                 print("🔎 searching previous months...")
                 try await loadData(willSearchPrecedingMonths: true)
                 if transactions.notEmpty {
-                    print(" we have \(transactions.count) transactions!")
+                    didFindOldTransactions = true
                 } else {
                     print(" no transactions in previous months.")
                 }
@@ -79,6 +80,15 @@ import Foundation
             }
         case .Done:
             print("done swiping")
+            Task {
+                print("🔎 searching previous months...")
+                try await loadData(willSearchPrecedingMonths: true)
+                if transactions.notEmpty {
+                    didFindOldTransactions = true
+                } else {
+                    print(" no transactions in previous months.")
+                }
+            }
         }
     }
     
@@ -162,5 +172,17 @@ extension InterfaceManager {
         case FetchEmpty
         case Swiping
         case Done
+    }
+}
+
+extension InterfaceManager {
+    static let previewOldTransactionFound: InterfaceManager = {
+        let manager = InterfaceManager(dataSource: .Local)
+        manager.didFindOldTransactions = true
+        return manager
+    }()
+    
+    var oldestTransactionDate: String? {
+        transactions.first?.date
     }
 }

@@ -15,10 +15,39 @@ struct NoTransactionsView: View {
             .onAppear {
                 manager.runTaskAndAdvanceState()
             }
+            .sheet(isPresented: $manager.didFindOldTransactions) {
+                OldTransactionsFoundView(dateOfOldest: manager.oldestTransactionDate)
+            }
     }
 }
 
 #Preview {
     NoTransactionsView()
         .environmentObject(InterfaceManager(dataSource: .Empty))
+}
+
+#Preview("Found Old Transactions") {
+    NoTransactionsView()
+        .environmentObject(InterfaceManager.previewOldTransactionFound)
+}
+
+struct OldTransactionsFoundView: View {
+    var dateOfOldest: String? = "2024-12-12"
+    
+    var body: some View {
+        VStack {
+            Text("More transactions found.")
+                .font(.headline)
+            if let dateOfOldest {
+                Text("Oldest: \(dateOfOldest)")
+                    .font(.subheadline)
+            }
+            Button("Go") {
+                print("Go button pressed")
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .presentationDetents([.fraction(0.25), .fraction(0.4)])
+        .presentationDragIndicator(.hidden)
+    }
 }
