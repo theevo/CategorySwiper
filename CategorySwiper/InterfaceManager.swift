@@ -92,6 +92,13 @@ import Foundation
         }
     }
     
+    public func swipeOnOldTransactions() {
+        print("enter swiping mode")
+        appState = .Swiping
+        cardsModel = SwipeableCardsModel(transactions: transactions)
+        didFindOldTransactions = false
+    }
+    
     private func loadDataFromLocal() {
         var localInterface: any LunchMoneyLocalInterface
         

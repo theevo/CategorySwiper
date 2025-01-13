@@ -3,7 +3,8 @@
 ## UI
 
 - Surface uncleared transactions before current month
-    - set state to Swiping after Go pressed
+    - batch clear transactions BEFORE asking for new ones
+    - ✅ set state to Swiping after Go pressed
     - ✅ show small sheet with date of oldest
         - ✅ get transactions from previous months after swiping done
         - ✅ get transactions from previous months if nothing this month
