@@ -3,7 +3,9 @@
 ## UI
 
 - Surface uncleared transactions before current month
-    - batch clear transactions BEFORE asking for new ones
+    - bug: if last card is swiped left, the user cannot edit[^32]
+    - ✅ limit the number of swipes
+    - ❌ batch clear transactions BEFORE asking for new ones[^31]
     - ✅ set state to Swiping after Go pressed
     - ✅ show small sheet with date of oldest
         - ✅ get transactions from previous months after swiping done
@@ -362,3 +364,5 @@
 [^28]: My intention was to give CardViewModel a new property of type `Action`. While we're in the for loop of `processSwipes()`, we cannot assign the property of card, because it is a let. While I'm proud of myself for throwing closures around with relative ease, this just feels like too much to build. There has to be a better way.
 [^29]: We cannot force InterfaceManager to load items from within UpdateProgressView, because InterfaceManager is built on the idea of a state machine, and the data won't load until it reaches a specific state (we swipe transactions, then we make Progress Items). Also, this bypassing completely destroys how the state machine is supposed to work. If we just force a bunch of sample data in there just for UpdateProgressView, how is it supposed to behave for StatesView? I'm trying to keep InterfaceManager out of the picture here and just let UpdateProgressView do its thing.
 [^30]: I think limit returns the OLDEST transaction in the range.
+[^31]: I wrote this with the intent to make an API call queue. After glancing at [Sundell's article](https://www.swiftbysundell.com/articles/a-deep-dive-into-grand-central-dispatch-in-swift/) on the matter, that felt like a long-term investment that would be better spent post-MVP. Could I get away with something simpler? I took a good look at `runTaskAndAdvanceState()` and concluded that indeed, the batch should be cleared by the time new transactions are fetched. I think placing a limit on the number of swipes is a good thing. It limits the number of transactions that can be batched, and it also prevents cognitive overload. If things get out of hand, I could also build in a 2 second delay before the searchPrecedingMonths starts. 
+[^32]: If the last card is swiped left, the user will see the edit screen for brief moment and then see the SwipedAllCardsView. The previous transactions are batched, not the one that was "abandoned." The state advances to done before the user can change the category. Luckily, with the logic in place, the abandoned transaction is not cleared, since no new Category was given.

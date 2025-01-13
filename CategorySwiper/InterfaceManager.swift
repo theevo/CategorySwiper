@@ -8,6 +8,7 @@
 import Foundation
 
 @MainActor class InterfaceManager: ObservableObject {
+    private let swipeLimit: Int = 5
     private let dataSource: DataSource
     private let interface: LunchMoneyInterface
     var categories: [Category] = []
@@ -15,7 +16,7 @@ import Foundation
     var items: [ProgressItem] = []
     @Published var appState: AppState = .Fetching
     @Published var cardsModel: SwipeableCardsModel = SwipeableCardsModel.empty
-    @Published var didFindOldTransactions = false
+    @Published var didFindMoreTransactions = false
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })
@@ -50,6 +51,7 @@ import Foundation
                         appState = .FetchEmpty
                     } else {
                         appState = .Swiping
+                        transactions = Array(transactions.prefix(swipeLimit))
                         cardsModel = SwipeableCardsModel(transactions: transactions)
                     }
                 }
@@ -68,7 +70,7 @@ import Foundation
                 print("🔎 searching previous months...")
                 try await loadData(willSearchPrecedingMonths: true)
                 if transactions.notEmpty {
-                    didFindOldTransactions = true
+                    didFindMoreTransactions = true
                 } else {
                     print(" no transactions in previous months.")
                 }
@@ -80,11 +82,24 @@ import Foundation
             }
         case .Done:
             print("done swiping")
+            var willSearchPrecedingMonths: Bool = false
+            
             Task {
-                print("🔎 searching previous months...")
+                print("🔎 searching CURRENT month...")
+                try await loadData()
+                if transactions.notEmpty {
+                    didFindMoreTransactions = true
+                } else {
+                    print(" no transactions in current month.")
+                    willSearchPrecedingMonths = true
+                }
+                
+                guard willSearchPrecedingMonths else { return }
+                
+                print("🔎 searching PREVIOUS months...")
                 try await loadData(willSearchPrecedingMonths: true)
                 if transactions.notEmpty {
-                    didFindOldTransactions = true
+                    didFindMoreTransactions = true
                 } else {
                     print(" no transactions in previous months.")
                 }
@@ -93,10 +108,10 @@ import Foundation
     }
     
     public func swipeOnOldTransactions() {
-        print("enter swiping mode")
         appState = .Swiping
+        transactions = Array(transactions.prefix(swipeLimit))
         cardsModel = SwipeableCardsModel(transactions: transactions)
-        didFindOldTransactions = false
+        didFindMoreTransactions = false
     }
     
     private func loadDataFromLocal() {
@@ -185,7 +200,7 @@ extension InterfaceManager {
 extension InterfaceManager {
     static let previewOldTransactionFound: InterfaceManager = {
         let manager = InterfaceManager(dataSource: .Local)
-        manager.didFindOldTransactions = true
+        manager.didFindMoreTransactions = true
         return manager
     }()
     

@@ -15,7 +15,7 @@ struct NoTransactionsView: View {
             .onAppear {
                 manager.runTaskAndAdvanceState()
             }
-            .sheet(isPresented: $manager.didFindOldTransactions) {
+            .sheet(isPresented: $manager.didFindMoreTransactions) {
                 OldTransactionsFoundView(dateOfOldest: manager.oldestTransactionDate)
             }
     }
