@@ -154,4 +154,33 @@ final class LocalTests: XCTestCase {
         
         XCTAssertFalse(manager.cardsModel.isDoneSwiping)
     }
+    
+    func test_given1card_afterLastCardCategoryIsEdited_thenStateIsDONE() async {
+        let manager = InterfaceManager(dataSource: .Local, limit: 1)
+        
+        XCTAssertEqual(manager.appState, .Swiping)
+        
+        let cardToEdit = manager.cardsModel.unswipedCards.first!
+        
+        // swipe Left
+        manager.cardsModel.updateTopCardSwipeDirection(.left)
+        var model = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+        manager.cardsModel.removeTopCard()
+        
+        // save new category
+        let newCategory = manager.categories.first!
+        model.selectedCategory = newCategory
+        manager.cardsModel.set(card: model.card, to: model.selectedCategory)
+
+        // we've returned to SwipeableCardsView
+        let runTaskAndAdvanceState = Task {
+            if manager.cardsModel.isDoneSwiping {
+                manager.runTaskAndAdvanceState()
+            }
+        }
+        
+        await runTaskAndAdvanceState.value
+        
+        XCTAssertEqual(manager.appState, .Done)
+    }
 }

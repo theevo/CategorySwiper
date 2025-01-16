@@ -4,7 +4,7 @@
 
 - Surface uncleared transactions before current month
     - bug: if last card is swiped left, the user cannot edit[^32]
-        - bug: last card is swiped left, the state is stuck in swiping 
+        - ✅ bug: last card is swiped left, the state is stuck in swiping 
         - ✅ test isDoneSwiping
     - ✅ limit the number of swipes
     - ❌ batch clear transactions BEFORE asking for new ones[^31]

@@ -69,6 +69,11 @@ struct SwipeableCardsView: View {
             )
             .interactiveDismissDisabled()
         }
+        .onChange(of: showingSheet) { oldValue, newValue in
+            if oldValue == true, newValue == false {
+                checkForCompletion()
+            }
+        }
     }
     
     private func checkForCompletion() {
