@@ -124,4 +124,34 @@ final class LocalTests: XCTestCase {
         let cardToCheck = manager.cardsModel.swipedCards.first!
         XCTAssertEqual(cardToCheck.newCategory, newCategory)
     }
+    
+    func test_given1card_whenLastCardCategoryIsEdited_isDoneSwipingIsFALSE() {
+        let manager = InterfaceManager(dataSource: .Local, limit: 1)
+        
+        let cardToEdit = manager.cardsModel.unswipedCards.first!
+        
+        // swipe Left
+        manager.cardsModel.updateTopCardSwipeDirection(.left)
+        let _ = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+        manager.cardsModel.removeTopCard()
+        
+        XCTAssertFalse(manager.cardsModel.isDoneSwiping)
+    }
+    
+    func test_given2cards_whenLastCardCategoryIsEdited_isDoneSwipingIsFALSE() {
+        let manager = InterfaceManager(dataSource: .Local, limit: 2)
+        
+        // swipe Right on first card
+        manager.cardsModel.updateTopCardSwipeDirection(.right)
+        manager.cardsModel.removeTopCard()
+        
+        let cardToEdit = manager.cardsModel.unswipedCards.first!
+        
+        // swipe Left on second card
+        manager.cardsModel.updateTopCardSwipeDirection(.left)
+        let _ = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
+        manager.cardsModel.removeTopCard()
+        
+        XCTAssertFalse(manager.cardsModel.isDoneSwiping)
+    }
 }

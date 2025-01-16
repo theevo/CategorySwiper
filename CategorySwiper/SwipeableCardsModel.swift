@@ -28,7 +28,7 @@ struct SwipeableCardsModel {
     }
     
     var isDoneSwiping: Bool {
-        unswipedCards.isEmpty && swipedCards.notEmpty
+        swipedCards.count == originalCards.count
     }
     
     func isTopCard(card: CardViewModel) -> Bool {

@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor class InterfaceManager: ObservableObject {
-    private let swipeLimit: Int = 5
+    var swipeLimit: Int = 5
     private let dataSource: DataSource
     private let interface: LunchMoneyInterface
     var categories: [Category] = []
@@ -28,6 +28,20 @@ import Foundation
     
     init(dataSource: DataSource = .Production) {
         print("💿 running in \(dataSource)")
+        self.dataSource = dataSource
+        switch dataSource {
+        case .Production:
+            self.interface = LMNetworkInterface()
+        case .Local:
+            self.interface = LMLocalInterface()
+        case .Empty:
+            self.interface = LMEmptyInterface()
+        }
+        runTaskAndAdvanceState()
+    }
+    
+    init(dataSource: DataSource, limit: Int) {
+        self.swipeLimit = limit
         self.dataSource = dataSource
         switch dataSource {
         case .Production:
@@ -61,6 +75,7 @@ import Foundation
                     appState = .FetchEmpty
                 } else {
                     appState = .Swiping
+                    transactions = Array(transactions.prefix(swipeLimit))
                     cardsModel = SwipeableCardsModel(transactions: transactions)
                 }
             }
