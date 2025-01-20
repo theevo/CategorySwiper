@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+struct FetchingView: View {
+    @EnvironmentObject var manager: InterfaceManager
+    
+    var body: some View {
+        VStack {
+            Text("Checking for new transactions...")
+            ProgressView()
+        }
+    }
+}
+
 struct StatesView: View {
     @EnvironmentObject var manager: InterfaceManager
     
@@ -14,7 +25,8 @@ struct StatesView: View {
         VStack {
             switch manager.appState {
             case .Fetching:
-                ProgressView()
+                FetchingView()
+                    .environmentObject(manager)
             case .FetchEmpty:
                 NoTransactionsView()
             case .Swiping:
