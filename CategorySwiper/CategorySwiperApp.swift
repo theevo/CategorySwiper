@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct CategorySwiperApp: App {
+    @StateObject var manager = InterfaceManager()
+    
     private var isProduction: Bool {
         NSClassFromString("XCTestCase") == nil
     }
@@ -17,7 +19,7 @@ struct CategorySwiperApp: App {
         WindowGroup {
             if isProduction {
                 StatesView()
-                    .environmentObject(InterfaceManager())
+                    .environmentObject(manager)
             }
         }
     }
