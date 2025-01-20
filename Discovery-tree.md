@@ -2,8 +2,12 @@
 
 ## UI
 
-- Surface uncleared transactions before current month
-    - bug: if last card is swiped left, the user cannot edit[^32]
+- Bug: app is stuck in Fetching state even after force quit
+    - handle URLSession error
+- Bug: clear items each time we enter swiping state
+
+- ✅ Surface uncleared transactions before current month
+    - ✅ bug: if last card is swiped left, the user cannot edit[^32]
         - ✅ bug: last card is swiped left, the state is stuck in swiping 
         - ✅ test isDoneSwiping
     - ✅ limit the number of swipes
