@@ -172,7 +172,7 @@ final class LocalTests: XCTestCase {
         model.selectedCategory = newCategory
         manager.cardsModel.set(card: model.card, to: model.selectedCategory)
 
-        // we've returned to SwipeableCardsView
+        // SwipeableCardsView.checkForCompletion()
         let runTaskAndAdvanceState = Task {
             if manager.cardsModel.isDoneSwiping {
                 manager.runTaskAndAdvanceState()
@@ -182,5 +182,8 @@ final class LocalTests: XCTestCase {
         await runTaskAndAdvanceState.value
         
         XCTAssertEqual(manager.appState, .Done)
-    }
+        print("SWIPED CARDS =", manager.cardsModel.swipedCards.count)
+        print("ITEMS =", manager.items.count)
+        XCTAssertTrue(manager.items.isEmpty)
+    }    
 }

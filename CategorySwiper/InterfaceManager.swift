@@ -27,7 +27,7 @@ import Foundation
     }
     
     init(dataSource: DataSource = .Production) {
-        print("💿 running in \(dataSource)")
+        LogThisAs.state("💿 running in \(dataSource)")
         self.dataSource = dataSource
         switch dataSource {
         case .Production:
@@ -54,13 +54,19 @@ import Foundation
         runTaskAndAdvanceState()
     }
     
+    public func reset() {
+        appState = .Fetching
+        cardsModel = SwipeableCardsModel.empty
+    }
+    
     public func runTaskAndAdvanceState() {
         switch appState {
         case .Fetching:
             if dataSource == .Production {
                 Task {
-                    print("calling loadData")
+                    LogThisAs.state("💭 calling loadData")
                     try await loadData()
+                    LogThisAs.state("💭 done calling loadData")
                     if transactions.isEmpty {
                         appState = .FetchEmpty
                     } else {
@@ -93,6 +99,7 @@ import Foundation
         case .Swiping:
             Task {
                 await processSwipes()
+                LogThisAs.state("🤡 processSwipes done")
                 appState = .Done
             }
         case .Done:

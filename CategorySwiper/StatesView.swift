@@ -36,7 +36,7 @@ struct StatesView: View {
             }
         }
         .onAppear {
-            print("🧐 StatesView appeared")
+            LogThisAs.viewCycle("StatesView appeared")
         }
     }
 }
