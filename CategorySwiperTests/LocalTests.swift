@@ -155,15 +155,14 @@ final class LocalTests: XCTestCase {
         XCTAssertFalse(manager.cardsModel.isDoneSwiping)
     }
     
-    func test_given1card_afterLastCardCategoryIsEdited_thenStateIsDONE() async {
+    func test_given1card_afterLastCardCategoryIsEdited_thenStateIsDONE_andSwipeDirectionIsLeft_andItemsIsNotEmpty() async {
         let manager = InterfaceManager(dataSource: .Local, limit: 1)
         
         XCTAssertEqual(manager.appState, .Swiping)
         
-        let cardToEdit = manager.cardsModel.unswipedCards.first!
-        
-        // swipe Left
+        // swipe Left in SwipeableCardsView gesture onEnded
         manager.cardsModel.updateTopCardSwipeDirection(.left)
+        let cardToEdit = manager.cardsModel.unswipedCards.first!
         var model = CategoriesSelectorViewModel(categories: manager.categories, card: cardToEdit)
         manager.cardsModel.removeTopCard()
         
@@ -182,8 +181,8 @@ final class LocalTests: XCTestCase {
         await runTaskAndAdvanceState.value
         
         XCTAssertEqual(manager.appState, .Done)
-        print("SWIPED CARDS =", manager.cardsModel.swipedCards.count)
-        print("ITEMS =", manager.items.count)
-        XCTAssertTrue(manager.items.isEmpty)
-    }    
+        let firstCard = manager.cardsModel.swipedCards.first!
+        XCTAssertEqual(firstCard.swipeDirection, .left)
+        XCTAssertTrue(manager.items.notEmpty)
+    }
 }
