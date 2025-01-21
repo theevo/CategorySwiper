@@ -33,6 +33,8 @@ struct StatesView: View {
                 SwipeableCardsView()
             case .Done:
                 SwipedAllCardsView(progressModel: manager.progressModel)
+            case .Debug(let message):
+                Text(message)
             }
         }
         .onAppear {

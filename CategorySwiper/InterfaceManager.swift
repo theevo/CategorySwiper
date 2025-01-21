@@ -64,15 +64,20 @@ import Foundation
         case .Fetching:
             if dataSource == .Production {
                 Task {
-                    LogThisAs.state("💭 calling loadData")
-                    try await loadData()
-                    LogThisAs.state("💭 done calling loadData")
-                    if transactions.isEmpty {
-                        appState = .FetchEmpty
-                    } else {
-                        appState = .Swiping
-                        transactions = Array(transactions.prefix(swipeLimit))
-                        cardsModel = SwipeableCardsModel(transactions: transactions)
+                    do {
+                        LogThisAs.state("💭 calling loadData")
+                        try await loadData()
+                        LogThisAs.state("💭 done calling loadData")
+                        if transactions.isEmpty {
+                            appState = .FetchEmpty
+                        } else {
+                            appState = .Swiping
+                            transactions = Array(transactions.prefix(swipeLimit))
+                            cardsModel = SwipeableCardsModel(transactions: transactions)
+                        }
+                    } catch {
+                        LogThisAs.state("FETCHING got error: \(error)")
+                        appState = .Debug(message: error.localizedDescription)
                     }
                 }
             } else {
@@ -126,6 +131,8 @@ import Foundation
                     print(" no transactions in previous months.")
                 }
             }
+        case .Debug(_):
+            print("why are we advancing on Debug?")
         }
     }
     
@@ -211,11 +218,12 @@ extension InterfaceManager {
         case Production, Local, Empty
     }
     
-    enum AppState: String {
+    enum AppState: Equatable {
         case Fetching
         case FetchEmpty
         case Swiping
         case Done
+        case Debug(message: String)
     }
 }
 

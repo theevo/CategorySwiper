@@ -2,9 +2,12 @@
 
 ## UI
 
-- Bug: app is stuck in Fetching state even after force quit
-    - handle URLSession error
 - Bug: clear items each time we enter swiping state
+
+- 👉 Bug: app is stuck in Fetching state even after force quit[^33]
+    - enter LunchMoney Bearer Token
+    - create Settings menu
+    - ✅ handle URLSession error
 
 - ✅ Surface uncleared transactions before current month
     - ✅ bug: if last card is swiped left, the user cannot edit[^32]
@@ -297,6 +300,21 @@
 - ✅ assert status 200
     - ✅ handle optional URLSession
 
+## States
+
+- Fetching
+    - Swiping
+    - Fetch Error
+    - Fetch Empty
+- Fetch Error
+    - Fetching
+- Swiping
+    - Done
+- Done
+    - Fetching
+- Fetch Empty
+    - Fetching
+
 ## Housekeeping
 - ✅ remove example-transactions from git history
     - ✅ remove redundant commits
@@ -372,3 +390,4 @@
 [^30]: I think limit returns the OLDEST transaction in the range.
 [^31]: I wrote this with the intent to make an API call queue. After glancing at [Sundell's article](https://www.swiftbysundell.com/articles/a-deep-dive-into-grand-central-dispatch-in-swift/) on the matter, that felt like a long-term investment that would be better spent post-MVP. Could I get away with something simpler? I took a good look at `runTaskAndAdvanceState()` and concluded that indeed, the batch should be cleared by the time new transactions are fetched. I think placing a limit on the number of swipes is a good thing. It limits the number of transactions that can be batched, and it also prevents cognitive overload. If things get out of hand, I could also build in a 2 second delay before the searchPrecedingMonths starts. 
 [^32]: If the last card is swiped left, the user will see the edit screen for brief moment and then see the SwipedAllCardsView. The previous transactions are batched, not the one that was "abandoned." The state advances to done before the user can change the category. Luckily, with the logic in place, the abandoned transaction is not cleared, since no new Category was given.
+[^33]: I was definitely puzzled by this bug. It turns out that Environment Variables you add to a scheme don't work after the Simulator or physical iOS device (aka Run Destination) is no longer paired to a run session with Xcode. In other words, in order for an app to "see" Environment Variables, Xcode must run with that Run Destination.
