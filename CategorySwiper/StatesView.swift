@@ -34,7 +34,8 @@ struct StatesView: View {
             case .Done:
                 SwipedAllCardsView(progressModel: manager.progressModel)
             case .Debug(let message):
-                Text(message)
+                DebugView(message: message)
+                    .environmentObject(manager)
             }
         }
         .onAppear {

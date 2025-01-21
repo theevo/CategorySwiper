@@ -5,8 +5,8 @@
 - Bug: clear items each time we enter swiping state
 
 - 👉 Bug: app is stuck in Fetching state even after force quit[^33]
-    - enter LunchMoney Bearer Token
-    - create Settings menu
+    - save LunchMoney Bearer Token securely 
+    - ✅ create Settings menu
     - ✅ handle URLSession error
 
 - ✅ Surface uncleared transactions before current month
