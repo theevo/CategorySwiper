@@ -10,7 +10,7 @@ import Foundation
 @MainActor class InterfaceManager: ObservableObject {
     var swipeLimit: Int = 5
     private let dataSource: DataSource
-    private let interface: LunchMoneyInterface
+    private var interface: LunchMoneyInterface
     var categories: [Category] = []
     var transactions: [Transaction] = []
     var items: [ProgressItem] = []
@@ -133,6 +133,20 @@ import Foundation
             }
         case .Debug(_):
             print("why are we advancing on Debug?")
+        }
+    }
+    
+    public func saveBearerToken(_ token: String) {
+        guard dataSource == .Production else {
+            print("saved Bearer Token to a non-production data source.")
+            return
+        }
+        
+        do {
+            try SecretsStash().save(key: "LunchMoneyBearerToken", value: token)
+            self.interface = LMNetworkInterface()
+        } catch {
+            LogThisAs.state("Error: Access Token could not be saved in Keychain. Details: \(error.localizedDescription)")
         }
     }
     

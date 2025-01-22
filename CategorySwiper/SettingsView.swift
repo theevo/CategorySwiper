@@ -14,7 +14,9 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(content: {
-                TextField("Please paste access token here.", text: $token)
+                DebounceSecureField(label: "API Access Token", value: $token) { value in
+                    manager.saveBearerToken(value)
+                }
                 PasteButton(payloadType: String.self) { strings in
                     guard let first = strings.first else { return }
                     token = first
@@ -35,4 +37,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(InterfaceManager(dataSource: .Empty))
 }

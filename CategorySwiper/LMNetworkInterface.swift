@@ -8,6 +8,17 @@
 import Foundation
 
 struct LMNetworkInterface: LunchMoneyInterface {
+    let bearerToken: String
+    
+    init() {
+        do {
+            self.bearerToken = try SecretsStash().recall(key: "LunchMoneyBearerToken")
+        } catch {
+            self.bearerToken = ""
+            LogThisAs.state("Error: Access Token could not be found in Keychain. Details: \(error.localizedDescription)")
+        }
+    }
+    
     func getCategories() async throws -> CategoryResponseWrapper {
         let builder = makeURLSessionBuilder()
         let request = Request.GetCategories.makeRequest()
@@ -257,7 +268,6 @@ enum LMQueryParams {
 
 extension LMNetworkInterface {
     private func makeURLSessionBuilder() -> URLSessionBuilder {
-        let bearerToken = ProcessInfo.processInfo.environment["LUNCHMONEY_ACCESS_TOKEN"] ?? ""
         return URLSessionBuilder(bearerToken: bearerToken)
     }
 }

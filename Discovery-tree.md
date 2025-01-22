@@ -5,7 +5,10 @@
 - Bug: clear items each time we enter swiping state
 
 - 👉 Bug: app is stuck in Fetching state even after force quit[^33]
-    - save LunchMoney Bearer Token securely 
+    - immediately load transactions after exiting Settings
+    - show green check if the token is good
+    - ✅ save LunchMoney Bearer Token securely
+        - ✅ add Debounce to SecureField[^35]
     - ✅ create Settings menu
     - ✅ handle URLSession error
 
@@ -392,3 +395,4 @@
 [^32]: If the last card is swiped left, the user will see the edit screen for brief moment and then see the SwipedAllCardsView. The previous transactions are batched, not the one that was "abandoned." The state advances to done before the user can change the category. Luckily, with the logic in place, the abandoned transaction is not cleared, since no new Category was given.
 [^33]: I was definitely puzzled by this bug. It turns out that Environment Variables you add to a scheme don't work after the Simulator or physical iOS device (aka Run Destination) is no longer paired to a run session with Xcode. In other words, in order for an app to "see" Environment Variables, Xcode must run with that Run Destination.
 [^34]: I revisited the topic of HTTP headers, because I was curious if they were encrypted over HTTPS. After looking at an [intro to URLSession](https://cocoacasts.com/networking-fundamentals-how-to-make-an-http-request-in-swift), I questioned why I put the Bearer token into the `URLSessionConfiguration` and not the `URLRequest.` This bloke wrote [an emotionally charged article](https://ampersandsoftworks.com/posts/bearer-authentication-nsurlsession/) about how he went through great lengths to discover that URLSesh Config was the answer. I had followed his advice from the beginning of this app's development without testing it myself, but now, after trying it myself with just URLRequest sans URLSesh Config, the bloke was absolutely right. URLSesh Config is absolutely required for Bearer tokens. I also want to credit this bloke for saving me hours of frustration.
+[^35]: Ondrej wrote an excelllent post on the subject of a [debouncing text field](https://ondrej-kvasnovsky.medium.com/apply-textfield-changes-after-a-delay-debouncing-in-swiftui-af425446f8d8). Anselmus has a [good flow](https://medium.com/@anselmus.pavel/debouncing-user-input-in-swiftui-10dda5231bdf) for how to save the debounce value in the ViewModel after it's gone through the wringer.

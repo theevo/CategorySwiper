@@ -21,6 +21,9 @@
 		27656D522D0243F100877E8B /* example-transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 27656D502D0243F100877E8B /* example-transactions.json */; };
 		276BF6A62D15F9720063935D /* LMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276BF6A52D15F9720063935D /* LMNetworkInterface.swift */; };
 		27A13ABE2CFA6AD200430ABF /* URLSessionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A13ABD2CFA6AD200430ABF /* URLSessionBuilder.swift */; };
+		27A709ED2D404FB00029A3EB /* SecretsStash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A709EC2D404FB00029A3EB /* SecretsStash.swift */; };
+		27A709F02D404FC80029A3EB /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 27A709EF2D404FC80029A3EB /* SimpleKeychain */; };
+		27A709F22D418CC30029A3EB /* DebounceSecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A709F12D418CC30029A3EB /* DebounceSecureField.swift */; };
 		27B5CE402D079EE1002B961B /* Data+jsonFlatString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5CE3F2D079EE1002B961B /* Data+jsonFlatString.swift */; };
 		27B5F4F32D1B182C00ACC463 /* CategoriesSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */; };
 		27C3AA602D24A55E00DDFB08 /* StatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */; };
@@ -75,6 +78,8 @@
 		276BF6A52D15F9720063935D /* LMNetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LMNetworkInterface.swift; sourceTree = "<group>"; };
 		27A13ABC2CFA374800430ABF /* Discovery-tree.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Discovery-tree.md"; sourceTree = "<group>"; };
 		27A13ABD2CFA6AD200430ABF /* URLSessionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionBuilder.swift; sourceTree = "<group>"; };
+		27A709EC2D404FB00029A3EB /* SecretsStash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsStash.swift; sourceTree = "<group>"; };
+		27A709F12D418CC30029A3EB /* DebounceSecureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceSecureField.swift; sourceTree = "<group>"; };
 		27B5CE3F2D079EE1002B961B /* Data+jsonFlatString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+jsonFlatString.swift"; sourceTree = "<group>"; };
 		27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSelectorViewModel.swift; sourceTree = "<group>"; };
 		27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesView.swift; sourceTree = "<group>"; };
@@ -106,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A709F02D404FC80029A3EB /* SimpleKeychain in Frameworks */,
 				2715AA122D25CB3F00273F2D /* Time in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,8 +160,10 @@
 				27F88AAB2D11FD89000D8DFF /* example-categories.json */,
 				27656D502D0243F100877E8B /* example-transactions.json */,
 				27F3EC962CDAC26400851CCB /* CategorySwiperApp.swift */,
+				27A709EC2D404FB00029A3EB /* SecretsStash.swift */,
 				27C3AA5F2D24A55E00DDFB08 /* StatesView.swift */,
 				27C9610F2D3F2EF000B41F27 /* SettingsView.swift */,
+				27A709F12D418CC30029A3EB /* DebounceSecureField.swift */,
 				27C9610D2D3F2E9800B41F27 /* DebugView.swift */,
 				27C924F12D173E170081849D /* CategoriesSelectorView.swift */,
 				27B5F4F22D1B182C00ACC463 /* CategoriesSelectorViewModel.swift */,
@@ -300,6 +308,7 @@
 			mainGroup = 27F3EC8A2CDAC26400851CCB;
 			packageReferences = (
 				2715AA102D25CB3F00273F2D /* XCRemoteSwiftPackageReference "time" */,
+				27A709EE2D404FC80029A3EB /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			productRefGroup = 27F3EC942CDAC26400851CCB /* Products */;
 			projectDirPath = "";
@@ -346,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A709F22D418CC30029A3EB /* DebounceSecureField.swift in Sources */,
 				272F16052D0277630040A272 /* SwipeableCardsModel.swift in Sources */,
 				27F567DF2D2C694300990723 /* UpdateProgressView.swift in Sources */,
 				27C9610C2D3F042400B41F27 /* OSLog+Logger.swift in Sources */,
@@ -368,6 +378,7 @@
 				27F3EC972CDAC26400851CCB /* CategorySwiperApp.swift in Sources */,
 				27D638162CFBBD7C00B43DE1 /* LunchMoneyInterface.swift in Sources */,
 				27158EB62CFC1AF90093421F /* CardViewModel.swift in Sources */,
+				27A709ED2D404FB00029A3EB /* SecretsStash.swift in Sources */,
 				276498082D01128E005A7916 /* SwipeableCardsView.swift in Sources */,
 				276BF6A62D15F9720063935D /* LMNetworkInterface.swift in Sources */,
 			);
@@ -713,6 +724,14 @@
 				version = 1.0.2;
 			};
 		};
+		27A709EE2D404FC80029A3EB /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/SimpleKeychain";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -720,6 +739,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2715AA102D25CB3F00273F2D /* XCRemoteSwiftPackageReference "time" */;
 			productName = Time;
+		};
+		27A709EF2D404FC80029A3EB /* SimpleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A709EE2D404FC80029A3EB /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
+			productName = SimpleKeychain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
