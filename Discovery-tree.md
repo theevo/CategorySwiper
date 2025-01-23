@@ -6,7 +6,8 @@
 
 - 👉 Bug: app is stuck in Fetching state even after force quit[^33]
     - immediately load transactions after exiting Settings
-    - show green check if the token is good
+    - ✅ show green check if the token is good
+        - ✅ delete token
     - ✅ save LunchMoney Bearer Token securely
         - ✅ add Debounce to SecureField[^35]
     - ✅ create Settings menu

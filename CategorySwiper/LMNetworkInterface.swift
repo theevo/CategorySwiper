@@ -19,6 +19,20 @@ struct LMNetworkInterface: LunchMoneyInterface {
         }
     }
     
+    func validateConnection() async -> Bool {
+        guard bearerToken.notEmpty else {
+            return false
+        }
+        
+        do {
+            let _ = try await getCategories()
+            return true
+        } catch {
+            LogThisAs.state("\(#function) threw error: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
     func getCategories() async throws -> CategoryResponseWrapper {
         let builder = makeURLSessionBuilder()
         let request = Request.GetCategories.makeRequest()

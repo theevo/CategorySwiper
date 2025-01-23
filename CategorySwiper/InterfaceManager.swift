@@ -17,6 +17,7 @@ import Foundation
     @Published var appState: AppState = .Fetching
     @Published var cardsModel: SwipeableCardsModel = SwipeableCardsModel.empty
     @Published var didFindMoreTransactions = false
+    @Published var isTokenWorking = false
     
     var uncleared: [Transaction] {
         transactions.filter({ $0.status == .uncleared })
@@ -136,17 +137,58 @@ import Foundation
         }
     }
     
+    public func getBearerToken() -> String {
+        do {
+            return try SecretsStash().recall(key: "LunchMoneyBearerToken")
+        } catch {
+            LogThisAs.state("Error: Access Token could not be found in Keychain. Details: \(error.localizedDescription)")
+            return ""
+        }
+    }
+    
     public func saveBearerToken(_ token: String) {
         guard dataSource == .Production else {
-            print("saved Bearer Token to a non-production data source.")
+            print("saveBearerToken() called on a non-production data source. Setting isTokenWorking to TRUE anyway.")
+            self.isTokenWorking = true
+            return
+        }
+        
+        guard token.notEmpty else {
             return
         }
         
         do {
             try SecretsStash().save(key: "LunchMoneyBearerToken", value: token)
-            self.interface = LMNetworkInterface()
+            Task { await validateToken() }
         } catch {
             LogThisAs.state("Error: Access Token could not be saved in Keychain. Details: \(error.localizedDescription)")
+        }
+    }
+    
+    public func removeToken() {
+        guard dataSource == .Production else {
+            print("removeToken() called!")
+            return
+        }
+        
+        do {
+            try SecretsStash().delete(key: "LunchMoneyBearerToken")
+            isTokenWorking = false
+        } catch {
+            LogThisAs.state("Error: Access Token could not be deleted from Keychain. Details: \(error.localizedDescription)")
+        }
+    }
+    
+    public func validateToken() async {
+        guard dataSource == .Production else {
+            return
+        }
+        
+        Task {
+            let networkInterface = LMNetworkInterface()
+            self.interface = networkInterface
+            let isWorking = await networkInterface.validateConnection()
+            self.isTokenWorking = isWorking ? true : false
         }
     }
     

@@ -10,12 +10,20 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var manager: InterfaceManager
     @State var token: String = ""
+    @FocusState var focusState: Bool
     
     var body: some View {
         Form {
             Section(content: {
-                DebounceSecureField(label: "API Access Token", value: $token) { value in
-                    manager.saveBearerToken(value)
+                HStack {
+                    if manager.isTokenWorking {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                    }
+                    DebounceSecureField(label: "API Access Token", value: $token) { value in
+                        manager.saveBearerToken(value)
+                    }
+                    .focused($focusState)
                 }
                 PasteButton(payloadType: String.self) { strings in
                     guard let first = strings.first else { return }
@@ -30,8 +38,18 @@ struct SettingsView: View {
             Section {
                 Link("Get Token from My LunchMoney", destination: URL(string: "https://my.lunchmoney.app/developers")!)
             }
+            Section {
+                Button("Remove Token") {
+                    token = ""
+                    manager.removeToken()
+                }
+            }
         }
         .navigationTitle("Settings")
+        .onAppear() {
+            focusState = true
+            Task { await manager.validateToken() }
+        }
     }
 }
 

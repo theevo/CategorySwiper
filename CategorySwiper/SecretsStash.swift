@@ -19,8 +19,8 @@ struct SecretsStash {
         self.keychain = SimpleKeychain(attributes: attributes)
     }
     
-    func deleteAll() throws {
-        try keychain.deleteAll()
+    func delete(key: String) throws {
+        try keychain.deleteItem(forKey: key)
     }
     
     func recall(key: String) throws -> String {
