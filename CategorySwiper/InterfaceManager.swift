@@ -134,6 +134,7 @@ import Foundation
             }
         case .Debug(_):
             appState = .Fetching
+            runTaskAndAdvanceState()
         }
     }
     

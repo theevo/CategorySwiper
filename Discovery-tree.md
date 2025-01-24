@@ -6,8 +6,8 @@
 
 - Bug: clear items each time we enter swiping state
 
-- 👉 Bug: app is stuck in Fetching state even after force quit[^33]
-    - Error: token not saving after Back button is pressed on SettingsView
+- ✅ Bug: app is stuck in Fetching state even after force quit[^33]
+    - ✅ Error: app stuck in Fetching after Back button is pressed on SettingsView
     - ✅ immediately load transactions after exiting Settings
         - ✅ refactor: add token methods to Interfaces [^36]
     - ✅ show green check if the token is good
