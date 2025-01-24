@@ -11,7 +11,6 @@ import XCTest
 @MainActor
 final class NetworkTests: XCTestCase {
     let secretName = "LunchMoneyBearerToken"
-    let tokenValue = "" // do not commit!
     private var sut: SecretsStash!
     
     override func setUpWithError() throws {
