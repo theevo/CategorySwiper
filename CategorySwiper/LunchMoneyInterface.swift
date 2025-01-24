@@ -8,20 +8,42 @@
 import Foundation
 
 protocol LunchMoneyInterface {
+    var bearerToken: String { get }
     func clear(transaction: Transaction) async throws -> Bool
     func getCategories() async throws -> CategoryResponseWrapper
     func getUnclearedTransactions(withinPrecedingMonths: UInt?) async throws -> TransactionsResponseWrapper
+    func isBearerTokenValid() async -> Bool
+    func removeBearerToken()
+    func saveBearerToken(_ token: String)
     func updateAndClear(transaction: Transaction, newCategory: Category?) async throws -> Bool
 }
 
 protocol LunchMoneyLocalInterface: LunchMoneyInterface {
+    var bearerToken: String { get }
     func clear(transaction: Transaction) -> Bool
     func getCategories() throws -> CategoryResponseWrapper
     func getUnclearedTransactions(withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper
+    func isBearerTokenValid() -> Bool
+    func removeBearerToken()
+    func saveBearerToken(_ token: String)
     func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool
 }
 
+extension LunchMoneyLocalInterface {
+    func removeBearerToken() {
+        print("\(#function) called for a Local Interface.")
+    }
+    
+    func saveBearerToken(_ token: String) {
+        print("\(#function) called for a Local Interface.")
+    }
+}
+
 struct LMLocalInterface: LunchMoneyLocalInterface {
+    var bearerToken: String {
+        return "Bearer_Token-for*Local^Interface"
+    }
+    
     func clear(transaction: Transaction) -> Bool {
         return true
     }
@@ -35,6 +57,10 @@ struct LMLocalInterface: LunchMoneyLocalInterface {
         } catch {
             throw LoaderError.JSONFailure(error: error)
         }
+    }
+    
+    func isBearerTokenValid() -> Bool {
+        return true
     }
     
     func loadTransactions(showUnclearedOnly: Bool = false, limit: Int = .max) throws -> [Transaction] {
@@ -95,6 +121,10 @@ enum LoaderError: LocalizedError {
 }
 
 struct LMEmptyInterface: LunchMoneyLocalInterface {
+    var bearerToken: String {
+        ""
+    }
+    
     func clear(transaction: Transaction) -> Bool {
         return true
     }
@@ -105,6 +135,11 @@ struct LMEmptyInterface: LunchMoneyLocalInterface {
     
     func getUnclearedTransactions(withinPrecedingMonths: UInt?) throws -> TransactionsResponseWrapper {
         return TransactionsResponseWrapper(transactions: [], has_more: false)
+    }
+    
+    func isBearerTokenValid() -> Bool {
+        print("empty interface will return false")
+        return false
     }
     
     func updateAndClear(transaction: Transaction, newCategory: Category?) -> Bool {

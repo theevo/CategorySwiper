@@ -133,63 +133,31 @@ import Foundation
                 }
             }
         case .Debug(_):
-            print("why are we advancing on Debug?")
+            appState = .Fetching
         }
     }
     
     public func getBearerToken() -> String {
-        do {
-            return try SecretsStash().recall(key: "LunchMoneyBearerToken")
-        } catch {
-            LogThisAs.state("Error: Access Token could not be found in Keychain. Details: \(error.localizedDescription)")
-            return ""
-        }
+        return interface.bearerToken
     }
     
     public func saveBearerToken(_ token: String) {
-        guard dataSource == .Production else {
-            print("saveBearerToken() called on a non-production data source. Setting isTokenWorking to TRUE anyway.")
-            self.isTokenWorking = true
-            return
-        }
-        
-        guard token.notEmpty else {
-            return
-        }
-        
-        do {
-            try SecretsStash().save(key: "LunchMoneyBearerToken", value: token)
-            Task { await validateToken() }
-        } catch {
-            LogThisAs.state("Error: Access Token could not be saved in Keychain. Details: \(error.localizedDescription)")
-        }
+        interface.saveBearerToken(token)
+        Task { await validateToken() }
     }
     
     public func removeToken() {
-        guard dataSource == .Production else {
-            print("removeToken() called!")
-            return
-        }
-        
-        do {
-            try SecretsStash().delete(key: "LunchMoneyBearerToken")
-            isTokenWorking = false
-        } catch {
-            LogThisAs.state("Error: Access Token could not be deleted from Keychain. Details: \(error.localizedDescription)")
-        }
+        interface.removeBearerToken()
+        isTokenWorking = false
     }
     
     public func validateToken() async {
-        guard dataSource == .Production else {
-            return
+        if dataSource == .Production {
+            // refresh the NetworkInterface
+            self.interface = LMNetworkInterface()
         }
         
-        Task {
-            let networkInterface = LMNetworkInterface()
-            self.interface = networkInterface
-            let isWorking = await networkInterface.validateConnection()
-            self.isTokenWorking = isWorking ? true : false
-        }
+        self.isTokenWorking = await interface.isBearerTokenValid()
     }
     
     public func swipeOnOldTransactions() {

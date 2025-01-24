@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var manager: InterfaceManager
     @State var token: String = ""
-    @FocusState var focusState: Bool
     
     var body: some View {
         Form {
@@ -22,8 +21,9 @@ struct SettingsView: View {
                     }
                     DebounceSecureField(label: "API Access Token", value: $token) { value in
                         manager.saveBearerToken(value)
+                        Task { await manager.validateToken() }
                     }
-                    .focused($focusState)
+                    .disabled(true)
                 }
                 PasteButton(payloadType: String.self) { strings in
                     guard let first = strings.first else { return }
@@ -47,13 +47,21 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .onAppear() {
-            focusState = true
+            token = manager.getBearerToken()
             Task { await manager.validateToken() }
+        }
+        .onDisappear() {
+            manager.runTaskAndAdvanceState()
         }
     }
 }
 
-#Preview {
+#Preview("Valid") {
+    SettingsView()
+        .environmentObject(InterfaceManager(dataSource: .Local))
+}
+
+#Preview("Empty") {
     SettingsView()
         .environmentObject(InterfaceManager(dataSource: .Empty))
 }

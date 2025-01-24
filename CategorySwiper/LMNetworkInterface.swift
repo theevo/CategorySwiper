@@ -8,29 +8,19 @@
 import Foundation
 
 struct LMNetworkInterface: LunchMoneyInterface {
-    let bearerToken: String
+    private let _bearerToken: String
     
     init() {
         do {
-            self.bearerToken = try SecretsStash().recall(key: "LunchMoneyBearerToken")
+            self._bearerToken = try SecretsStash().recall(key: "LunchMoneyBearerToken")
         } catch {
-            self.bearerToken = ""
+            self._bearerToken = ""
             LogThisAs.state("Error: Access Token could not be found in Keychain. Details: \(error.localizedDescription)")
         }
     }
     
-    func validateConnection() async -> Bool {
-        guard bearerToken.notEmpty else {
-            return false
-        }
-        
-        do {
-            let _ = try await getCategories()
-            return true
-        } catch {
-            LogThisAs.state("\(#function) threw error: \(error.localizedDescription)")
-            return false
-        }
+    var bearerToken: String {
+        _bearerToken.notEmpty ? "A_TOKEN_EXISTS" : ""
     }
     
     func getCategories() async throws -> CategoryResponseWrapper {
@@ -48,6 +38,20 @@ struct LMNetworkInterface: LunchMoneyInterface {
             }
         case .failure(let error):
             throw LoaderError.SessionErrorThrown(error: error)
+        }
+    }
+    
+    func isBearerTokenValid() async -> Bool {
+        guard _bearerToken.notEmpty else {
+            return false
+        }
+        
+        do {
+            let _ = try await getCategories()
+            return true
+        } catch {
+            LogThisAs.state("\(#function) threw error: \(error.localizedDescription)")
+            return false
         }
     }
     
@@ -104,6 +108,26 @@ struct LMNetworkInterface: LunchMoneyInterface {
             }
         case .failure(let error):
             throw LoaderError.SessionErrorThrown(error: error)
+        }
+    }
+    
+    func removeBearerToken() {
+        do {
+            try SecretsStash().delete(key: "LunchMoneyBearerToken")
+        } catch {
+            LogThisAs.state("Info: Access Token could not be deleted from Keychain. Details: \(error.localizedDescription)")
+        }
+    }
+    
+    func saveBearerToken(_ token: String) {
+        guard token.notEmpty else {
+            return
+        }
+        
+        do {
+            try SecretsStash().save(key: "LunchMoneyBearerToken", value: token)
+        } catch {
+            LogThisAs.state("Error: Access Token could not be saved in Keychain. Details: \(error.localizedDescription)")
         }
     }
     
@@ -282,7 +306,7 @@ enum LMQueryParams {
 
 extension LMNetworkInterface {
     private func makeURLSessionBuilder() -> URLSessionBuilder {
-        return URLSessionBuilder(bearerToken: bearerToken)
+        return URLSessionBuilder(bearerToken: _bearerToken)
     }
 }
 

@@ -23,6 +23,14 @@ struct SecretsStash {
         try keychain.deleteItem(forKey: key)
     }
     
+    func contains(key: String) -> Bool {
+        do {
+            return try keychain.hasItem(forKey: key)
+        } catch {
+            return false
+        }
+    }
+    
     func recall(key: String) throws -> String {
         return try keychain.string(forKey: key)
     }
