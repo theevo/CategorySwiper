@@ -52,6 +52,7 @@ struct Transaction: Decodable, Equatable {
     var status: Status // "cleared"
     var created_at: String // "2024-11-02T19:10:02.328Z"
     var updated_at: String // "2024-11-10T21:51:30.898Z"
+    var account_display_name: String
     
     /*
                 
@@ -106,7 +107,8 @@ extension Transaction {
         is_income: false,
         status: .uncleared,
         created_at: "2024-11-13T03:07:10.365Z",
-        updated_at: "2024-11-13T03:07:10.365Z"
+        updated_at: "2024-11-13T03:07:10.365Z",
+        account_display_name: "Chase CREDIT CARD"
     )
     static let exampleDummy = Transaction(
         id: 666,
@@ -120,7 +122,8 @@ extension Transaction {
         is_income: false,
         status: .uncleared,
         created_at: "2024-11-13T03:07:10.365Z",
-        updated_at: "2024-11-13T03:07:10.365Z"
+        updated_at: "2024-11-13T03:07:10.365Z",
+        account_display_name: "Chase CREDIT CARD"
     )
     static let exampleOpenSourceCollective = Transaction(
         id: 2242779588,
@@ -136,7 +139,8 @@ extension Transaction {
         is_income: false,
         status: .uncleared,
         created_at: "2024-12-05T03:39:35.102Z",
-        updated_at: "2024-12-05T03:39:35.102Z"
+        updated_at: "2024-12-05T03:39:35.102Z",
+        account_display_name: "Chase CREDIT CARD"
     )
     static let exampleUncategorized = Transaction(
         id: 2239669666,
@@ -152,6 +156,7 @@ extension Transaction {
         is_income: false,
         status: .uncleared,
         created_at: "2024-11-16T03:27:09.074Z",
-        updated_at: "2024-11-16T03:27:09.074Z"
+        updated_at: "2024-11-16T03:27:09.074Z",
+        account_display_name: "Chase CREDIT CARD"
     )
 }

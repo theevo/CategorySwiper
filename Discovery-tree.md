@@ -6,6 +6,8 @@
 
 - Bug: clear items each time we enter swiping state
 
+- ✅ Add Transaction.account_display_name 
+
 - ✅ Bug: app is stuck in Fetching state even after force quit[^33]
     - ✅ Error: app stuck in Fetching after Back button is pressed on SettingsView
     - ✅ immediately load transactions after exiting Settings
@@ -344,8 +346,6 @@
 - Surface uncleared transactions before current month
     - why? the web app offers no visual indication if transactions in previous months are uncleared unless you change the date range. the web app only surfaces uncleared transactions for the date range you specify. this date range defaults to the current month.
     - could it be less of a grind? rather than make the user advance backward in time in 1 month increments, could we make it appear intelligent? get one year's worth of transactions and limit the search to 1 uncleared transaction. "You have uncleared transactions from MM/YY." "Let's go" Button will jump the user to that month.
-- Add Transaction.account_display_name
-    - why? to help the user understand where the expense landed and to help them decide faster
 - Activity Log
     - example: 5 transactions checked on Wednesday, 2 transactions checked on Tuesday
 - Read Plaid metadata

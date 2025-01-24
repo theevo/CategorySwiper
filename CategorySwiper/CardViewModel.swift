@@ -9,6 +9,7 @@ import Foundation
 
 struct CardViewModel: Identifiable {
     var id: Int
+    var account: String
     var merchant: String
     var date: String
     var amount: Float
@@ -30,6 +31,7 @@ struct CardViewModel: Identifiable {
     
     init(transaction: Transaction) {
         self.id = transaction.id
+        self.account = transaction.account_display_name
         self.merchant = transaction.payee
         self.date = transaction.date
         self.amount = transaction.to_base

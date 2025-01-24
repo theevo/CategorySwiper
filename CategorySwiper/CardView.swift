@@ -41,8 +41,13 @@ struct CardView: View {
                 VStack {
                     Text(card.merchant)
                         .font(.title2)
+                        .fontDesign(.monospaced)
                     Text(card.date)
+                        .fontDesign(.monospaced)
                     Text(card.amount, format: .currency(code: card.currency))
+                        .fontDesign(.monospaced)
+                    Text(card.account)
+                        .fontDesign(.monospaced)
                 }
                 .padding()
                 .background(HierarchicalShapeStyle.quinary)
