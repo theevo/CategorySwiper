@@ -326,6 +326,8 @@
     - Fetching
 
 ## Housekeeping
+- ✅ remove API tokens and restore xcscheme
+
 - ✅ remove example-transactions from git history
     - ✅ remove redundant commits
 

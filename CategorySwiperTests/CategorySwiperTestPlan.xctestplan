@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "7026BA5C-A9B7-4C63-ABD3-9501C5AD332B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CategorySwiper.xcodeproj",
+        "identifier" : "27F3ECA22CDAC26500851CCB",
+        "name" : "CategorySwiperTests"
+      }
+    }
+  ],
+  "version" : 1
+}

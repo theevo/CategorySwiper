@@ -10,27 +10,20 @@ import XCTest
 
 @MainActor
 final class NetworkTests: XCTestCase {
-
-    func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
-        let key = "junktoken"
-        
-        let session = URLSessionBuilder(bearerToken: key)
-        
-        let request = LMNetworkInterface.Request.GetTransactions.makeRequest()
-        
-        let result = await session.execute(request: request)
-        
-        guard case .failure(let error) = result else {
-            XCTFail("We sent the server a junk token and expected a failure. Instead, we got a success?")
-            return
-        }
-        
-        guard case .HTTPStatusCode(let response) = error else {
-            XCTFail("We sent the server a junk token and expected a 401 status failure. Instead, we got this error: \(error)")
-            return
-        }
-        
-        XCTAssertEqual(response.statusCode, 401)
+    let secretName = "LunchMoneyBearerToken"
+    let tokenValue = "" // do not commit!
+    private var sut: SecretsStash!
+    
+    override func setUpWithError() throws {
+        super.setUp()
+        sut = SecretsStash()
+        try sut.save(key: secretName, value: tokenValue)
+    }
+    
+    override func tearDownWithError() throws {
+        try sut.delete(key: secretName)
+        sut = nil
+        try super.tearDownWithError()
     }
     
     func test_InterfaceManager_getTransactions_resultsInNonEmptyTransactions() async throws {
@@ -73,6 +66,30 @@ final class NetworkTests: XCTestCase {
         
         let transaction = try await interface.findOldestUnclearedTransaction()
         XCTAssertNotNil(transaction)
+    }
+}
+
+final class JunkNetworkTests: XCTestCase {
+    func test_NetworkInterace_with_INVALID_BearerToken_resultsInFailure_HTTPStatusCode_401() async {
+        let key = "junktoken"
+        
+        let session = URLSessionBuilder(bearerToken: key)
+        
+        let request = LMNetworkInterface.Request.GetTransactions.makeRequest()
+        
+        let result = await session.execute(request: request)
+        
+        guard case .failure(let error) = result else {
+            XCTFail("We sent the server a junk token and expected a failure. Instead, we got a success?")
+            return
+        }
+        
+        guard case .HTTPStatusCode(let response) = error else {
+            XCTFail("We sent the server a junk token and expected a 401 status failure. Instead, we got this error: \(error)")
+            return
+        }
+        
+        XCTAssertEqual(response.statusCode, 401)
     }
 }
 
