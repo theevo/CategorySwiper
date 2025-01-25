@@ -2,6 +2,8 @@
 
 ## UI
 
+- if user leaves app for more than 1 minute, force into fetching state 
+
 - Human-friendly error messages
 
 - ✅ Bug: clear items each time we enter swiping state
