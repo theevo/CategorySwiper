@@ -55,11 +55,6 @@ import Foundation
         runTaskAndAdvanceState()
     }
     
-    public func reset() {
-        appState = .Fetching
-        cardsModel = SwipeableCardsModel.empty
-    }
-    
     public func runTaskAndAdvanceState() {
         switch appState {
         case .Fetching:
