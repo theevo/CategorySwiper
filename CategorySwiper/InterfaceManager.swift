@@ -166,6 +166,7 @@ import Foundation
         transactions = Array(transactions.prefix(swipeLimit))
         cardsModel = SwipeableCardsModel(transactions: transactions)
         didFindMoreTransactions = false
+        items = []
     }
     
     private func loadDataFromLocal() {

@@ -4,7 +4,7 @@
 
 - Human-friendly error messages
 
-- Bug: clear items each time we enter swiping state
+- ✅ Bug: clear items each time we enter swiping state
 
 - ✅ Add Transaction.account_display_name 
 
