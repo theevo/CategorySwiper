@@ -52,7 +52,6 @@ class UpdateProgressViewModel: ObservableObject {
     
     func startActions() {
         for item in items {
-            print("started action of \(item.name)")
             Task {
                 let result = try await item.action()
                 setDone(for: item, isDone: result)
